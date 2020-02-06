@@ -1,4 +1,36 @@
-<textarea rows='6' [(ngModel)]="enteredValue"></textarea>
-<hr>
-<button (click)="onAddPost()">Save Post</button>
-<p>{{ newPost }} </p>
+<mat-card>
+  <form (submit)="onAddPost(postForm)" #postForm="ngForm">
+    <mat-form-field>
+      <input matInput
+      type = "text"
+      name="title"
+      ngModel
+      required
+      minlength="3"
+      placeholder="Title"
+      #title="ngModel">
+      <mat-error *ngIf="title.invalid">Min title length is 3 </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <textarea matInput
+      rows='4'
+      name="content"
+      ngModel
+      required
+      minlength="1"
+      placeholder="Description"
+      #content="ngModel"></textarea>
+      <mat-error *ngIf="title.invalid">Content cannot be empty </mat-error>
+    </mat-form-field>
+    <button mat-raised-button
+    color = "primary" type="submit">Save Post</button>
+  </form>
+
+
+</mat-card>
+
+
+
+
+
+

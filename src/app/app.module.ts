@@ -12,11 +12,15 @@ import { PostListComponent } from './posts/post-list/post-list.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CreateAccountComponent } from './create-account/create-account.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { LoginComponent } from './login/login.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const appRoutes: Routes = [
   { path: 'create-account', component: CreateAccountComponent },
   { path: 'post-create',      component: PostCreateComponent },
-  { path: 'post-create',      component: PostListComponent },
+  { path: 'post-list',      component: PostListComponent },
+  { path: 'login',      component: LoginComponent },
+  { path: 'profile',      component: ProfileComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
 
@@ -27,7 +31,9 @@ const appRoutes: Routes = [
     ToolbarComponent,
     PostListComponent,
     CreateAccountComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    LoginComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

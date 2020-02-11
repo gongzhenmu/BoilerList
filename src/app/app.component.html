@@ -18,24 +18,17 @@
                 routerLinkActive="active">Post Create</a>
             </li>
              <li class="nav-item dropdown">
-              <a class="nav-link text-theme dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link text-theme dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Theme
               </a>
               <div class="dropdown-menu text-theme" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" (click)="theme('cyborg')">Cyborg</a>
+                <a class="dropdown-item" (click)="theme('dark')">Dark</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" (click)="theme('minty')">Minty</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" (click)="theme('wcag')">WCAG</a>
+                <a class="dropdown-item" (click)="theme('bright')">Bright</a>
               </div>
             </li>
           </ul>
-          <!-- <input *ngIf="isAuthenticated$ | async" class="form-control mr-sm-2" [(ngModel)]="search" type="text" placeholder="Search"
-            aria-label="Search input">
-          <button *ngIf="isAuthenticated$ | async" class="btn btn-outline-info my-2 my-sm-0" type="submit"
-            (click)="searchUsername(search)" role="search">Search</button> -->
         </div>
       </nav>
       <router-outlet></router-outlet>
-
 </body>

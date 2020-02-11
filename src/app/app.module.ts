@@ -5,13 +5,20 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { PostCreateComponent } from './posts/post-create/post-create.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-
+import { RouterModule, Routes } from '@angular/router';
 import { MatInputModule, MatCardModule, MatButtonModule, MatToolbarModule, MatExpansionModule} from '@angular/material';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { PostListComponent } from './posts/post-list/post-list.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CreateAccountComponent } from './create-account/create-account.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
+const appRoutes: Routes = [
+  { path: 'create-account', component: CreateAccountComponent },
+  { path: 'post-create',      component: PostCreateComponent },
+  { path: 'post-create',      component: PostListComponent },
+  { path: '**', component: PageNotFoundComponent }
+];
 
 @NgModule({
   declarations: [
@@ -19,7 +26,8 @@ import { CreateAccountComponent } from './create-account/create-account.componen
     PostCreateComponent,
     ToolbarComponent,
     PostListComponent,
-    CreateAccountComponent
+    CreateAccountComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +39,11 @@ import { CreateAccountComponent } from './create-account/create-account.componen
     MatButtonModule,
     MatToolbarModule,
     MatExpansionModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule.forRoot(
+      appRoutes,
+      { enableTracing: true } // <-- debugging purposes only
+    )
   ],
   providers: [],
   bootstrap: [AppComponent]

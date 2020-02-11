@@ -10,6 +10,7 @@ import { MatInputModule, MatCardModule, MatButtonModule, MatToolbarModule, MatEx
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { PostListComponent } from './posts/post-list/post-list.component';
 import { HttpClientModule } from '@angular/common/http';
+import { CreateAccountComponent } from './create-account/create-account.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { HttpClientModule } from '@angular/common/http';
     AppComponent,
     PostCreateComponent,
     ToolbarComponent,
-    PostListComponent
+    PostListComponent,
+    CreateAccountComponent
   ],
   imports: [
     BrowserModule,

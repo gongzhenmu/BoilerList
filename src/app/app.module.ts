@@ -14,11 +14,12 @@ import { CreateAccountComponent } from './create-account/create-account.componen
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
+import { MatSliderModule } from '@angular/material/slider';
 
 const appRoutes: Routes = [
   { path: 'create-account', component: CreateAccountComponent },
   { path: 'post-create',      component: PostCreateComponent },
-  { path: 'post-list',      component: PostListComponent },
+  { path: '',  component: PostListComponent },
   { path: 'login',      component: LoginComponent },
   { path: 'profile',      component: ProfileComponent },
   { path: '**', component: PageNotFoundComponent }
@@ -46,6 +47,7 @@ const appRoutes: Routes = [
     MatToolbarModule,
     MatExpansionModule,
     HttpClientModule,
+    MatSliderModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only

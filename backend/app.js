@@ -64,4 +64,4 @@ app.delete("/posts/:id", (req, res, next) => {
   });
 });
 
-module.exports = router;
+module.exports = app;

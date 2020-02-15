@@ -26,9 +26,15 @@
     "bootstrap": "^4.4.1",
     "express": "^4.17.1",
     "jquery": "^3.4.1",
+
     "mongoose": "^5.9.0",
+
+    "jsonwebtoken": "^8.5.1",
+
+
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
+    "utility": "^1.16.3",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {

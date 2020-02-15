@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const postSchema = mongoose.Schema({
+
   postID:{type: String, required: false},
   title: { type: String, required: true },
   content: { type: String, required: true},
@@ -15,4 +16,4 @@ const postSchema = mongoose.Schema({
   numOfLike: {type: Int16Array},*/
 });
 
-module.exports = mongoose.model('Post',postSchema);
+module.exports = mongoose.model('Post',postSchema,'Post');

@@ -3,7 +3,7 @@ const router = express.Router();
 const utils = require('utility');
 const jwt = require('jsonwebtoken');
 
-const userModel = require('../models/user');
+const userM = require('../models/user');
 
 router.post('/', (req, res) => {
     console.log('login request');
@@ -22,7 +22,7 @@ router.post('/', (req, res) => {
         return;
     }
 
-    userModel.findOne({username: userData.username}, (err, user) => {
+    userM.findOne({username: userData.username}, (err, user) => {
         console.log(user);
         if (err) {
             console.log('query err occurred');
@@ -44,7 +44,7 @@ router.post('/', (req, res) => {
         else {
             let payload = {subject: user._id};
             let token = jwt.sign(payload, 'secretKey');
-            userModel.updateOne({username: user.username}, {token: token}, {upsert: true}, (err) => {
+            userM.updateOne({username: user.username}, {token: token}, {upsert: true}, (err) => {
                 if (err) console.log(err);
             });
             res.status(200).send({token, user})

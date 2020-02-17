@@ -1,59 +1,51 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { AppComponent } from './app.component';
-import { PostCreateComponent } from './posts/post-create/post-create.component';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterModule, Routes } from '@angular/router';
-import { MatInputModule, MatCardModule, MatButtonModule, MatToolbarModule, MatExpansionModule} from '@angular/material';
-import { ToolbarComponent } from './toolbar/toolbar.component';
-import { PostListComponent } from './posts/post-list/post-list.component';
-import { HttpClientModule } from '@angular/common/http';
-import { CreateAccountComponent } from './create-account/create-account.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { LoginComponent } from './login/login.component';
-import { ProfileComponent } from './profile/profile.component';
-import { MatSliderModule } from '@angular/material/slider';
 
-const appRoutes: Routes = [
-  { path: 'create-account', component: CreateAccountComponent },
-  { path: 'post-create',      component: PostCreateComponent },
-  { path: '',  component: PostListComponent },
-  { path: 'login',      component: LoginComponent },
-  { path: 'profile',      component: ProfileComponent },
-  { path: '**', component: PageNotFoundComponent }
-];
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { HeaderComponent } from './common/header/header.component';
+import { FooterComponent } from './common/footer/footer.component';
+import { MainComponent } from './common/main/main.component';
+import {RegisterComponent} from './register/register.component';
+
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {AuthService} from './auth.service';
+//import {OtherService} from './other.service';
+import {ReactiveFormsModule } from '@angular/forms';
+//import { ProfileComponent } from './profile/profile.component';
+//import { TimelineComponent } from './timeline/timeline.component';
+import {CookieService} from 'angular2-cookie/core';
+import {AuthInterceptor} from './auth-interceptor';
+//import { TestComponent } from './test/test.component';
+//import {FinduserComponent} from './finduser/finduser.component';
+// { OtherProfileComponent } from './other-profile/other-profile.component';
+import {DatePipe} from '@angular/common';
+
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    PostCreateComponent,
-    ToolbarComponent,
-    PostListComponent,
-    CreateAccountComponent,
-    PageNotFoundComponent,
-    LoginComponent,
-    ProfileComponent
+    HeaderComponent,
+    FooterComponent,
+    MainComponent,
+    RegisterComponent,
+    //ProfileComponent,
+    //TestComponent,
+    //OtherProfileComponent,
+    // DataComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    NoopAnimationsModule,
-    BrowserAnimationsModule,
-    MatInputModule,
-    MatCardModule,
-    MatButtonModule,
-    MatToolbarModule,
-    MatExpansionModule,
     HttpClientModule,
-    MatSliderModule,
-    RouterModule.forRoot(
-      appRoutes,
-      { enableTracing: true } // <-- debugging purposes only
-    )
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [AuthService, CookieService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true, }, DatePipe],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
+

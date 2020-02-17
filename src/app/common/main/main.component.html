@@ -1,0 +1,109 @@
+
+<div class="container-login100">
+  <div class="wrap-login100">
+    <form class="login100-form validate-form">
+					<span class="login100-form-title p-b-43">
+						Login to continue
+					</span>
+
+
+      <div class="wrap-input100 validate-input" data-validate = "Valid username is required">
+        <input class="input100" [(ngModel)]="loginUserData.username" type="text" name="username">
+        <span class="focus-input100"></span>
+        <span class="label-input100">Username</span>
+      </div>
+
+
+      <div class="wrap-input100 validate-input" data-validate="Password is required">
+        <input class="input100" [(ngModel)]="loginUserData.password" type="password" name="password">
+        <span class="focus-input100"></span>
+        <span class="label-input100">Password</span>
+      </div>
+
+<!--      <div class="flex-sb-m w-full p-t-3 p-b-32">-->
+<!--        <div class="contact100-form-checkbox">-->
+<!--          <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">-->
+<!--          <label class="label-checkbox100" for="ckb1">-->
+<!--            Remember me-->
+<!--          </label>-->
+<!--        </div>-->
+
+<!--        <div>-->
+<!--          <button id="findPassword" type="submit" class="login100-form-btn"-->
+<!--                  routerLink="/findPassword" routerLinkActive="active">-->
+<!--            &lt;!&ndash;<a href="Admin/index.html" class="txt1">&ndash;&gt;-->
+<!--            findPassword-->
+<!--            &lt;!&ndash;</a>&ndash;&gt;-->
+<!--          </button>-->
+<!--        </div>-->
+<!--      </div>-->
+
+
+      <div class="container-login100-form-btn">
+        <button (click)="loginUser()" type="submit" class="login100-form-btn">
+          <!--<a href="Admin/index.html" class="txt1">-->
+          Login
+          <!--</a>-->
+        </button>
+      </div>
+
+
+
+      <div class="text-center p-t-46 p-b-20">
+        <button id="button" type="button" class="login100-form-btn"
+                routerLink="/register" routerLinkActive="active">
+          <!--<a href="Admin/index.html" class="txt1">-->
+          Sign up
+          <!--</a>-->
+        </button>
+      </div>
+
+<!--      <div class="text-center p-t-46 p-b-20">-->
+<!--          <span class="txt2">-->
+<!--							or sign in using-->
+<!--						</span>-->
+<!--      </div>-->
+
+
+<!--      <div class="login100-form-social flex-c-m">-->
+<!--        <a href="#" class="login100-form-social-item flex-c-m bg1 m-r-5">-->
+<!--          <i class="fa fa-facebook-f" aria-hidden="true"></i>-->
+<!--        </a>-->
+
+<!--        <a href="#" class="login100-form-social-item flex-c-m bg2 m-r-5">-->
+<!--          <i class="fa fa-twitter" aria-hidden="true"></i>-->
+<!--        </a>-->
+<!--      </div>-->
+    </form>
+
+    <div class="login100-more" style="background-image: url('assets/images/purdue.jpg');">
+    </div>
+  </div>
+</div>
+<div id="signupform" class="popup-effect">
+  <div class="popup">
+    <div class="letter-w3ls">
+      <form action="#" method="post">
+        <div class="form-left-to-w3l">
+          <input type="text" name="username" placeholder="Username" required="">
+        </div>
+        <div class="form-left-to-w3l">
+          <input type="text" name="phone" placeholder="Phone" required="">
+        </div>
+        <div class="form-left-to-w3l">
+          <input type="email" name="email" placeholder="Email" required="">
+        </div>
+        <div class="form-left-to-w3l">
+          <input type="password" name="password" placeholder="Password" required="">
+        </div>
+        <div class="form-left-to-w3l margin-zero">
+          <input type="password" name="password" placeholder="Confirm Password" required="">
+        </div>
+      </form>
+      <div class="clear"></div>
+    </div>
+
+    <a class="close" href="#">&times;</a>
+  </div>
+</div>
+

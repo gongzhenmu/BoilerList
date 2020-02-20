@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
 const postRoutes = require("./routes/posts");
 const registerRoutes =  require('./routes/register');
-
+const registerRoutes =  require('./routes/login');
 const cors = require("cors");
 
 const app = express();
@@ -28,7 +28,8 @@ mongoose.connect(db, {useNewUrlParser: true, useUnifiedTopology: true})
 
  //--------------------create account-------------------
  app.use('/api/register', registerRoutes);
-
+//--------------------create account-------------------
+app.use('/api/login', loginRoutes);
 
 
 module.exports = app;

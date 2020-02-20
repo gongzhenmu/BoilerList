@@ -27,7 +27,7 @@ mongoose.connect(db, {useNewUrlParser: true, useUnifiedTopology: true})
  app.use("/api/posts",postRoutes);
 
  //--------------------create account-------------------
- app.use('/register', registerRoutes);
+ app.use('/api/register', registerRoutes);
 
 
 

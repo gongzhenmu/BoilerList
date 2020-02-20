@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const utils = require('utility');
 const jwt = require('jsonwebtoken');
+
 const userModel = require('../models/User');
 
 router.post('/', (req, res) => {

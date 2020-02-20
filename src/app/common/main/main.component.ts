@@ -30,11 +30,7 @@ export class MainComponent implements OnInit {
           localStorage.setItem('email', res.user.email);
           localStorage.setItem('userName', res.user.username);
           localStorage.setItem('token', res.token);
-          localStorage.setItem('age', res.user.age);
-          localStorage.setItem('school', res.user.school);
-          localStorage.setItem('gender', res.user.gender);
           localStorage.setItem('phone', res.user.phone);
-          localStorage.setItem('address', res.user.address);
           localStorage.setItem('searchUser', '');
           this._cookieService.put('loginKey', res.token);
           console.log('the cookie', this._cookieService.get('loginKey'));

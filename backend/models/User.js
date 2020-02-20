@@ -7,7 +7,8 @@ const userSchema = mongoose.Schema({
   email: {type: String, required: true, unique:true},
   username: {type: String, required: true, unique: true},
   password: {type: String, required: true},
-  phone: {type : String}
+  phone: {type : String},
+  token: {type: String, unique:true}
   //registerDate: {type: Date},
   //postInformation: {type: Array},
   //transaction: {type: Array},

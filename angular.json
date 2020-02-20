@@ -126,10 +126,10 @@
       }
     }
   },
-  "defaultProject": "BoilerList",
-  "schematics": {
+  "defaultProject": "BoilerList"
+  /*"schematics": {
     "@schematics/angular:component": {
       "styleext": "scss"
     }
-  }
+  }*/
 }

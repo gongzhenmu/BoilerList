@@ -5,6 +5,7 @@ import { Post } from './posts/post.model';
 import * as $ from 'jquery';
 
 import {AuthService} from './auth/auth.service';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -14,6 +15,8 @@ export class AppComponent implements OnInit{
   currentTheme: string = 'minty';
   title = 'Twister';
   search: string;
+  private authListener: Subscription;
+  isAuth = false;
 
 
   constructor(public auth: AuthService, public router: Router,  private renderer: Renderer2, @Inject(DOCUMENT) private document) { }
@@ -23,6 +26,11 @@ export class AppComponent implements OnInit{
     if (cacheTheme) {
       this.theme(cacheTheme);
     }
+    this.authListener = this.auth.getAuthStatusListener().subscribe(authState => {
+      this.isAuth = authState;
+    });
+
+
   }
 
   theme(type) {
@@ -36,6 +44,8 @@ export class AppComponent implements OnInit{
   logout() {
     this.auth.logout();
   }
+
+
 
 
 }

@@ -9,12 +9,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { MatInputModule, MatCardModule, MatButtonModule, MatToolbarModule, MatExpansionModule} from '@angular/material';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { PostListComponent } from './posts/post-list/post-list.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CreateAccountComponent } from './create-account/create-account.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { MatSliderModule } from '@angular/material/slider';
+import { AuthInterceptor } from './auth/auth-interceptor';
 
 const appRoutes: Routes = [
   { path: 'create-account', component: CreateAccountComponent },
@@ -53,7 +54,9 @@ const appRoutes: Routes = [
       { enableTracing: true } // <-- debugging purposes only
     )
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

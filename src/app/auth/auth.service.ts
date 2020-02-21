@@ -11,7 +11,6 @@ export class AuthService {
 
   private isAuthenticated = false;
   private token: string;
-  private tokenTimer: any;
   private authStatusListener = new Subject<boolean>();
 
 // private _checkUrl = 'http://localhost:3000/api/checkUserNameAndEmail';
@@ -57,6 +56,7 @@ export class AuthService {
       if (token) {
         this.isAuthenticated = true;
         this.authStatusListener.next(true);
+        this.saveAuthData(token);
         this.router.navigate(['/']);
       }
     }, err => {

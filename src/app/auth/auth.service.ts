@@ -48,9 +48,58 @@ export class AuthService {
   }
 
 
-  // login
+  // -------------------login-----------------
   loginUser(email: string, password: string) {
-     this.http.post<any>(this.loginUserURL, { email: email, password: password });
+    this.http.post<{ token: string }>(this.loginUserURL, { email: email, password: password })
+    .subscribe(response => {
+      const token = response.token;
+      this.token = token;
+      if (token) {
+        this.isAuthenticated = true;
+        this.authStatusListener.next(true);
+        this.router.navigate(['/']);
+      }
+    }, err => {
+      if (err.status === 400) {
+          alert('Please fill in all blanks');
+      } else if (err.status === 500) {
+          alert('Server error');
+      } else if (err.status === 403) {
+          alert('No such user');
+      } else if (err.status === 401) {
+          alert('Wrong password');
+    }
+    });
   }
+
+  logout() {
+    this.token = null;
+    this.isAuthenticated = false;
+    this.authStatusListener.next(false);
+    this.clearAuthData();
+    this.router.navigate(['/login']);
+  }
+
+
+  private saveAuthData(token: string) {
+    localStorage.setItem('token', token);
+  }
+
+  private clearAuthData() {
+    localStorage.removeItem('token');
+  }
+
+  private getAuthData() {
+    const token = localStorage.getItem('token');
+
+    if (!token ) {
+      return;
+    }
+    return { token: token }
+  }
+
+
+
+
 
 }

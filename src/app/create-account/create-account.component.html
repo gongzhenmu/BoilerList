@@ -6,15 +6,17 @@
 
         </span>
 
-          <label>Username</label>
-          <input name="username" class="form-control" type="text" required minlength="2" maxlength="30"
-                 pattern="[a-zA-Z0-9 ]*" [(ngModel)]="registerUserData.username" #name="ngModel">
 
-          <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
-              <div *ngIf="name.errors.required">User Name is required.</div>
-              <div *ngIf="name.errors.minlength">Name must be at least 2 characters long.</div>
-              <div *ngIf="name.errors.maxlength">Name must not exceeds 30 characters long</div>
-              <div *ngIf="name.errors.pattern">Name must be composed of pure letters and numbers</div>
+
+
+
+          <label>Email Address</label>
+          <input name="email" class="form-control" type="text" required email
+                 [(ngModel)]="registerUserData.email" #em="ngModel">
+
+          <div *ngIf="em.invalid && (em.dirty || em.touched)" class="alert alert-danger">
+              <div *ngIf="em.errors.required">Email Address is required.</div>
+              <div *ngIf="em.errors.email">Please enter a valid email address</div>
           </div>
 
           <label>Password</label>
@@ -27,13 +29,15 @@
               <div *ngIf="passwd.errors.maxlength">Password must not exceeds 30 characters long</div>
           </div>
 
-          <label>Email Address</label>
-          <input name="email" class="form-control" type="text" required email
-                 [(ngModel)]="registerUserData.email" #em="ngModel">
+          <label>Username</label>
+          <input name="username" class="form-control" type="text" required minlength="2" maxlength="30"
+                 pattern="[a-zA-Z0-9 ]*" [(ngModel)]="registerUserData.username" #name="ngModel">
 
-          <div *ngIf="em.invalid && (em.dirty || em.touched)" class="alert alert-danger">
-              <div *ngIf="em.errors.required">Email Address is required.</div>
-              <div *ngIf="em.errors.email">Please enter a valid email address</div>
+          <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+              <div *ngIf="name.errors.required">User Name is required.</div>
+              <div *ngIf="name.errors.minlength">Name must be at least 2 characters long.</div>
+              <div *ngIf="name.errors.maxlength">Name must not exceeds 30 characters long</div>
+              <div *ngIf="name.errors.pattern">Name must be composed of pure letters and numbers</div>
           </div>
 
 

@@ -11,7 +11,7 @@ router.post('/', (req, res) => {
 
     // check field of request body
     try {
-        if (userData.email == null || userData.password == null) {
+        if (userData.email == '' || userData.password == '') {
             console.log('null body property');
             res.status(400).send();
             return;

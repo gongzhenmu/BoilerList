@@ -3,6 +3,8 @@ import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
 import { Post } from './posts/post.model';
 import * as $ from 'jquery';
+
+import {AuthService} from './auth/auth.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -13,10 +15,11 @@ export class AppComponent implements OnInit{
   title = 'Twister';
   search: string;
 
-  constructor(public router: Router,  private renderer: Renderer2, @Inject(DOCUMENT) private document) { }
+
+  constructor(public auth: AuthService, public router: Router,  private renderer: Renderer2, @Inject(DOCUMENT) private document) { }
 
   ngOnInit() {
-    const cacheTheme = localStorage.getItem("currentTheme")
+    const cacheTheme = localStorage.getItem('currentTheme');
     if (cacheTheme) {
       this.theme(cacheTheme);
     }
@@ -25,9 +28,14 @@ export class AppComponent implements OnInit{
   theme(type) {
       this.renderer.removeClass(document.body, 'theme-'+this.currentTheme);
       this.currentTheme = type;
-      localStorage.setItem("currentTheme", this.currentTheme);
-      this.renderer.addClass(document.body, 'theme-'+this.currentTheme);
-      this.document.getElementById('theme').href = '/assets/theme/bootstrap.'+ type +'.css';
+      localStorage.setItem('currentTheme', this.currentTheme);
+      this.renderer.addClass(document.body, 'theme-'+ this.currentTheme);
+      this.document.getElementById('theme').href = '/assets/theme/bootstrap.' + type + '.css';
   }
+
+  logout() {
+    this.auth.logout();
+  }
+
 
 }

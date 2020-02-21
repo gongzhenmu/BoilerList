@@ -33,6 +33,11 @@
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" (click)="theme('bright')">Bright</a>
             </div>
+            <button (click)="logout()" *ngIf='auth'>logout</button>
+
+
+
+
           </li>
         </ul>
       </div>

@@ -12,11 +12,8 @@ import {AuthService} from '../auth/auth.service';
 export class CreateAccountComponent implements OnInit {
 
   registerUserData =  {
-    firstName: '',
-    lastName: '',
     email: '',
     password: '',
-    phone: '',
     username: ''
 };
 

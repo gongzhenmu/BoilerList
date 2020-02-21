@@ -24,12 +24,12 @@ router.post('/', (req, res, next) => {
   console.log('register request verification');
   //todo validation of http request body
   const newUser = new userModel();
-  newUser.firstName = req.body.firstName;
-  newUser.lastName = req.body.lastName;
+  // newUser.firstName = req.body.firstName;
+  // newUser.lastName = req.body.lastName;
   newUser.email = req.body.email;
   newUser.username = req.body.username;
   newUser.password = utility.md5(req.body.password, 'base64');
-  newUser.phone = '';
+
 
   let tempToken = req.body.username;
   tempToken.concat(req.body.password);

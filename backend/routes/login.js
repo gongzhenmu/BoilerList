@@ -11,7 +11,7 @@ router.post('/', (req, res) => {
 
     // check field of request body
     try {
-        if (userData.username == null || userData.password == null) {
+        if (userData.email == null || userData.password == null) {
             console.log('null body property');
             res.status(400).send();
             return;
@@ -22,7 +22,7 @@ router.post('/', (req, res) => {
         return;
     }
 
-    userM.findOne({username: userData.username}, (err, user) => {
+    userM.findOne({email: userData.email}, (err, user) => {
         console.log(user);
         if (err) {
             console.log('query err occurred');
@@ -31,7 +31,7 @@ router.post('/', (req, res) => {
         }
 
         if (!user) {
-            console.log('No matching username');
+            console.log('No matching email');
             res.status(403).send('No such user');
             return
         }
@@ -42,12 +42,12 @@ router.post('/', (req, res) => {
             res.status(401).send('Invalid password entered!')
         }
         else {
-            let payload = {subject: user._id};
-            let token = jwt.sign(payload, 'secretKey');
+            let payload = {email: user.email, userId: user._id};
+            const token = jwt.sign(payload, 'secretKey');
             userM.updateOne({username: user.username}, {token: token}, {upsert: true}, (err) => {
                 if (err) console.log(err);
             });
-            res.status(200).send({token, user})
+            res.status(200).json({token});
         }
 
     }); //end User.findOne()

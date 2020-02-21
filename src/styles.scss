@@ -1,4 +1,4 @@
-@import '../node_modules/bootstrap/dist/css/bootstrap.css';
+//@import '../node_modules/bootstrap/dist/css/bootstrap.css';
 /* You can add global styles to this file, and also import other style files */
 
 $themes: (
@@ -14,7 +14,7 @@ $themes: (
 * Implementation of themes
 */
 $theme-map: null;
-@mixin themify($themes) {   
+@mixin themify($themes) {
   @each $theme, $map in $themes {
       .theme-#{$theme} & {
       $theme-map: () !global;
@@ -35,9 +35,9 @@ $theme-map: null;
   @include themify($themes) {
       // custom theme to your needs. Add here
       @if themed('name') == 'bright' {
-        
-      }    
-     
+
+      }
+
       @if themed('name') == 'dark' {
 
       }

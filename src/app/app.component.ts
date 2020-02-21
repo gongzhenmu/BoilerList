@@ -1,6 +1,6 @@
 import { Component, OnInit,Renderer2, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { Router } from '@angular/router'
+import { Router } from '@angular/router';
 import { Post } from './posts/post.model';
 import * as $ from 'jquery';
 @Component({
@@ -27,7 +27,7 @@ export class AppComponent implements OnInit{
       this.currentTheme = type;
       localStorage.setItem("currentTheme", this.currentTheme);
       this.renderer.addClass(document.body, 'theme-'+this.currentTheme);
-      this.document.getElementById('theme').href = '/assets/theme/bootstrap.'+type+'.css';
+      this.document.getElementById('theme').href = '/assets/theme/bootstrap.'+ type +'.css';
   }
 
 }

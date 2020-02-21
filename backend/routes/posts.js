@@ -1,6 +1,7 @@
 const express = require("express");
 const Post = require('../models/post');
 const router = express.Router();
+const checkAuth = require('../middleware/checkAuth');
 
 //add post to DB
 router.post("", (req, res, next) => {

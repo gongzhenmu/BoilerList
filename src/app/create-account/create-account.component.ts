@@ -19,7 +19,7 @@ export class CreateAccountComponent implements OnInit {
 
 constructor(
   private router: Router,
-  private authService: AuthService
+  public authService: AuthService
 ) { }
 
   ngOnInit() {
@@ -38,7 +38,7 @@ constructor(
                             console.log(data);
                             console.log('yes');
                             alert('create success');
-                            this.router.navigate(['/']);
+                            this.router.navigate(['/login']);
                         }, err => {
                             if (err.status === 400) {
                                 alert('Bad request! Please fill in all blanks');

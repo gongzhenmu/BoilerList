@@ -3,7 +3,7 @@ const router = express.Router();
 
 const userM = require('../models/user');
 const postM = require('../models/post');
-const favM = require('../models/favorite);
+const favM = require('../models/favorite');
 const checkAuth = require('../middleware/checkAuth');
 
 router.post('/getOthers', checkAuth, (req, res) => {
@@ -27,7 +27,7 @@ router.post('/getOthers', checkAuth, (req, res) => {
         if (!user) {
             res.status(403).send('cannot find the user');
         } else {
-            res.json(user);
+            res.status(201).json(user);
         }
     })
 });

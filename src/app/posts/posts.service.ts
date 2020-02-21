@@ -19,6 +19,8 @@ export class PostsService {
           return {
             title: post.title,
             content: post.content,
+            price: post.price,
+            owner: post.owner,
             id: post._id
           };
         });
@@ -33,8 +35,8 @@ export class PostsService {
     return this.postsUpdated.asObservable();
   }
 
-  addPost(title: string, content: string) {
-    const post: Post = { id: null, title: title, content: content };
+  addPost(title: string, content: string, price: string, owner: string) {
+    const post: Post = { id: null, title: title, content: content, price: price, owner: owner};
     this.http
       .post<{ message: string, postId: string }>(this.posturl, post)
       .subscribe(resData => {

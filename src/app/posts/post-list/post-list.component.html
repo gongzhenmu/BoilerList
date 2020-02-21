@@ -4,7 +4,9 @@
       <mat-expansion-panel-header>
         {{ post.title}}
       </mat-expansion-panel-header>
-      {{ post.content}}
+      Price: ${{ post.price}}<br>
+      Description: {{ post.content}}<br>
+      Posted By: {{ post.owner}}
       <mat-action-row>
         <button mat-button color="warn" (click)="onDelete(post.id)">Delete</button>
       </mat-action-row>

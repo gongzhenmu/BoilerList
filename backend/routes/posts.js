@@ -7,7 +7,9 @@ const checkAuth = require('../middleware/checkAuth');
 router.post("", checkAuth,(req, res, next) => {
   const post = new Post({
     title: req.body.title,
-    content: req.body.content
+    content: req.body.content,
+    price: req.body.price,
+    owner: req.body.owner
   });
   post.save().then(createdPost => {
     res.status(201).json({

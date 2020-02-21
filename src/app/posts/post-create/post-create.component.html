@@ -23,12 +23,22 @@
       #content="ngModel"></textarea>
       <mat-error *ngIf="title.invalid">Content cannot be empty </mat-error>
     </mat-form-field>
+    <mat-form-field>
+      <textarea matInput
+                name="price"
+                ngModel
+                required
+                minlength="1"
+                placeholder="Price"
+                #content="ngModel"></textarea>
+      <mat-error *ngIf="title.invalid">Content cannot be empty </mat-error>
+    </mat-form-field>
     <button mat-raised-button
     color = "primary" type="submit">Save Post</button>
   </form>
 
 
-</mat-card> 
+</mat-card>
 
 
 

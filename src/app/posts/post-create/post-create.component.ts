@@ -21,7 +21,7 @@ export class PostCreateComponent {
       if (form.invalid) {
         return;
       }
-      this.postsService.addPost(form.value.title, form.value.content);
+      this.postsService.addPost(form.value.title, form.value.content, form.value.price, sessionStorage.getItem('username'));
       form.resetForm();
     }
   }

@@ -56,7 +56,7 @@ export class AuthService {
       if (token) {
         this.isAuthenticated = true;
         this.authStatusListener.next(true);
-        this.saveAuthData(token);
+        this.saveAuthData(token, email);
         this.router.navigate(['/']);
       }
     }, err => {
@@ -81,8 +81,9 @@ export class AuthService {
   }
 
 
-  private saveAuthData(token: string) {
+  private saveAuthData(token: string, username: string) {
     localStorage.setItem('token', token);
+    sessionStorage.setItem('username', username);
   }
 
   private clearAuthData() {

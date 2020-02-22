@@ -8,6 +8,7 @@
       Description: {{ post.content}}<br>
       Posted By: {{ post.owner}}
       <mat-action-row>
+        <a mat-button color="primary" [routerLink]="['post-edit', post.id]">EDIT</a>
         <button mat-button color="warn" (click)="onDelete(post.id)">Delete</button>
       </mat-action-row>
   </mat-expansion-panel >

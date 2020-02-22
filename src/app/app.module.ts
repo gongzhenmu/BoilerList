@@ -20,6 +20,7 @@ import { AuthInterceptor } from './auth/auth-interceptor';
 const appRoutes: Routes = [
   { path: 'create-account', component: CreateAccountComponent },
   { path: 'post-create',      component: PostCreateComponent },
+  { path: 'post-edit/:postId',      component: PostCreateComponent },
   { path: '',  component: PostListComponent },
   { path: 'login',      component: LoginComponent },
   { path: 'profile',      component: ProfileComponent },

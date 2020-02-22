@@ -12,7 +12,7 @@ const app = express();
 const db = 'mongodb+srv://BoilerListAdmin:cs407project@boilerlist-pfb6u.mongodb.net/node-angular?retryWrites=true&w=majority';
 mongoose.connect(db, {useNewUrlParser: true, useUnifiedTopology: true})
   .then(() => {
-    console.log('Connectd to database!');
+    console.log('Connected to database!');
   })
   .catch(() => {
     console.log('Connection failed');
@@ -23,6 +23,12 @@ mongoose.connect(db, {useNewUrlParser: true, useUnifiedTopology: true})
  app.use(bodyParser.urlencoded({ extended: false }));
  app.use(bodyParser.json());
  app.use(cors());
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, GET, DELETE, OPTIONS');
+  next();
+});
 
  //--------------------------post----------------------
  app.use("/api/posts",postRoutes);

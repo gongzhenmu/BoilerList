@@ -52,11 +52,12 @@ export class AuthService {
     this.http.post<{ token: string }>(this.loginUserURL, { email: email, password: password })
     .subscribe(response => {
       const token = response.token;
+      const username = response.username;
       this.token = token;
       if (token) {
         this.isAuthenticated = true;
         this.authStatusListener.next(true);
-        this.saveAuthData(token, email);
+        this.saveAuthData(token, username);
         this.router.navigate(['/']);
       }
     }, err => {
@@ -88,6 +89,7 @@ export class AuthService {
 
   private clearAuthData() {
     localStorage.removeItem('token');
+    sessionStorage.removeItem('username');
   }
 
   private getAuthData() {

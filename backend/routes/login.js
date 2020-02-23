@@ -47,7 +47,7 @@ router.post('/', (req, res) => {
             userM.updateOne({username: user.username}, {token: token}, {upsert: true}, (err) => {
                 if (err) console.log(err);
             });
-            res.status(200).json({token});
+            res.status(200).json({token, username: user.username});
         }
 
     }); //end User.findOne()

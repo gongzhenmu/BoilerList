@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 @Injectable({providedIn: 'root'})
 export class ProfileService{
 
-  private myPosts: Post[];
+  private posts: Post[];
   private postsUpdated  = new Subject<Post[]>();
 
   private posturl = 'http://localhost:3000/api/profile';
@@ -31,8 +31,8 @@ export class ProfileService{
       });
     }))
     .subscribe(transformedPosts => {
-      this.myPosts = transformedPosts;
-      this.postsUpdated.next([...this.myPosts]);
+      this.posts = transformedPosts;
+      this.postsUpdated.next([...this.posts]);
     });
   }
 
@@ -43,9 +43,9 @@ export class ProfileService{
   deletePost(postId: string) {
     this.http.delete(this.posturl + '/delete/' + postId)
       .subscribe(() => {
-        const updatedPosts = this.myPosts.filter(post => post.id !== postId);
-        this.myPosts = updatedPosts;
-        this.postsUpdated.next([...this.myPosts]);
+        const updatedPosts = this.posts.filter(post => post.id !== postId);
+        this.posts = updatedPosts;
+        this.postsUpdated.next([...this.posts]);
       });
   }
 

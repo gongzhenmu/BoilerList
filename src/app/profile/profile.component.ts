@@ -11,7 +11,7 @@ import { ProfileService } from './profile.service';
 export class ProfileComponent implements OnInit,  OnDestroy {
   username = localStorage.getItem('username');
   email = localStorage.getItem('email');
-  posts: Post[];
+  posts: Post[] = [];
   private postsSub: Subscription;
 
   constructor(public profileService: ProfileService) { }
@@ -30,5 +30,10 @@ export class ProfileComponent implements OnInit,  OnDestroy {
 
   onDelete(postId: string){
     this.profileService.deletePost(postId);
+  }
+
+  onImagePicked(event: Event){
+    const file = (event.target as HTMLInputElement).files[0];
+    console.log(file);
   }
 }

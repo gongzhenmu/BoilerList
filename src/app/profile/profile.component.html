@@ -15,3 +15,8 @@
       </mat-action-row>
   </mat-expansion-panel >
 </mat-accordion>
+
+<div>
+  <button mat-stroked-button type="button" (click)="filePicker.click()">Upload your avatar</button>
+  <input type="file" accept="image/png, image/jpeg" #filePicker (change)="onImagePicked($event)">
+</div>

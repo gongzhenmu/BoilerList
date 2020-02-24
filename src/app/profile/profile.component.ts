@@ -1,15 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 
+import { Post } from '../posts/post.model';
+import { ProfileService } from './profile.service';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit,  OnDestroy {
+  username = 'dummy_username';
+  email = 'dummy_email@cc.cc';
+  posts: Post[];
+  private postsSub: Subscription;
 
-  constructor() { }
+  constructor(public profileService: ProfileService) { }
 
   ngOnInit() {
+    this.profileService.getMyPosts();
+    this.postsSub = this.profileService.getMyPostsUpdateListener()
+      .subscribe((posts: Post[])=> {
+        this.posts  =  posts;
+      });
   }
 
+  ngOnDestroy(){
+    this.postsSub.unsubscribe();
+  }
 }

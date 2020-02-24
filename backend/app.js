@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const postRoutes = require("./routes/posts");
 const registerRoutes =  require('./routes/register');
 const loginRoutes = require('./routes/login');
+const profileRoutes = require('./routes/profile');
 
 const cors = require("cors");
 
@@ -38,6 +39,8 @@ app.use(function(req, res, next) {
 //--------------------login-------------------
 app.use('/api/login', loginRoutes);
 
+//----------------------profile------------------------
+app.use('/api/profile', profileRoutes);
 
 
 module.exports = app;

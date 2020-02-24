@@ -1,1 +1,17 @@
 <p>profile works!</p>
+<p>User: {{ username }}</p>
+<hr>
+<p>email: {{ email }}</p>
+<mat-accordion multi="true" *ngIf="posts.length > 0">
+  <mat-expansion-panel *ngFor="let post of posts">
+      <mat-expansion-panel-header>
+        {{ post.title}}
+      </mat-expansion-panel-header>
+      Price: ${{ post.price}}<br>
+      Description: {{ post.content}}<br>
+      <mat-action-row>
+        <a mat-button color="primary" [routerLink]="['post-edit', post.id]">EDIT</a>
+        <button mat-button color="warn" (click)="onDelete(post.id)">Delete</button>
+      </mat-action-row>
+  </mat-expansion-panel >
+</mat-accordion>

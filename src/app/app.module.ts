@@ -16,14 +16,15 @@ import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { MatSliderModule } from '@angular/material/slider';
 import { AuthInterceptor } from './auth/auth-interceptor';
+import { AuthGuard } from './auth/auth.guard';
 
 const appRoutes: Routes = [
-  { path: 'create-account', component: CreateAccountComponent },
-  { path: 'post-create',      component: PostCreateComponent },
-  { path: 'post-edit/:postId',      component: PostCreateComponent },
-  { path: '',  component: PostListComponent },
+  { path: 'create-account', component: CreateAccountComponent  },
+  { path: 'post-create',      component: PostCreateComponent, canActivate: [AuthGuard] },
+  { path: 'post-edit/:postId',      component: PostCreateComponent , canActivate: [AuthGuard]},
+  { path: '',  component: PostListComponent, canActivate: [AuthGuard] },
   { path: 'login',      component: LoginComponent },
-  { path: 'profile',      component: ProfileComponent },
+  { path: 'profile',      component: ProfileComponent , canActivate: [AuthGuard]},
   { path: '**', component: PageNotFoundComponent }
 ];
 
@@ -56,6 +57,7 @@ const appRoutes: Routes = [
     )
   ],
   providers: [
+    AuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

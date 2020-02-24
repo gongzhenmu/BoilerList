@@ -12,6 +12,7 @@ export class AuthService {
   private isAuthenticated = false;
   private token: string;
   private authStatusListener = new Subject<boolean>();
+  private username: string;
 
 // private _checkUrl = 'http://localhost:3000/api/checkUserNameAndEmail';
   private loginUserURL = 'http://localhost:3000/api/login';
@@ -23,6 +24,9 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) { }
   getToken() {
     return this.token;
+  }
+  getUsername() {
+    return this.username;
   }
 
   getIsAuth() {
@@ -49,14 +53,17 @@ export class AuthService {
 
   // -------------------login-----------------
   loginUser(email: string, password: string) {
-    this.http.post<{ token: string }>(this.loginUserURL, { email: email, password: password })
+    this.http.post<{ token: string, username: string }>(this.loginUserURL, { email: email, password: password })
     .subscribe(response => {
       const token = response.token;
+      const username = response.username;
       this.token = token;
+      this.username = username;
+
       if (token) {
         this.isAuthenticated = true;
         this.authStatusListener.next(true);
-        this.saveAuthData(token, email);
+        this.saveAuthData(token, username);
         this.router.navigate(['/']);
       }
     }, err => {
@@ -74,6 +81,7 @@ export class AuthService {
 
   logout() {
     this.token = null;
+    this.username = null;
     this.isAuthenticated = false;
     this.authStatusListener.next(false);
     this.clearAuthData();
@@ -83,20 +91,34 @@ export class AuthService {
 
   private saveAuthData(token: string, username: string) {
     localStorage.setItem('token', token);
-    sessionStorage.setItem('username', username);
+    localStorage.setItem('username', username);
   }
 
   private clearAuthData() {
     localStorage.removeItem('token');
+    localStorage.removeItem('username');
   }
 
   private getAuthData() {
     const token = localStorage.getItem('token');
+    const username = localStorage.getItem('username');
 
-    if (!token ) {
+    if (!token || !username) {
       return;
     }
-    return { token: token }
+    return { token: token, username: username };
+  }
+
+  autoAuth() {
+    const authData = this.getAuthData();
+    if (!authData) {
+      return;
+    }
+    this.token = authData.token;
+    this.username = authData.username;
+    this.isAuthenticated = true;
+    this.authStatusListener.next(true);
+
   }
 
 

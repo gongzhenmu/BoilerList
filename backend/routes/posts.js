@@ -19,6 +19,16 @@ router.post("", checkAuth,(req, res, next) => {
   });
 });
 
+//get posts from DB
+router.get('',checkAuth,(req, res, next) => {
+  Post.find().then(documents => {
+    res.status(200).json({
+      message: 'post fetched',
+      posts: documents
+    });
+  });
+});
+
 //update post to DB
 router.put("/:id",(req, res, next) => {
   const post = new Post({
@@ -28,22 +38,11 @@ router.put("/:id",(req, res, next) => {
     price: req.body.price,
     owner: req.body.owner
   });
-  post.updateOne({_id: req.params.id} , post).then(updatedPost => {
+  Post.updateOne({_id: req.params.id} , post).then(updatedPost => {
     console.log(updatedPost);
     res.status(201).json({
       message: "Post updated successfully",
       postId: updatedPost._id
-    });
-  });
-});
-
-
-//get posts from DB
-router.get('',checkAuth,(req, res, next) => {
-  Post.find().then(documents => {
-    res.status(200).json({
-      message: 'post fetched',
-      posts: documents
     });
   });
 });

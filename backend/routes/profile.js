@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const userM = require('../models/user');
-const postM = require('../models/post');
+const Post = require('../models/post');
 const favM = require('../models/favorite');
 const checkAuth = require('../middleware/checkAuth');
 
@@ -38,7 +38,7 @@ const checkAuth = require('../middleware/checkAuth');
 router.get('', checkAuth, (req, res, next) =>{
   const current_user = req.body;
   console.log("getting my posts in profile for user: %s", req.query.username);
-  postM.find({owner: req.query.username}).then(documents => {
+  Post.find({owner: req.query.username}).then(documents => {
     res.status(200).json({
       message: 'profile: post fetched',
       posts: documents
@@ -46,7 +46,13 @@ router.get('', checkAuth, (req, res, next) =>{
   });
 });
 
-
+//delete post
+router.delete("/delete/:id", checkAuth,(req, res, next) => {
+  Post.deleteOne({ _id: req.params.id }).then(result => {
+    console.log(result);
+    res.status(200).json({ message: "Post deleted!" });
+  });
+});
 
 
 

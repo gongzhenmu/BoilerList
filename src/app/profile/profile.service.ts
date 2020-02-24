@@ -1,6 +1,6 @@
 import { Injectable, ɵangular_packages_core_core_bm } from '@angular/core';
 import { Subject } from 'rxjs';
-import {  HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Post } from '../posts/post.model';
 import { map } from 'rxjs/operators';
 
@@ -38,6 +38,15 @@ export class ProfileService{
 
   getMyPostsUpdateListener(){
     return this.postsUpdated.asObservable();
+  }
+
+  deletePost(postId: string) {
+    this.http.delete(this.posturl + '/delete/' + postId)
+      .subscribe(() => {
+        const updatedPosts = this.myPosts.filter(post => post.id !== postId);
+        this.myPosts = updatedPosts;
+        this.postsUpdated.next([...this.myPosts]);
+      });
   }
 
 }

@@ -9,8 +9,8 @@ import { ProfileService } from './profile.service';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit,  OnDestroy {
-  username = 'dummy_username';
-  email = 'dummy_email@cc.cc';
+  username = localStorage.getItem('username');
+  email = localStorage.getItem('email');
   posts: Post[];
   private postsSub: Subscription;
 
@@ -26,5 +26,9 @@ export class ProfileComponent implements OnInit,  OnDestroy {
 
   ngOnDestroy(){
     this.postsSub.unsubscribe();
+  }
+
+  onDelete(postId: string){
+    this.profileService.deletePost(postId);
   }
 }

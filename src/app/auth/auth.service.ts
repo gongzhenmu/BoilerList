@@ -63,7 +63,7 @@ export class AuthService {
       if (token) {
         this.isAuthenticated = true;
         this.authStatusListener.next(true);
-        this.saveAuthData(token, username);
+        this.saveAuthData(token, username, email);
         this.router.navigate(['/']);
       }
     }, err => {
@@ -89,9 +89,10 @@ export class AuthService {
   }
 
 
-  private saveAuthData(token: string, username: string) {
+  private saveAuthData(token: string, username: string, email: string) {
     localStorage.setItem('token', token);
     localStorage.setItem('username', username);
+    localStorage.setItem('email', email);
   }
 
   private clearAuthData() {

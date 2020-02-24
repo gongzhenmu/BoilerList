@@ -44,10 +44,10 @@ export class PostCreateComponent implements OnInit {
         return;
       }
       if (this.mode === 'create') {
-        this.postsService.addPost(form.value.title, form.value.content, form.value.price, sessionStorage.getItem('username'));
+        this.postsService.addPost(form.value.title, form.value.content, form.value.price, localStorage.getItem('username'));
       } else {
         this.postsService.updatePost(this.postId, form.value.title,
-          form.value.content, form.value.price, sessionStorage.getItem('username'));
+          form.value.content, form.value.price, localStorage.getItem('username'));
       }
       form.resetForm();
     }

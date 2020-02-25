@@ -38,8 +38,8 @@ export class ProfileService{
     });
   }
 
-  getMyProfile() {
-    const httpParams = new HttpParams().set('username', localStorage.getItem('username'));
+  getMyProfile(username) {
+    const httpParams = new HttpParams().set('username', username);
     this.http.get<{
       user: any;
       message: string; posts: any}>(this.posturl, {params: httpParams})

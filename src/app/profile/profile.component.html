@@ -1,27 +1,51 @@
-<p>profile works!</p>
-
-<div>
-  <p>User: {{ profile.username }}</p>
-  <hr>
-  <p>email: {{ profile.email }}</p>
+<div id="profile">
+  <br>
+  <br>
+  <!-- <div class="topButtons" *ngIf="(this.uid$ | async) != this.authModule.auth.currentUser.uid">
+      <button class="btn btn-posts btn-primary col" (click)="Posts();">Posts</button>
+      <br>
+    </div> -->
+  <br>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-4 col-md-6 col-sm-8 col-10">
+        <div class="card">
+          <div class="card-body">
+            <button *ngIf= "currentUserPage" type="button" routerLink="/profileEdit" aria-label="Edit profile" class="btn btn-outline-primary"
+              style="float: right;">Edit</button>
+            <br>
+            <div>
+              <p class="card-username">User: {{ profile.username }}
+                <br>
+              </p>
+              <p class="card-email">Email: {{ profile.email }}
+                <br>
+              </p>
+              <hr>
+            </div>
+            <span class="col-sm-1"></span>
+            <div>
+              <button *ngIf= "currentUserPage" class="btn btn-outline-primary" type="button" (click)="filePicker.click()">Upload your
+                avatar</button>
+              <input type="file" accept="image/png, image/jpeg" #filePicker (change)="onImagePicked($event)">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
-
-<mat-accordion multi="true" *ngIf="posts.length > 0">
+<br>
+<mat-accordion multi="true" *ngIf="posts.length > 0 && currentUserPage">
   <mat-expansion-panel *ngFor="let post of posts">
-      <mat-expansion-panel-header>
-        {{ post.title}}
-      </mat-expansion-panel-header>
-      Price: ${{ post.price}}<br>
-      Description: {{ post.content}}<br>
-      <mat-action-row>
-        <a mat-button color="primary" [routerLink]="['post-edit', post.id]">EDIT</a>
-        <button mat-button color="warn" (click)="onDelete(post.id)">Delete</button>
-      </mat-action-row>
-  </mat-expansion-panel >
+    <mat-expansion-panel-header>
+      {{ post.title}}
+    </mat-expansion-panel-header>
+    Price: ${{ post.price}}<br>
+    Description: {{ post.content}}<br>
+    <mat-action-row>
+      <a mat-button color="primary" [routerLink]="['post-edit', post.id]">EDIT</a>
+      <button mat-button color="warn" (click)="onDelete(post.id)">Delete</button>
+    </mat-action-row>
+  </mat-expansion-panel>
 </mat-accordion>
-
-<div>
-  <button mat-stroked-button type="button" (click)="filePicker.click()">Upload your avatar</button>
-  <input type="file" accept="image/png, image/jpeg" #filePicker (change)="onImagePicked($event)">
-</div>

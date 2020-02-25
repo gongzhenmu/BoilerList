@@ -17,6 +17,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { MatSliderModule } from '@angular/material/slider';
 import { AuthInterceptor } from './auth/auth-interceptor';
 import { AuthGuard } from './auth/auth.guard';
+import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 
 const appRoutes: Routes = [
   { path: 'create-account', component: CreateAccountComponent  },
@@ -25,6 +26,8 @@ const appRoutes: Routes = [
   { path: '',  component: PostListComponent, canActivate: [AuthGuard] },
   { path: 'login',      component: LoginComponent },
   { path: 'profile',      component: ProfileComponent , canActivate: [AuthGuard]},
+  { path: 'profile/:username', component: ProfileComponent, canActivate: [AuthGuard]},
+  { path: 'profileEdit',      component: ProfileEditComponent , canActivate: [AuthGuard]},
   { path: '**', component: PageNotFoundComponent }
 ];
 
@@ -37,7 +40,8 @@ const appRoutes: Routes = [
     CreateAccountComponent,
     PageNotFoundComponent,
     LoginComponent,
-    ProfileComponent
+    ProfileComponent,
+    ProfileEditComponent
   ],
   imports: [
     BrowserModule,

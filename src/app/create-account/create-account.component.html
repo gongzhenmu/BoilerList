@@ -1,54 +1,56 @@
-<div class="container-login100">
-  <div class="wrap-login100">
+<div class="col-span-3 container-login100">
+    <div class="wrap-login100">
+        <form class="login100-form validate-form">
+            <br>
+            <br>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="card col-lg-6 col">
+                        <div class="card-header">
+                            <h3>Sign up for BoilerList!</h3>
+                        </div>
+                        <br>
+                        <div class="form-group ">
+                            <label>Email Address</label>
+                            <input name="email" class="form-control" type="text" required email
+                                [(ngModel)]="registerUserData.email" #em="ngModel">
+                            <div *ngIf="em.invalid && (em.dirty || em.touched)" class="alert alert-danger"
+                                required(ngModelChange)="checkPurdueEmail()">
+                                <div *ngIf="em.errors.required">Email Address is required.</div>
+                                <div *ngIf="em.errors.email">Please enter a valid email address</div>
+                            </div>
+                            <br>
+                            <label>Password</label>
+                            <input name="password" class="form-control" type="password" required minlength="6"
+                                maxlength="30" [(ngModel)]="registerUserData.password" #passwd="ngModel">
+                            <div *ngIf="passwd.invalid && (passwd.dirty || passwd.touched)" class="alert alert-danger">
+                                <div *ngIf="passwd.errors.required">Password is required.</div>
+                                <div *ngIf="passwd.errors.minlength">Password must be at least 6 characters long.</div>
+                                <div *ngIf="passwd.errors.maxlength">Password must not exceeds 30 characters long</div>
+                            </div>
+                            <br>
+                            <label>Username</label>
+                            <input name="username" class="form-control" type="text" required minlength="2"
+                                maxlength="30" pattern="[a-zA-Z0-9 ]*" [(ngModel)]="registerUserData.username"
+                                #name="ngModel">
+                            <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+                                <div *ngIf="name.errors.required">Username is required.</div>
+                                <div *ngIf="name.errors.minlength">Name must be at least 2 characters long.</div>
+                                <div *ngIf="name.errors.maxlength">Name must not exceeds 30 characters long</div>
+                                <div *ngIf="name.errors.pattern">Name must be composed of pure letters and numbers</div>
+                            </div>
 
-      <form class="login100-form validate-form">
-        <span class="login100-form-title p-b-43">
-
-        </span>
-
-
-
-
-
-          <label>Email Address</label>
-          <input name="email" class="form-control" type="text" required email
-                 [(ngModel)]="registerUserData.email" #em="ngModel">
-
-          <div *ngIf="em.invalid && (em.dirty || em.touched)" class="alert alert-danger">
-              <div *ngIf="em.errors.required">Email Address is required.</div>
-              <div *ngIf="em.errors.email">Please enter a valid email address</div>
-          </div>
-
-          <label>Password</label>
-          <input name="password" class="form-control" type="password" required minlength="6" maxlength="30"
-                 [(ngModel)]="registerUserData.password" #passwd="ngModel">
-
-          <div *ngIf="passwd.invalid && (passwd.dirty || passwd.touched)" class="alert alert-danger">
-              <div *ngIf="passwd.errors.required">Password is required.</div>
-              <div *ngIf="passwd.errors.minlength">Password must be at least 6 characters long.</div>
-              <div *ngIf="passwd.errors.maxlength">Password must not exceeds 30 characters long</div>
-          </div>
-
-          <label>Username</label>
-          <input name="username" class="form-control" type="text" required minlength="2" maxlength="30"
-                 pattern="[a-zA-Z0-9 ]*" [(ngModel)]="registerUserData.username" #name="ngModel">
-
-          <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
-              <div *ngIf="name.errors.required">User Name is required.</div>
-              <div *ngIf="name.errors.minlength">Name must be at least 2 characters long.</div>
-              <div *ngIf="name.errors.maxlength">Name must not exceeds 30 characters long</div>
-              <div *ngIf="name.errors.pattern">Name must be composed of pure letters and numbers</div>
-          </div>
-
-
-
-
-          <div class="text-center p-t-46 p-b-20">
-              <button (click)="onSubmit()" type="button" class="login100-form-btn">
-                  Register
-              </button>
-          </div>
-      </form>
-
-  </div>
+                            <br>
+                            <button (click)="onSubmit()" type="button" class="btn btn-primary">
+                                    Register
+                                </button>
+                            <br><br>
+                            Already have an account?
+                            <a class = "text-theme link" routerLink="/login" style="text-decoration: underline;" aria-label="login link">login</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>

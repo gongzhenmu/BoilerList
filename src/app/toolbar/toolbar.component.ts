@@ -1,27 +1,24 @@
-import { Component,  OnDestroy , OnInit , Renderer2, Inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, Renderer2, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Subscription } from 'rxjs';
-import {AuthService} from '../auth/auth.service';
+import { AuthService } from '../auth/auth.service';
 
 
 @Component({
   selector: 'app-toolbar',
-  templateUrl: './toolbar.component.html'
-
+  templateUrl: './toolbar.component.html',
+  styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent implements OnInit, OnDestroy {
 
   isAuth = false;
   private authListenerSubs: Subscription;
 
-
-  currentTheme: string = 'minty';
-  title = 'Twister';
+  currentTheme: string = 'bright';
+  title = 'BoilerList';
   search: string;
 
-  constructor(private authService: AuthService,  private renderer: Renderer2, @Inject(DOCUMENT) private document) {}
-
-
+  constructor(private authService: AuthService, private renderer: Renderer2, @Inject(DOCUMENT) private document) { }
 
   ngOnInit() {
     const cacheTheme = localStorage.getItem('currentTheme');
@@ -50,9 +47,5 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     localStorage.setItem('currentTheme', this.currentTheme);
     this.renderer.addClass(document.body, 'theme-' + this.currentTheme);
     this.document.getElementById('theme').href = '/assets/theme/bootstrap.' + type + '.css';
- }
-
-
-
-
+  }
 }

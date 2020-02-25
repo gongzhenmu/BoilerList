@@ -35,14 +35,29 @@ $theme-map: null;
   @include themify($themes) {
       // custom theme to your needs. Add here
       @if themed('name') == 'bright' {
-
+        .card {
+          background-color: rgba(253, 253, 253, 0.7) !important;
+          border-radius: 6px;
+        }
+        .card-header{
+          background-color: rgba(253, 253, 253, 0.1) !important;
+          border-radius: 6px;
+        }
       }
-
       @if themed('name') == 'dark' {
-
+        
+        .card {
+          background-color: rgba(15, 15, 15, 0.5) !important;
+          border-radius: 6px;
+        }
+        .card-header{
+          background-color: rgba(15, 15, 15, 0.5) !important;
+          border-radius: 6px;
+        }
       }
   }
 }
+ // Below will effect all themes
 .navbar{
     padding:0.5rem 1rem !important;
 }
@@ -50,4 +65,22 @@ $theme-map: null;
     color:#fff !important;
 }
 html, body { height: 100%; }
+
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.btn{
+  border-radius: 6px;
+}
+.container{
+  height: 100%;
+  align-content: center;
+}
+.card-header{
+  text-size-adjust: auto !important;
+  text-align: center;
+}
+.card{
+  height: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+}

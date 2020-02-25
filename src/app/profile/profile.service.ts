@@ -2,6 +2,7 @@ import { Injectable, ɵangular_packages_core_core_bm } from '@angular/core';
 import { Subject } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Post } from '../posts/post.model';
+import { Profile } from '../profile/profile.model';
 import { map } from 'rxjs/operators';
 
 
@@ -9,8 +10,9 @@ import { map } from 'rxjs/operators';
 export class ProfileService{
 
   private posts: Post[];
+  private profile: Profile;
   private postsUpdated  = new Subject<Post[]>();
-
+  private profileUpdated  = new Subject<Profile>();
   private posturl = 'http://localhost:3000/api/profile';
 
   constructor(private http: HttpClient){};
@@ -36,8 +38,26 @@ export class ProfileService{
     });
   }
 
+  getMyProfile() {
+    const httpParams = new HttpParams().set('username', localStorage.getItem('username'));
+    this.http.get<{
+      user: any;
+      message: string; posts: any}>(this.posturl, {params: httpParams})
+      .pipe(map((postData) => {
+        return postData.user;
+      }))
+      .subscribe(userProfile => {
+        this.profile = userProfile;
+        this.profileUpdated.next(this.profile);
+      });
+  }
+
   getMyPostsUpdateListener(){
     return this.postsUpdated.asObservable();
+  }
+
+  getMyProfileUpdateListener(){
+    return this.profileUpdated.asObservable();
   }
 
   deletePost(postId: string) {
@@ -48,5 +68,4 @@ export class ProfileService{
         this.postsUpdated.next([...this.posts]);
       });
   }
-
 }

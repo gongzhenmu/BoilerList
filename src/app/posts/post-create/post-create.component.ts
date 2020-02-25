@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { NgForm } from '@angular/forms';
+import {FormControl, NgForm, Validators} from '@angular/forms';
 
 import { PostsService } from '../posts.service';
 import {ActivatedRoute} from '@angular/router';
@@ -24,10 +24,17 @@ export class PostCreateComponent implements OnInit {
     price: '',
     owner: ''
   }
+  private price: FormControl;
 
    constructor(public postsService: PostsService, public route: ActivatedRoute) {}
     ngOnInit(): void {
-       this.route.paramMap.subscribe((paramMap) => {
+
+      this.price = new FormControl('', [
+        Validators.required,
+        Validators.pattern('^[0-9]*$'),
+      ]);
+
+      this.route.paramMap.subscribe((paramMap) => {
          if (paramMap.has('postId')) {
           this.mode = 'edit';
           this.postId = paramMap.get('postId');

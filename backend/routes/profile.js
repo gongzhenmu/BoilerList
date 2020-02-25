@@ -20,29 +20,27 @@ const checkAuth = require('../middleware/checkAuth');
 //         return;
 //     }
 
-//     userM.findOne({username: req.body.username},(err, user) => {
-//         if (err) {
-//             console.log('the error is: ', err);
-//             res.status(500).send(err);
-//         }
-//         if (!user) {
-//             res.status(403).send('cannot find the user');
-//         } else {
-//             res.status(201).json(user);
-//         }
-//     })
-// });
-
-
 //get current user's uploaded posts from DB
 router.get('', checkAuth, (req, res, next) =>{
   const current_user = req.body;
   console.log("getting my posts in profile for user: %s", req.query.username);
   Post.find({owner: req.query.username}).then(documents => {
-    res.status(200).json({
-      message: 'profile: post fetched',
-      posts: documents
-    });
+    userM.findOne({username: req.query.username},(err, user) => {
+      if (err) {
+        console.log('the error is: ', err);
+        res.status(500).send(err);
+      }
+      if (!user) {
+        res.status(403).send('cannot find the user');
+      } else {
+        res.status(200).json({
+          message: 'profile: post fetched',
+          posts: documents,
+          user: user
+        });
+      }
+    })
+
   });
 });
 

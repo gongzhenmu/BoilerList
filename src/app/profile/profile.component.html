@@ -1,7 +1,12 @@
 <p>profile works!</p>
-<p>User: {{ username }}</p>
-<hr>
-<p>email: {{ email }}</p>
+
+<div>
+  <p>User: {{ profile.username }}</p>
+  <hr>
+  <p>email: {{ profile.email }}</p>
+</div>
+
+
 <mat-accordion multi="true" *ngIf="posts.length > 0">
   <mat-expansion-panel *ngFor="let post of posts">
       <mat-expansion-panel-header>

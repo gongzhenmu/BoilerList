@@ -6,6 +6,7 @@ import { Profile } from './profile.model';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
+import { NgxImageCompressService} from 'ngx-image-compress';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -18,12 +19,18 @@ export class ProfileComponent implements OnInit,  OnDestroy {
     username: '',
     email: ''
   }
+
   private postsSub: Subscription;
   private profileSub: Subscription;
-  constructor(private route: ActivatedRoute, public profileService: ProfileService) { };
+  constructor(private imageCompress: NgxImageCompressService, private route: ActivatedRoute, public profileService: ProfileService) { };
   public otherUsername;
   public currentUser = localStorage.getItem('username');
   public currentUserPage: Boolean = false;
+
+  imagePreview: string;
+  imageFile: File;
+  imgAfterCompressed: string;
+  compressedFile: File;
 
   ngOnInit() {
     this.route.paramMap.pipe(
@@ -61,8 +68,44 @@ export class ProfileComponent implements OnInit,  OnDestroy {
     this.profileService.deletePost(postId);
   }
 
-  onImagePicked(event: Event){
-    const file = (event.target as HTMLInputElement).files[0];
-    console.log(file);
+  onImagePicked(){
+    this.imageFile = (event.target as HTMLInputElement).files[0];
+    const imageName = this.imageFile.name;
+    console.log(this.imageFile);
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imagePreview = reader.result as string;
+      if(this.imageFile.size/(1024*1024) > 1)
+      {
+        this.imageCompress.compressFile(this.imagePreview, -1, 40, 40)
+        .then(
+          result =>{
+            this.imgAfterCompressed = result;
+            this.imagePreview = result;
+            const imageBlob = this.dataURItoBlob(this.imgAfterCompressed.split(',')[1]);
+            this.compressedFile = new File([imageBlob], imageName, {type: 'image/jpeg'});
+          }
+        )
+      }
+    };
+    reader.readAsDataURL(this.imageFile);
+  }
+
+
+  dataURItoBlob(dataURI){
+    const byteString = window.atob(dataURI);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const int8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+    int8Array[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([int8Array], { type: 'image/jpeg' });
+    return blob;
+  }
+
+
+
+  onImageSubmit(){
+    this.profileService.addAvatar(this.compressedFile, this.profile.username);
   }
 }

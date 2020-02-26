@@ -4,7 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Post } from '../posts/post.model';
 import { Profile } from '../profile/profile.model';
 import { map } from 'rxjs/operators';
-
+import {mimeType } from './mime-type.validator';
 
 @Injectable({providedIn: 'root'})
 export class ProfileService{
@@ -67,5 +67,19 @@ export class ProfileService{
         this.posts = updatedPosts;
         this.postsUpdated.next([...this.posts]);
       });
+  }
+
+  addAvatar(image: File, filename: string){
+    const avatarData = new FormData();
+    avatarData.append("image", image, filename);
+    this.http.post< {message: string; username: string}>(
+      "http://localhost:3000/api/profile/avatar-upload",
+      avatarData
+    )
+    .subscribe(responseData => {
+      (res) => console.log(res);
+      console.log("image uploaded!")
+    })
+
   }
 }

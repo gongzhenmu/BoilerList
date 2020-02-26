@@ -5,7 +5,29 @@ const userM = require('../models/user');
 const Post = require('../models/post');
 const favM = require('../models/favorite');
 const checkAuth = require('../middleware/checkAuth');
+const multer = require("multer");
 
+const MIMIE_TYPE_MAP = {
+  'image/png': 'png',
+  'image/jpeg': 'jpg',
+  'image/jpg': 'jpg'
+}
+
+const avatar_storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const isValid = MIMIE_TYPE_MAP[file.mimetype];
+    let error = new Error("Invalid mime type");
+    if (isValid){
+      error = null;
+    }
+    cb(error, "backend/images");
+  },
+  filename: (req, file, cb) => {
+    const name = file.originalname.toLocaleLowerCase().split(' ').join('-');
+    const ext = MIMIE_TYPE_MAP[file.mimetype];
+    cb(null, name + '-' + Date.now() + '.' + ext);
+  }
+});
 
 // router.post('/getOthers', checkAuth, (req, res) => {
 //     const data = req.body;
@@ -52,8 +74,14 @@ router.delete("/delete/:id", checkAuth,(req, res, next) => {
   });
 });
 
-
-
-
+//store profile avatar
+router.post("/avatar-upload", multer({storage: avatar_storage}).single("image"), (req, res, next) => {
+  const file = req.file;
+  console.log("image %s received", file.filename);
+  if(!file){
+    console.log(" no images");
+  }
+  res.send("image stored");
+});
 
 module.exports = router;

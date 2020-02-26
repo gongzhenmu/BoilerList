@@ -18,6 +18,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { AuthInterceptor } from './auth/auth-interceptor';
 import { AuthGuard } from './auth/auth.guard';
 import { ProfileEditComponent } from './profile-edit/profile-edit.component';
+import { NgxImageCompressService } from 'ngx-image-compress';
 
 const appRoutes: Routes = [
   { path: 'create-account', component: CreateAccountComponent  },
@@ -61,7 +62,7 @@ const appRoutes: Routes = [
     )
   ],
   providers: [
-    AuthGuard,
+    AuthGuard, NgxImageCompressService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

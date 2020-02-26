@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, NgForm, Validators} from '@angular/forms';
 
 import { PostsService } from '../posts.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Post} from '../post.model';
 
 @Component({
@@ -26,7 +26,7 @@ export class PostCreateComponent implements OnInit {
   }
   private price: FormControl;
 
-   constructor(public postsService: PostsService, public route: ActivatedRoute) {}
+   constructor(public postsService: PostsService, public route: ActivatedRoute,private router: Router) {}
     ngOnInit(): void {
 
       this.price = new FormControl('', [
@@ -57,7 +57,8 @@ export class PostCreateComponent implements OnInit {
           form.value.content, form.value.price, localStorage.getItem('username'));
       }
       form.resetForm();
-    }
+      this.router.navigate(['/']);
+    } 
   }
 
 

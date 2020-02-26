@@ -28,9 +28,9 @@ export class CreateAccountComponent implements OnInit {
     onSubmit() {
         console.log('click');
         console.log(this.registerUserData);
-        if (!this.registerUserData.email.endsWith('@purdue.edu'))
-            alert('Please use your purdue email to sign up');
-        else {
+        if (!this.registerUserData.email.endsWith('@purdue.edu')) {
+          alert('Please use your purdue email to sign up');
+        } else {
             this.authService.usernameAvailablility(this.registerUserData.username)
                 .subscribe(() => {
                     this.authService.emailAvailibility(this.registerUserData.email)

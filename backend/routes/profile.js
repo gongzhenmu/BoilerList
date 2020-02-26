@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const utils = require('utility');
 
 const userM = require('../models/user');
 const Post = require('../models/post');
-const favM = require('../models/favorite');
+
 const checkAuth = require('../middleware/checkAuth');
 
 
@@ -51,6 +52,73 @@ router.delete("/delete/:id", checkAuth,(req, res, next) => {
     res.status(200).json({ message: "Post deleted!" });
   });
 });
+
+
+router.post("/verify",checkAuth, (req,res,next) => {
+
+  const userData = req.body;
+  userM.findOne({username: userData.username}, (err, user)=> {
+
+
+    if (err) {
+      console.log('query err occurred');
+      res.status(500).send('query error');
+      return
+   }
+
+   if (utils.md5(userData.password, 'base64') !== user.password) {
+    console.log("password verify failed , username: " + user.username);
+    res.status(401).send('Invalid password entered!');
+   }else{
+    res.status(200).send();
+
+
+   }
+
+  });
+
+});
+
+router.post("/changePassword",checkAuth, (req,res,next) => {
+  const userData = req.body;
+  const encryptedPass = utils.md5(userData.password, 'base64');
+
+
+
+  userM.findOne({username: userData.username}, (err, user)=> {
+
+
+    if (err) {
+      res.status(500).send('server error');
+      return
+    }
+
+   if (encryptedPass !== user.password) {
+    userM.updateOne({username: userData.username}, {password:encryptedPass}, (err) => {
+      if (err) {
+        res.status(500).send('server error');
+        return
+      }
+      res.status(200).send();
+
+    });
+
+   }else{
+    res.status(401).send('Please use another password!');
+   }
+
+  });
+
+
+
+
+
+});
+
+
+
+
+
 
 
 

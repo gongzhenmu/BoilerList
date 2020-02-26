@@ -40,14 +40,38 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   }
   onSubmit() {
     //update the new password
-    this.router.navigate(['/profile']);
+    this.profileService.updatePassword(this.currentUser, this.newPass2)
+    .subscribe(() => {
+        alert("Password Updated");
+        this.router.navigate(['/profile']);
+
+    }, err => {
+      if(err.status === 500) {
+        alert('Server Error!');
+      } else if (err.status === 401){
+        alert('Please use another password!');
+
+      }
+
+    });
+
+
   }
   changePassword() {
     this.changePass = true;
   }
+  // verify if the password is correct
+  passwordVeri() {
+    this.profileService.verifyPassword(this.currentUser, this.password)
+    .subscribe(() => {
+      this.passedVeri = true;
+    }, err => {
+        if (err.status === 500  ){
+          alert('Server Error!');
+        } else if (err.status === 401){
+          alert('Invalid password!');
 
-  passwordVeri(){
-    this.passedVeri = true;
-    // verify if the password is correct
+        }
+    });
   }
 }

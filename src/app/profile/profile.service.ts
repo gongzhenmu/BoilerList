@@ -14,6 +14,8 @@ export class ProfileService{
   private postsUpdated  = new Subject<Post[]>();
   private profileUpdated  = new Subject<Profile>();
   private posturl = 'http://localhost:3000/api/profile';
+  private verifyPass = 'http://localhost:3000/api/profile/verify';
+  private changePass = 'http://localhost:3000/api/profile/changePassword';
 
   constructor(private http: HttpClient){};
 
@@ -67,5 +69,15 @@ export class ProfileService{
         this.posts = updatedPosts;
         this.postsUpdated.next([...this.posts]);
       });
+  }
+
+
+  verifyPassword(username: string, password: string) {
+    return this.http.post<any>(this.verifyPass, {username, password});
+  }
+
+
+  updatePassword(username: string, password: string){
+    return this.http.post<any>(this.changePass, {username, password});
   }
 }

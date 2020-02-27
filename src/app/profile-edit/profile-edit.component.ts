@@ -28,7 +28,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   constructor(public profileService: ProfileService,
     private router: Router,
     public authService: AuthService) { };
-  public currentUser = localStorage.getItem('username');
+  public currentUser = this.authService.getUsername();
   ngOnInit() {
     this.profileService.getMyProfile(this.currentUser);
     this.profileSub = this.profileService.getMyProfileUpdateListener()

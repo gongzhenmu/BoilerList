@@ -107,11 +107,11 @@ router.post("/avatar-upload", multer({storage: avatar_storage}).single("image"),
 router.post("/verify",checkAuth, (req,res,next) => {
 
   const userData = req.body;
-  userM.updateOne({username: userData.username}, (err, user)=> {
+  userM.findOne({username: userData.username}, (err, user)=> {
 
 
     if (err) {
-      console.log('query err occurred');
+      console.log(err);
       res.status(500).send('query error');
       return
    }

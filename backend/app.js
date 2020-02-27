@@ -12,6 +12,8 @@ const cors = require("cors");
 
 const app = express();
 const db = 'mongodb+srv://BoilerListAdmin:cs407project@boilerlist-pfb6u.mongodb.net/node-angular?retryWrites=true&w=majority';
+
+
 mongoose.connect(db, {useNewUrlParser: true, useUnifiedTopology: true})
   .then(() => {
     console.log('Connected to database!');

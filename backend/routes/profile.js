@@ -6,7 +6,29 @@ const userM = require('../models/user');
 const Post = require('../models/post');
 
 const checkAuth = require('../middleware/checkAuth');
+const multer = require("multer");
 
+const MIMIE_TYPE_MAP = {
+  'image/png': 'png',
+  'image/jpeg': 'jpg',
+  'image/jpg': 'jpg'
+}
+
+const avatar_storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const isValid = MIMIE_TYPE_MAP[file.mimetype];
+    let error = new Error("Invalid mime type");
+    if (isValid){
+      error = null;
+    }
+    cb(error, "backend/images/avatar");
+  },
+  filename: (req, file, cb) => {
+    const name = file.originalname.toLocaleLowerCase().split(' ').join('-');
+    const ext = MIMIE_TYPE_MAP[file.mimetype];
+    cb(null, name + '-' + Date.now() + '.' + ext);
+  }
+});
 
 // router.post('/getOthers', checkAuth, (req, res) => {
 //     const data = req.body;
@@ -41,7 +63,6 @@ router.get('', checkAuth, (req, res, next) =>{
         });
       }
     })
-
   });
 });
 
@@ -53,11 +74,40 @@ router.delete("/delete/:id", checkAuth,(req, res, next) => {
   });
 });
 
+//store profile avatar
+router.post("/avatar-upload", multer({storage: avatar_storage}).single("image"), (req, res, next) => {
+  const image_url = req.protocol + "://" + req.get("host");
+  const username = req.body.username;
+  const file = req.file;
+  const imagePath = image_url + "/images/avatar/" + file.filename;
+  if(!file){
+    console.log(" no images");
+  }
+  else{
+    console.log("image %s received", file.filename);
+    userM.updateOne({username: username}, {avatarUrl: imagePath}, (err, user, next) => {
+      if(err){
+        console.log("error happened when updating user's avatar");
+        res.status(500).send("query error");
+      }
+      else{
+          res.status(200).json({
+            message: "avatar stored sucessfully!",
+            imagePath: imagePath
+          });
+      }
+    })
+
+  }
+
+
+});
+
 
 router.post("/verify",checkAuth, (req,res,next) => {
 
   const userData = req.body;
-  userM.findOne({username: userData.username}, (err, user)=> {
+  userM.updateOne({username: userData.username}, (err, user)=> {
 
 
     if (err) {
@@ -114,12 +164,6 @@ router.post("/changePassword",checkAuth, (req,res,next) => {
 
 
 });
-
-
-
-
-
-
 
 
 

@@ -27,8 +27,12 @@
             <div>
               <button *ngIf= "currentUserPage" class="btn btn-outline-primary" type="button" (click)="filePicker.click()">Upload your
                 avatar</button>
-              <input type="file" accept="image/png, image/jpeg" #filePicker (change)="onImagePicked($event)">
+              <input type="file" accept="image/png, image/jpeg" #filePicker (change)="onImagePicked()">
             </div>
+          <div class=" image-preview" *ngIf="imagePreview != '' && imagePreview">
+            <img [src]="imagePreview" >
+          </div>
+          <button type="submit" (click)="onImageSubmit()">Upload</button>
           </div>
         </div>
       </div>
@@ -49,3 +53,6 @@
     </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>
+<div class=" user's avatar">
+  <img [src]="profile.avatarUrl">
+</div>

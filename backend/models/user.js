@@ -8,7 +8,7 @@ const userSchema = mongoose.Schema({
   username: {type: String, required: true, unique: true},
   password: {type: String, required: true},
   token: {type: String},
-  avatarUrl: {type: String, required: false, default: " "}
+  avatarUrl: {type: String, required: false, default: "http://localhost:3000/images/avatar/default.jpg "}
   // phone: {type : String}
   //registerDate: {type: Date},
   //postInformation: {type: Array},

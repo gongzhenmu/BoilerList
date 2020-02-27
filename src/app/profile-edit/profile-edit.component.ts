@@ -22,8 +22,8 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   newPass1 = '';
   newPass2 = '';
   public inputUsername = localStorage.getItem('username');
-  public changePass = true;
-  public passedVeri = true;
+  public changePass = false;
+  public passedVeri = false;
   private profileSub: Subscription;
   constructor(public profileService: ProfileService,
     private router: Router,

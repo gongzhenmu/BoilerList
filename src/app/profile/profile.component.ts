@@ -18,7 +18,8 @@ export class ProfileComponent implements OnInit,  OnDestroy {
   public profile: Profile = {
     username: '',
     email: '',
-    password: ''
+    password: '',
+    avatarUrl: '',
   }
 
   private postsSub: Subscription;
@@ -32,6 +33,7 @@ export class ProfileComponent implements OnInit,  OnDestroy {
   imageFile: File;
   imgAfterCompressed: string;
   compressedFile: File;
+  isCompressed: boolean = false;
 
   ngOnInit() {
     this.route.paramMap.pipe(
@@ -78,6 +80,7 @@ export class ProfileComponent implements OnInit,  OnDestroy {
       this.imagePreview = reader.result as string;
       if(this.imageFile.size/(1024*1024) > 1)
       {
+        this.isCompressed = true;
         this.imageCompress.compressFile(this.imagePreview, -1, 40, 40)
         .then(
           result =>{
@@ -107,6 +110,12 @@ export class ProfileComponent implements OnInit,  OnDestroy {
 
 
   onImageSubmit(){
-    this.profileService.addAvatar(this.compressedFile, this.profile.username);
+    if(this.isCompressed){
+      this.profileService.addAvatar(this.compressedFile, this.profile.username);
+    }
+    else{
+      this.profileService.addAvatar(this.imageFile, this.profile.username);
+    }
+
   }
 }

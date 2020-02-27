@@ -15,7 +15,8 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   public profile: Profile = {
     username: '',
     email: '',
-    password: ''
+    password: '',
+    avatarUrl: ''
   }
   password = '';
   newPass1 = '';
@@ -40,7 +41,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   }
   onSubmit() {
     //update the new password
-    if (this.newPass1 != this.newPass2) 
+    if (this.newPass1 != this.newPass2)
       alert("Two passwords must match!");
     else {
       this.profileService.updatePassword(this.currentUser, this.newPass2)

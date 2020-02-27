@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const utils = require('utility');
 
 const userM = require('../models/user');
 const Post = require('../models/post');
-const favM = require('../models/favorite');
+
 const checkAuth = require('../middleware/checkAuth');
 const multer = require("multer");
 
@@ -62,7 +63,6 @@ router.get('', checkAuth, (req, res, next) =>{
         });
       }
     })
-
   });
 });
 
@@ -76,12 +76,96 @@ router.delete("/delete/:id", checkAuth,(req, res, next) => {
 
 //store profile avatar
 router.post("/avatar-upload", multer({storage: avatar_storage}).single("image"), (req, res, next) => {
+  const image_url = req.protocol + "://" + req.get("host");
+  const username = req.body.username;
   const file = req.file;
-  console.log("image %s received", file.filename);
+  const imagePath = image_url + "/images/avatar/" + file.filename;
   if(!file){
     console.log(" no images");
   }
-  res.send("image stored");
+  else{
+    console.log("image %s received", file.filename);
+    userM.updateOne({username: username}, {avatarUrl: imagePath}, (err, user, next) => {
+      if(err){
+        console.log("error happened when updating user's avatar");
+        res.status(500).send("query error");
+      }
+      else{
+          res.status(200).json({
+            message: "avatar stored sucessfully!",
+            imagePath: imagePath
+          });
+      }
+    })
+
+  }
+
+
 });
+
+
+router.post("/verify",checkAuth, (req,res,next) => {
+
+  const userData = req.body;
+  userM.updateOne({username: userData.username}, (err, user)=> {
+
+
+    if (err) {
+      console.log('query err occurred');
+      res.status(500).send('query error');
+      return
+   }
+
+   if (utils.md5(userData.password, 'base64') !== user.password) {
+    console.log("password verify failed , username: " + user.username);
+    res.status(401).send('Invalid password entered!');
+   }else{
+    res.status(200).send();
+
+
+   }
+
+  });
+
+});
+
+router.post("/changePassword",checkAuth, (req,res,next) => {
+  const userData = req.body;
+  const encryptedPass = utils.md5(userData.password, 'base64');
+
+
+
+  userM.findOne({username: userData.username}, (err, user)=> {
+
+
+    if (err) {
+      res.status(500).send('server error');
+      return
+    }
+
+   if (encryptedPass !== user.password) {
+    userM.updateOne({username: userData.username}, {password:encryptedPass}, (err) => {
+      if (err) {
+        res.status(500).send('server error');
+        return
+      }
+      res.status(200).send();
+
+    });
+
+   }else{
+    res.status(401).send('Please use another password!');
+   }
+
+  });
+
+
+
+
+
+});
+
+
+
 
 module.exports = router;

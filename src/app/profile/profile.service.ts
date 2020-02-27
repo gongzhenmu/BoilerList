@@ -13,14 +13,16 @@ export class ProfileService{
   private profile: Profile;
   private postsUpdated  = new Subject<Post[]>();
   private profileUpdated  = new Subject<Profile>();
-  private posturl = 'http://localhost:3000/api/profile';
+  private profileUrl = 'http://localhost:3000/api/profile';
+  private verifyPass = 'http://localhost:3000/api/profile/verify';
+  private changePass = 'http://localhost:3000/api/profile/changePassword';
 
   constructor(private http: HttpClient){};
 
 
   getMyPosts() {
     const httpParams = new HttpParams().set('username', localStorage.getItem('username'));
-    this.http.get<{message: string; posts: any}>(this.posturl, {params: httpParams})
+    this.http.get<{message: string; posts: any}>(this.profileUrl, {params: httpParams})
     .pipe(map((postData) => {
       return postData.posts.map(post => {
         return {
@@ -42,7 +44,7 @@ export class ProfileService{
     const httpParams = new HttpParams().set('username', username);
     this.http.get<{
       user: any;
-      message: string; posts: any}>(this.posturl, {params: httpParams})
+      message: string; posts: any}>(this.profileUrl, {params: httpParams})
       .pipe(map((postData) => {
         return postData.user;
       }))
@@ -61,7 +63,7 @@ export class ProfileService{
   }
 
   deletePost(postId: string) {
-    this.http.delete(this.posturl + '/delete/' + postId)
+    this.http.delete(this.profileUrl + '/delete/' + postId)
       .subscribe(() => {
         const updatedPosts = this.posts.filter(post => post.id !== postId);
         this.posts = updatedPosts;
@@ -69,17 +71,30 @@ export class ProfileService{
       });
   }
 
-  addAvatar(image: File, filename: string){
+
+  addAvatar(image: File, username: string){
     const avatarData = new FormData();
-    avatarData.append("image", image, filename);
-    this.http.post< {message: string; username: string}>(
+    avatarData.append("image", image, username);
+    avatarData.append("username", username);
+    this.http.post< {message: string; imagePath: string}>(
       "http://localhost:3000/api/profile/avatar-upload",
       avatarData
     )
     .subscribe(responseData => {
+      const imagePath = responseData.imagePath;
       (res) => console.log(res);
       console.log("image uploaded!")
     })
+  }
+
+
+  verifyPassword(username: string, password: string) {
+    return this.http.post<any>(this.verifyPass, {username, password});
+  }
+
+
+  updatePassword(username: string, password: string){
+    return this.http.post<any>(this.changePass, {username, password});
 
   }
 }

@@ -17,7 +17,8 @@ export class ProfileComponent implements OnInit,  OnDestroy {
   posts: Post[] = [];
   public profile: Profile = {
     username: '',
-    email: ''
+    email: '',
+    password: ''
   }
 
   private postsSub: Subscription;

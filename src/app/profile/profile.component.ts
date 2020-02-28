@@ -7,6 +7,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { NgxImageCompressService} from 'ngx-image-compress';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -24,10 +25,13 @@ export class ProfileComponent implements OnInit,  OnDestroy {
 
   private postsSub: Subscription;
   private profileSub: Subscription;
-  constructor(private imageCompress: NgxImageCompressService, private route: ActivatedRoute, public profileService: ProfileService) { };
+  constructor(private imageCompress: NgxImageCompressService, 
+    private router: Router,
+    private route: ActivatedRoute, public profileService: ProfileService) { };
   public otherUsername;
   public currentUser = localStorage.getItem('username');
   public currentUserPage: Boolean = false;
+  public choosedPicture: Boolean = false;
 
   imagePreview: string;
   imageFile: File;
@@ -47,7 +51,6 @@ export class ProfileComponent implements OnInit,  OnDestroy {
       this.otherUsername = this.currentUser;
       this.currentUserPage = true;
     }
-
     this.profileService.getMyPosts();
     this.postsSub = this.profileService.getMyPostsUpdateListener()
       .subscribe((posts: Post[]) => {
@@ -93,6 +96,7 @@ export class ProfileComponent implements OnInit,  OnDestroy {
       }
     };
     reader.readAsDataURL(this.imageFile);
+    this.choosedPicture = true;
   }
 
 
@@ -116,6 +120,6 @@ export class ProfileComponent implements OnInit,  OnDestroy {
     else{
       this.profileService.addAvatar(this.imageFile, this.profile.username);
     }
-
+    window.location.reload();
   }
 }

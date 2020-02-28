@@ -48,7 +48,6 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
         .subscribe(() => {
           alert("Password Updated");
           this.router.navigate(['/profile']);
-
         }, err => {
           if (err.status === 500) {
             alert('Server Error!');
@@ -57,8 +56,6 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
           }
         });
     }
-
-
   }
   changePassword() {
     this.changePass = true;
@@ -73,7 +70,6 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
           alert('Server Error!');
         } else if (err.status === 401) {
           alert('Invalid password!');
-
         }
       });
   }

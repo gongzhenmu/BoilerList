@@ -8,31 +8,36 @@
   <br>
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-lg-4 col-md-6 col-sm-8 col-10">
+      <div class="col-4">
         <div class="card">
-          <div class="card-body">
-            <button *ngIf= "currentUserPage" type="button" routerLink="/profileEdit" aria-label="Edit profile" class="btn btn-outline-primary"
-              style="float: right;">Edit</button>
+          <div class="card-body" style="text-align: center;">
+            <button *ngIf="currentUserPage" type="button" routerLink="/profileEdit" aria-label="Edit profile"
+              class="btn btn-outline-primary" style="float: right;">Edit</button>
             <br>
+            <br>
+            <div class="profile-picture">
+              <img [src]="profile.avatarUrl" alt='profile picture'
+                style="border-radius: 50%; width: 9rem; height: 9rem; " aria-label="profile picture">
+            </div>
+            <br>
+            <hr>
             <div>
-              <p class="card-username">User: {{ profile.username }}
+              <p class="card-username">Username: {{ profile.username }}
                 <br>
               </p>
               <p class="card-email">Email: {{ profile.email }}
                 <br>
               </p>
-              <hr>
             </div>
-            <span class="col-sm-1"></span>
-            <div>
-              <button *ngIf= "currentUserPage" class="btn btn-outline-primary" type="button" (click)="filePicker.click()">Upload your
-                avatar</button>
-              <input type="file" accept="image/png, image/jpeg" #filePicker (change)="onImagePicked()">
+            <button *ngIf="currentUserPage && !choosedPicture" class="btn btn-outline-primary" type="button"
+              (click)="filePicker.click()">
+              Change Your Avatar</button>
+            <input type="file" accept="image/png, image/jpeg" #filePicker (change)="onImagePicked()" style="width: 0em; height: 0em;">
+            <div class=" image-preview" *ngIf="imagePreview != '' && imagePreview" >
+              <img [src]="imagePreview">
             </div>
-          <div class=" image-preview" *ngIf="imagePreview != '' && imagePreview">
-            <img [src]="imagePreview" >
-          </div>
-          <button type="submit" (click)="onImageSubmit()">Upload</button>
+            <button *ngIf="currentUserPage && choosedPicture" class="btn btn-outline-primary" type="submit"
+              (click)="onImageSubmit()">Upload</button>
           </div>
         </div>
       </div>
@@ -53,6 +58,3 @@
     </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>
-<div class=" user's avatar">
-  <img [src]="profile.avatarUrl">
-</div>

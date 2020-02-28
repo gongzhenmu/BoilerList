@@ -99,7 +99,6 @@ export class ProfileComponent implements OnInit,  OnDestroy {
     this.choosedPicture = true;
   }
 
-
   dataURItoBlob(dataURI){
     const byteString = window.atob(dataURI);
     const arrayBuffer = new ArrayBuffer(byteString.length);
@@ -110,8 +109,6 @@ export class ProfileComponent implements OnInit,  OnDestroy {
     const blob = new Blob([int8Array], { type: 'image/jpeg' });
     return blob;
   }
-
-
 
   onImageSubmit(){
     if(this.isCompressed){

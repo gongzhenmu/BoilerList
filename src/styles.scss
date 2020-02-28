@@ -36,7 +36,7 @@ $theme-map: null;
       // custom theme to your needs. Add here
       @if themed('name') == 'bright' {
         .card {
-          background-color: rgba(253, 253, 253, 0.7) !important;
+          background-color: rgba(253, 253, 253, 0.8) !important;
           border-radius: 6px;
         }
         .card-header{
@@ -47,11 +47,11 @@ $theme-map: null;
       @if themed('name') == 'dark' {
         
         .card {
-          background-color: rgba(15, 15, 15, 0.5) !important;
+          background-color: rgba(15, 15, 15, 0.7) !important;
           border-radius: 6px;
         }
         .card-header{
-          background-color: rgba(15, 15, 15, 0.5) !important;
+          background-color: rgba(15, 15, 15, 0.7) !important;
           border-radius: 6px;
         }
       }

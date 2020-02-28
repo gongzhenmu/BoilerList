@@ -8,7 +8,7 @@
   <br>
   <div class="container">
     <div class="d-flex justify-content-center h-100">
-        <div class="card" style="width: 20rem;">
+        <div class="card" style="width: 18rem;">
           <div class="card-body" style="text-align: center;">
             <button *ngIf="currentUserPage" type="button" routerLink="/profileEdit" aria-label="Edit profile"
               class="btn btn-outline-primary" style="float: right;">Edit</button>
@@ -28,7 +28,7 @@
                 <br>
               </p>
             </div>
-            <button *ngIf="currentUserPage && !choosedPicture" class="btn btn-outline-primary" type="button"
+            <!-- <button *ngIf="currentUserPage && !choosedPicture" class="btn btn-outline-primary" type="button"
               (click)="filePicker.click()">
               Change Your Avatar</button>
             <input type="file" accept="image/png, image/jpeg" #filePicker (change)="onImagePicked()" style="width: 0em; height: 0em;">
@@ -38,14 +38,14 @@
             <button *ngIf="currentUserPage && choosedPicture" class="btn btn-outline-primary" type="submit"
               (click)="onImageSubmit()">Upload</button>
               <br *ngIf="currentUserPage">
-              <br *ngIf="currentUserPage">
+              <br *ngIf="currentUserPage"> -->
           </div>
         </div>
       </div>
   </div>
 </div>
 <br>
-<mat-accordion multi="true" *ngIf="posts.length > 0 && currentUserPage">
+<!-- <mat-accordion multi="true" *ngIf="posts.length > 0 && currentUserPage">
   <mat-expansion-panel *ngFor="let post of posts">
     <mat-expansion-panel-header>
       {{ post.title}}
@@ -57,4 +57,4 @@
       <button mat-button color="warn" (click)="onDelete(post.id)">Delete</button>
     </mat-action-row>
   </mat-expansion-panel>
-</mat-accordion>
+</mat-accordion> -->

@@ -1,5 +1,6 @@
-<mat-accordion multi="true" *ngIf="posts.length > 0">
-  <mat-expansion-panel *ngFor="let post of posts">
+
+  <mat-accordion multi="true" *ngIf="posts.length > 0">
+    <mat-expansion-panel *ngFor="let post of posts">
       <mat-expansion-panel-header>
         {{ post.title}}
       </mat-expansion-panel-header>
@@ -9,6 +10,22 @@
       <mat-action-row>
 
       </mat-action-row>
-  </mat-expansion-panel >
-</mat-accordion>
+    </mat-expansion-panel>
+  </mat-accordion>
 
+<!-- <br>
+<div class="container">
+    <div *ngFor='let post of this.posts' class="row post">
+      <div class="card" style=" width: 60rem;">
+        <div class="card-header">
+          &nbsp; &nbsp; <strong>{{ post.title}}</strong>
+        </div>
+        <div class="card-body">
+          <p> Price: ${{ post.price}}</p>
+          <p>Description: {{ post.content}}</p>
+          <p>Posted by: <a href="/profile/{{post.owner}}">{{ post.owner}}</a></p>
+        </div>
+      </div>
+    </div>
+</div>
+<br> -->

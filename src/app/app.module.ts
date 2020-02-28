@@ -24,6 +24,7 @@ const appRoutes: Routes = [
   { path: 'create-account', component: CreateAccountComponent  },
   { path: 'post-create',      component: PostCreateComponent, canActivate: [AuthGuard] },
   { path: 'profile/post-edit/:postId',      component: PostCreateComponent , canActivate: [AuthGuard]},
+  { path: 'profileEdit/post-edit/:postId',      component: PostCreateComponent , canActivate: [AuthGuard]},
   { path: '',  component: PostListComponent, canActivate: [AuthGuard] },
   { path: 'login',      component: LoginComponent },
   { path: 'profile',      component: ProfileComponent , canActivate: [AuthGuard]},

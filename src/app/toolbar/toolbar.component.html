@@ -27,10 +27,6 @@
               routerLinkActive="active">Create Post</a>
           </li>
 
-          <li class="nav-item" *ngIf='isAuth'>
-            <a class="nav-link text-theme" (click)="logout()" >logout</a>
-          </li>
-
            <li class="nav-item dropdown">
             <a class="nav-link text-theme dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Theme
@@ -42,7 +38,13 @@
             </div>
           </li>
 
+          
         </ul>
+        <!-- <li class="nav-item" *ngIf='isAuth'>
+          <a class="nav-link text-theme" (click)="logout()" >logout</a>
+        </li> -->
+        <button *ngIf='isAuth' class="btn btn-sm btn-outline-light" type="submit"
+        (click)="logout()" role="logout">Logout</button>
       </div>
     </nav>
     <router-outlet></router-outlet>

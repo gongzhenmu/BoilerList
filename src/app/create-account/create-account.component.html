@@ -14,11 +14,10 @@
                             <label>Email Address</label>
                             <input name="email" class="form-control" type="text" required email
                                 [(ngModel)]="registerUserData.email" #em="ngModel" pattern="[a-zA-Z0-9.-_]{1,}@purdue.edu">
-                            <div *ngIf="em.invalid && (em.dirty || em.touched)" class="alert alert-danger"
-                                required(ngModelChange)="checkPurdueEmail()">
+                            <div *ngIf="em.invalid && (em.dirty || em.touched)" class="alert alert-danger">
                                 <div *ngIf="em.errors.required">Email Address is required.</div>
                                 <div *ngIf="em.errors.email">Please enter a valid email address!</div>
-                                <div *ngIf="em.errors.pattern">Email Domain must be Purdue!</div>
+                                <div *ngIf="em.errors.pattern && !em.errors.email">Email Domain must be Purdue!</div>
                             </div>
                             <br>
                             <label>Password</label>

@@ -7,9 +7,8 @@
     </div> -->
   <br>
   <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-4">
-        <div class="card">
+    <div class="d-flex justify-content-center h-100">
+        <div class="card" style="width: 20rem;">
           <div class="card-body" style="text-align: center;">
             <button *ngIf="currentUserPage" type="button" routerLink="/profileEdit" aria-label="Edit profile"
               class="btn btn-outline-primary" style="float: right;">Edit</button>
@@ -17,7 +16,7 @@
             <br>
             <div class="profile-picture">
               <img [src]="profile.avatarUrl" alt='profile picture'
-                style="border-radius: 50%; width: 9rem; height: 9rem; " aria-label="profile picture">
+                style="border-radius: 50%; width: 8rem; height: 8rem; " aria-label="profile picture">
             </div>
             <br>
             <hr>
@@ -34,14 +33,15 @@
               Change Your Avatar</button>
             <input type="file" accept="image/png, image/jpeg" #filePicker (change)="onImagePicked()" style="width: 0em; height: 0em;">
             <div class=" image-preview" *ngIf="imagePreview != '' && imagePreview" >
-              <img [src]="imagePreview">
+              <img [src]="imagePreview" aria-label="image preview">
             </div>
             <button *ngIf="currentUserPage && choosedPicture" class="btn btn-outline-primary" type="submit"
               (click)="onImageSubmit()">Upload</button>
+              <br *ngIf="currentUserPage">
+              <br *ngIf="currentUserPage">
           </div>
         </div>
       </div>
-    </div>
   </div>
 </div>
 <br>

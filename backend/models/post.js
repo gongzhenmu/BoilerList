@@ -6,7 +6,8 @@ const postSchema = mongoose.Schema({
   title: { type: String, required: true },
   content: { type: String, required: true},
   price: { type: String, required: true},
-  owner: { type: String, required: false}
+  owner: { type: String, required: false},
+  tags: {type: [String]}
 
   //username: {type: String}
   /*createdDate:{type: Date, required: true},

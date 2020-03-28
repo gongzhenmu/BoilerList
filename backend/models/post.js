@@ -7,10 +7,16 @@ const postSchema = mongoose.Schema({
   content: { type: String, required: true},
   price: { type: String, required: true},
   owner: { type: String, required: false},
+
   tags: {type: [String], required: false},
   category: {type: String, required: false},
   condition: {type: String, required: false},
   //status: {type: String, required: false},
+
+
+  createdTime:{type: Date, default: Date.now},
+  likedBy: {type: String},
+
 
   //username: {type: String}
   /*createdDate:{type: Date, required: true},
@@ -20,7 +26,7 @@ const postSchema = mongoose.Schema({
 
   image: {type: String},
   favourite: {type: String},
-  likedBy: {type: String},
+
   numOfLike: {type: Int16Array},*/
 });
 

@@ -76,7 +76,7 @@ export class PostCreateComponent implements OnInit {
     {value: 'Real Estate', viewValue: 'Real Estate'},
     {value: 'Specialty Services', viewValue: 'Specialty Services'},
     {value: 'Sporting Goods', viewValue: 'Sporting Goods '},
-    {value: 'ports Mem, Cards & Fan Shop', viewValue: 'Sports Mem, Cards & Fan Shop'},
+    {value: 'Sports Mem, Cards & Fan Shop', viewValue: 'Sports Mem, Cards & Fan Shop'},
     {value: 'Stamps', viewValue: 'Stamps'},
     {value: 'Tickets & Experiences', viewValue: 'Tickets & Experiences'},
     {value: 'Toys & Hobbies', viewValue: 'Toys & Hobbies'},

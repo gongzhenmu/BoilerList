@@ -6,7 +6,15 @@ import { AppComponent } from './app.component';
 import { PostCreateComponent } from './posts/post-create/post-create.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
-import { MatInputModule, MatCardModule, MatButtonModule, MatToolbarModule, MatExpansionModule} from '@angular/material';
+import {
+  MatInputModule,
+  MatCardModule,
+  MatButtonModule,
+  MatToolbarModule,
+  MatExpansionModule,
+  MatSelectModule,
+  MatChipsModule, MatIconModule
+} from '@angular/material';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { PostListComponent } from './posts/post-list/post-list.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -19,6 +27,7 @@ import { AuthInterceptor } from './auth/auth-interceptor';
 import { AuthGuard } from './auth/auth.guard';
 import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 import { NgxImageCompressService } from 'ngx-image-compress';
+
 
 const appRoutes: Routes = [
   { path: 'create-account', component: CreateAccountComponent  },
@@ -59,8 +68,11 @@ const appRoutes: Routes = [
     MatSliderModule,
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: true } // <-- debugging purposes only
-    )
+      {enableTracing: true} // <-- debugging purposes only
+    ),
+    MatSelectModule,
+    MatChipsModule,
+    MatIconModule,
   ],
   providers: [
     AuthGuard, NgxImageCompressService,

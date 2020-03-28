@@ -3,6 +3,7 @@ import { Subject } from 'rxjs';
 import {  HttpClient } from '@angular/common/http';
 import { Post } from './post.model';
 import { map } from 'rxjs/operators';
+import {Tag} from '@angular/compiler/src/i18n/serializers/xml_helper';
 
 @Injectable({providedIn: 'root'})
 export class PostsService {
@@ -21,7 +22,10 @@ export class PostsService {
             content: post.content,
             price: post.price,
             owner: post.owner,
-            id: post._id
+            id: post._id,
+            category: post.category,
+            condition: post.condition,
+            tags: post.tags,
           };
         });
       }))
@@ -39,8 +43,11 @@ export class PostsService {
     return {...this.posts.find(p => p.id === id)};
   }
 
-  addPost(title: string, content: string, price: string, owner: string) {
-    const post: Post = { id: null, title: title, content: content, price: price, owner: owner};
+  addPost(title: string, content: string, price: string, owner: string, category: string, condition: string, tags: string[]) {
+    // tslint:disable-next-line:max-line-length
+    const post: Post = { id: null, title: title, content: content, price: price, owner: owner, category: category, condition: condition, tags: tags};
+    console.log('Post created!');
+    console.log(post);
     this.http
       .post<{ message: string, postId: string }>(this.posturl, post)
       .subscribe(resData => {
@@ -51,8 +58,10 @@ export class PostsService {
       });
   }
 
-  updatePost(id: string, title: string, content: string, price: string, owner: string) {
-    const post: Post = { id: id, title: title, content: content, price: price, owner: owner};
+  // tslint:disable-next-line:max-line-length
+  updatePost(id: string, title: string, content: string, price: string, owner: string, category: string, condition: string, tags: string[]) {
+    // tslint:disable-next-line:max-line-length
+    const post: Post = { id: id, title: title, content: content, price: price, owner: owner, category: category, condition: condition, tags: tags};
     this.http.put(this.posturl + '/' + id, post).subscribe(resData => {
       const updatedPosts = [...this.posts];
       const oldPostIndex = updatedPosts.findIndex(p => p.id === post.id);

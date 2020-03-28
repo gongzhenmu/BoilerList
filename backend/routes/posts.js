@@ -9,7 +9,10 @@ router.post("", checkAuth,(req, res, next) => {
     title: req.body.title,
     content: req.body.content,
     price: req.body.price,
-    owner: req.body.owner
+    owner: req.body.owner,
+    tags: req.body.tags,
+    category: req.body.category,
+    condition: req.body.condition,
   });
   post.save().then(createdPost => {
     res.status(201).json({
@@ -36,7 +39,10 @@ router.put("/:id",(req, res, next) => {
     title: req.body.title,
     content: req.body.content,
     price: req.body.price,
-    owner: req.body.owner
+    owner: req.body.owner,
+    tags: req.body.tags,
+    category: req.body.category,
+    condition: req.body.condition,
   });
   Post.updateOne({_id: req.params.id} , post).then(updatedPost => {
     console.log(updatedPost);

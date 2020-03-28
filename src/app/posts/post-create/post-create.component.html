@@ -6,10 +6,11 @@
       type = "text"
       name="title"
       [ngModel]="post.title"
+      #title="ngModel"
       required
       minlength="3"
       placeholder="Title"
-      #title="ngModel">
+      >
       <mat-error *ngIf="title.invalid">Min title length is 3 </mat-error>
     </mat-form-field>
     <mat-form-field>
@@ -23,17 +24,61 @@
       #content="ngModel"></textarea>
       <mat-error *ngIf="content.invalid">Content cannot be empty </mat-error>
     </mat-form-field>
-    <mat-form-field>
+
+    <mat-form-field class="half-width">
+      <mat-label>Category</mat-label>
+      <mat-select
+        [ngModel]="post.category"
+        #category="ngModel"
+        name="category"
+      >
+        <mat-option *ngFor="let category of categories" [value]="category.value">
+          {{category.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="half-width">
       <input matInput
-                type="number"
-                name="price"
-                [ngModel]="post.price"
-                required
-                minlength="1"
-                placeholder="Price"
-                #price="ngModel">
+             type="number"
+             name="price"
+             [ngModel]="post.price"
+             required
+             minlength="1"
+             placeholder="Price"
+             #price="ngModel">
       <mat-error *ngIf="price.invalid">Content cannot be empty or non-numeric</mat-error>
     </mat-form-field>
+
+    <h4>How new is your item for sale?</h4>
+      <mat-slider
+        [ngModel]="post.condition"
+        #condition="ngModel"
+        name="condition"
+        thumbLabel
+        [displayWith]="formatLabel"
+        tickInterval="1"
+        min="0"
+        max="4"></mat-slider><br>
+    <mat-form-field class="example-chip-list">
+      <mat-chip-list
+        #chipList
+        aria-label="Fruit selection"
+
+      >
+        <mat-chip *ngFor="let tag of tags" [selectable]="selectable"
+                  [removable]="removable" (removed)="remove(tag)">
+          {{tag.name}}
+          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+        </mat-chip>
+        <input placeholder="Add upto 3 Tags for Your Item..."
+               [matChipInputFor]="chipList"
+               [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+               [matChipInputAddOnBlur]="addOnBlur"
+               (matChipInputTokenEnd)="add($event)">
+      </mat-chip-list>
+    </mat-form-field>
+
     <button mat-raised-button
     color = "primary" type="submit">Save Post</button>
   </form>

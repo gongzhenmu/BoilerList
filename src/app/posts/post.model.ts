@@ -4,4 +4,9 @@ export interface Post {
   content: string;
   price: string;
   owner: string;
+  category: string;
+  condition: string;
+  // status: string;
+  tags: string[];
 }
+

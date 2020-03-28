@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const checkAuth = require("../middleware/checkAuth");
-const userModel = require("../models/user");
+const userM = require("../models/user");
 
 router.post('/getTags', checkAuth, (req, res)  => {
   console.log("Fetching tags");
-  userModel.findOne({username: res.locals.username}, (err, user) => {
+  userM.findOne({username: res.locals.username}, (err, user) => {
     if (err) {
       console.log(err);
       res.status(500).send("Could not found user");

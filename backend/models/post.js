@@ -11,7 +11,7 @@ const postSchema = mongoose.Schema({
   tags: {type: [String], required: false},
   category: {type: String, required: false},
   condition: {type: String, required: false},
-  //status: {type: String, required: false},
+  status: {type: String, required: false},
 
 
   createdTime:{type: Date, default: Date.now},

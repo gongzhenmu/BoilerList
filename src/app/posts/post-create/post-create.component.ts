@@ -167,11 +167,11 @@ export class PostCreateComponent implements OnInit {
     if (this.mode === 'create') {
       // tslint:disable-next-line:max-line-length
         this.postsService.addPost(form.value.title, form.value.content, form.value.price, localStorage.getItem('username'),
-          form.value.category, this.formatLabel(form.value.condition), postTags);
+          form.value.category, this.formatLabel(form.value.condition), postTags, 'available');
       } else {
         this.postsService.updatePost(this.postId, form.value.title,
           form.value.content, form.value.price, localStorage.getItem('username'),
-          form.value.category, this.formatLabel(form.value.condition), postTags);
+          form.value.category, this.formatLabel(form.value.condition), postTags, 'available');
       }
     form.resetForm();
     this.router.navigate(['/']);

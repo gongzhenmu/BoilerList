@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
 import {mimeType } from './mime-type.validator';
 
 @Injectable({providedIn: 'root'})
-export class ProfileService{
+export class ProfileService {
 
   private posts: Post[];
   private profile: Profile;
@@ -17,7 +17,7 @@ export class ProfileService{
   private verifyPass = 'http://localhost:3000/api/profile/verify';
   private changePass = 'http://localhost:3000/api/profile/changePassword';
 
-  constructor(private http: HttpClient){};
+  constructor(private http: HttpClient) {}
 
 
   getMyPosts() {
@@ -30,7 +30,11 @@ export class ProfileService{
           content: post.content,
           price: post.price,
           owner: post.owner,
-          id: post._id
+          id: post._id,
+          category: post.category,
+          condition: post.condition,
+          tags: post.tags,
+          status: post.status,
         };
       });
     }))
@@ -54,11 +58,11 @@ export class ProfileService{
       });
   }
 
-  getMyPostsUpdateListener(){
+  getMyPostsUpdateListener() {
     return this.postsUpdated.asObservable();
   }
 
-  getMyProfileUpdateListener(){
+  getMyProfileUpdateListener() {
     return this.profileUpdated.asObservable();
   }
 
@@ -71,20 +75,34 @@ export class ProfileService{
       });
   }
 
+  // update post Status
+  updateStatus(post: Post, status: string) {
+    // tslint:disable-next-line:max-line-length
+    const tempPost = post;
+    tempPost.status = status;
+    this.http.put(this.profileUrl + '/update/' + tempPost.id, tempPost).subscribe(resData => {
+      const updatedPosts = [...this.posts];
+      const oldPostIndex = updatedPosts.findIndex(p => p.id === post.id);
+      updatedPosts[oldPostIndex] = post;
+      this.posts = updatedPosts;
+      this.postsUpdated.next([...this.posts]);
+      alert('Post status is updated!');
+    });
+  }
 
-  addAvatar(image: File, username: string){
+  addAvatar(image: File, username: string) {
     const avatarData = new FormData();
-    avatarData.append("image", image, username);
-    avatarData.append("username", username);
+    avatarData.append('image', image, username);
+    avatarData.append('username', username);
     this.http.post< {message: string; imagePath: string}>(
-      "http://localhost:3000/api/profile/avatar-upload",
+      'http://localhost:3000/api/profile/avatar-upload',
       avatarData
     )
     .subscribe(responseData => {
       const imagePath = responseData.imagePath;
       (res) => console.log(res);
-      console.log("image uploaded!")
-    })
+      console.log('image uploaded!');
+    });
   }
 
 
@@ -93,7 +111,7 @@ export class ProfileService{
   }
 
 
-  updatePassword(username: string, password: string){
+  updatePassword(username: string, password: string) {
     return this.http.post<any>(this.changePass, {username, password});
 
   }

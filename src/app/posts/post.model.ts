@@ -8,5 +8,6 @@ export interface Post {
   condition: string;
   // status: string;
   tags: string[];
+  status: string;
 }
 

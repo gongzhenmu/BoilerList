@@ -74,6 +74,29 @@ router.delete("/delete/:id", checkAuth,(req, res, next) => {
   });
 });
 
+//update post to DB
+router.put("/update/:id", checkAuth, (req, res, next) => {
+  const post = new Post({
+    _id: req.body.id,
+    title: req.body.title,
+    content: req.body.content,
+    price: req.body.price,
+    owner: req.body.owner,
+    tags: req.body.tags,
+    category: req.body.category,
+    condition: req.body.condition,
+    status: req.body.status,
+  });
+  Post.updateOne({_id: req.params.id} , post).then(updatedPost => {
+    console.log(updatedPost);
+    res.status(201).json({
+      message: "Post updated successfully",
+      postId: updatedPost._id
+    });
+  });
+});
+
+
 //store profile avatar
 router.post("/avatar-upload", multer({storage: avatar_storage}).single("image"), (req, res, next) => {
   const image_url = req.protocol + "://" + req.get("host");

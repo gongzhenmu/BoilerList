@@ -9,5 +9,6 @@ export interface Post {
   // status: string;
   tags: string[];
   status: string;
+  viewCount: number;
 }
 

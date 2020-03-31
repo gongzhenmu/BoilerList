@@ -1,6 +1,6 @@
 
   <mat-accordion multi="true" *ngIf="posts.length > 0">
-    <mat-expansion-panel *ngFor="let post of posts">
+    <mat-expansion-panel *ngFor="let post of posts" (opened)="incrementViewCount(post)">
       <mat-expansion-panel-header>
         {{ post.title}}
       </mat-expansion-panel-header>
@@ -10,7 +10,8 @@
       Condition: {{ post.condition}}<br>
       Tags: {{ post.tags.join(", ")}}<br>
       Status: {{ post.status}}<br>
-      Owner: <a href="/profile/{{post.owner}}">{{ post.owner}}</a>
+      Owner: <a href="/profile/{{post.owner}}">{{ post.owner}}</a><br>
+      👁{{ post.viewCount}} views<br>
       <mat-action-row>
 
       </mat-action-row>

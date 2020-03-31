@@ -27,6 +27,7 @@ export class PostsService {
             condition: post.condition,
             tags: post.tags,
             status: post.status,
+            viewCount: post.viewCount,
           };
         });
       }))
@@ -44,9 +45,9 @@ export class PostsService {
     return {...this.posts.find(p => p.id === id)};
   }
 
-  addPost(title: string, content: string, price: string, owner: string, category: string, condition: string, tags: string[], status: string) {
+  addPost(title: string, content: string, price: string, owner: string, category: string, condition: string, tags: string[], status: string, viewCount: number) {
     // tslint:disable-next-line:max-line-length
-    const post: Post = { id: null, title: title, content: content, price: price, owner: owner, category: category, condition: condition, tags: tags, status: status};
+    const post: Post = { id: null, title: title, content: content, price: price, owner: owner, category: category, condition: condition, tags: tags, status: status, viewCount: viewCount};
     console.log('Post created!');
     console.log(post);
     this.http
@@ -60,9 +61,9 @@ export class PostsService {
   }
 
   // tslint:disable-next-line:max-line-length
-  updatePost(id: string, title: string, content: string, price: string, owner: string, category: string, condition: string, tags: string[], status: string) {
+  updatePost(id: string, title: string, content: string, price: string, owner: string, category: string, condition: string, tags: string[], status: string, viewCount: number) {
     // tslint:disable-next-line:max-line-length
-    const post: Post = { id: id, title: title, content: content, price: price, owner: owner, category: category, condition: condition, tags: tags, status: status};
+    const post: Post = { id: id, title: title, content: content, price: price, owner: owner, category: category, condition: condition, tags: tags, status: status, viewCount: viewCount};
     this.http.put(this.posturl + '/' + id, post).subscribe(resData => {
       const updatedPosts = [...this.posts];
       const oldPostIndex = updatedPosts.findIndex(p => p.id === post.id);
@@ -79,5 +80,17 @@ export class PostsService {
         this.posts = updatedPosts;
         this.postsUpdated.next([...this.posts]);
       });
+  }
+
+  updateViewCount(post: Post){
+    const tempPost = post;
+    tempPost.viewCount += 1;
+    this.http.put(this.posturl + '/' + tempPost.id, post).subscribe(resData => {
+      const updatedPosts = [...this.posts];
+      const oldPostIndex = updatedPosts.findIndex(p => p.id === post.id);
+      updatedPosts[oldPostIndex] = post;
+      this.posts = updatedPosts;
+      this.postsUpdated.next([...this.posts]);
+    });
   }
 }

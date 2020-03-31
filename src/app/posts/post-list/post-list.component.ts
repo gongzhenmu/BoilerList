@@ -31,4 +31,7 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.postsSub.unsubscribe();
   }
 
+  incrementViewCount(post: Post) {
+      this.postsService.updateViewCount(post);
+  }
 }

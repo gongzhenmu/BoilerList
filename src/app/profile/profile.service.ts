@@ -35,6 +35,7 @@ export class ProfileService {
           condition: post.condition,
           tags: post.tags,
           status: post.status,
+          viewCount: post.viewCount,
         };
       });
     }))

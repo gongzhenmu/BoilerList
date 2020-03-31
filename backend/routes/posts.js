@@ -14,6 +14,7 @@ router.post("", checkAuth,(req, res, next) => {
     category: req.body.category,
     condition: req.body.condition,
     status: req.body.status,
+    viewCount: req.body.viewCount,
   });
   post.save().then(createdPost => {
     res.status(201).json({
@@ -45,6 +46,7 @@ router.put("/:id",(req, res, next) => {
     category: req.body.category,
     condition: req.body.condition,
     status: req.body.status,
+    viewCount: req.body.viewCount,
   });
   Post.updateOne({_id: req.params.id} , post).then(updatedPost => {
     console.log(updatedPost);

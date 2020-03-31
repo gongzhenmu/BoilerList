@@ -108,6 +108,7 @@
       Condition: {{ post.condition}}<br>
       Tags: {{ post.tags.join(", ")}}<br>
       Status: {{ post.status}}<br>
+      View: {{ post.viewCount}}<br>
         <mat-action-row>
             <button mat-button color="primary" (click)="onAvailable(post)">Mark as Available</button>
             <button mat-button color="accent" (click)="onPending(post)">Mark as Pending</button>

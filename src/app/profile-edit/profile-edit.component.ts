@@ -71,6 +71,11 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   onSold(post: Post) {
     this.profileService.updateStatus(post, 'sold');
   }
+
+  onAvailable(post: Post) {
+    this.profileService.updateStatus(post, 'available');
+  }
+
   onSubmit() {
     //update the new password
     if (this.newPass1 != this.newPass2)

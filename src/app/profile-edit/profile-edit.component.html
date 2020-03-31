@@ -109,6 +109,7 @@
       Tags: {{ post.tags.join(", ")}}<br>
       Status: {{ post.status}}<br>
         <mat-action-row>
+            <button mat-button color="primary" (click)="onAvailable(post)">Mark as Available</button>
             <button mat-button color="accent" (click)="onPending(post)">Mark as Pending</button>
             <button mat-button color="warn" (click)="onSold(post)">Mark as Sold</button>
             <a mat-button color="primary" [routerLink]="['post-edit', post.id]">EDIT</a>

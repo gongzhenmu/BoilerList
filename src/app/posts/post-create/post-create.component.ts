@@ -36,6 +36,7 @@ export class PostCreateComponent implements OnInit {
     category: '',
     condition: '',
     tags: [],
+    status: '',
   };
   private price: FormControl;
 

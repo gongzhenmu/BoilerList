@@ -146,4 +146,7 @@ export class ProfileComponent implements OnInit,  OnDestroy {
     }
     window.location.reload();
   }
+  showSoldList(){
+    
+  }
 }

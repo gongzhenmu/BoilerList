@@ -38,6 +38,7 @@ export class PostCreateComponent implements OnInit {
     status: '',
     tags: [],
     viewCount: 0,
+    buyer: ''
   };
   private price: FormControl;
 
@@ -169,11 +170,11 @@ export class PostCreateComponent implements OnInit {
     if (this.mode === 'create') {
       // tslint:disable-next-line:max-line-length
         this.postsService.addPost(form.value.title, form.value.content, form.value.price, localStorage.getItem('username'),
-          form.value.category, this.formatLabel(form.value.condition), postTags, 'available', 0);
+          form.value.category, this.formatLabel(form.value.condition), postTags, 'available', 0, '');
       } else {
         this.postsService.updatePost(this.postId, form.value.title,
           form.value.content, form.value.price, localStorage.getItem('username'),
-          form.value.category, this.formatLabel(form.value.condition), postTags, 'available', this.post.viewCount);
+          form.value.category, this.formatLabel(form.value.condition), postTags, 'available', this.post.viewCount, this.post.buyer);
       }
     form.resetForm();
     this.router.navigate(['/']);

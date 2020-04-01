@@ -14,6 +14,8 @@ export class PostListComponent implements OnInit, OnDestroy {
   posts: Post[] = [];
   private postsSub: Subscription;
   constructor(public postsService: PostsService) {}
+  showList = true;
+  CurrentPost: Post;
 
   ngOnInit() {
     this.postsService.getPosts();
@@ -31,7 +33,10 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.postsSub.unsubscribe();
   }
 
-  incrementViewCount(post: Post) {
-      this.postsService.updateViewCount(post);
+
+  showDetails(post: Post){
+    this.showList = false;
+    this.CurrentPost = post;
+    this.postsService.updateViewCount(post);
   }
 }

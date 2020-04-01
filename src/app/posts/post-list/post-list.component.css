@@ -56,3 +56,10 @@ a:active {
 .album .container .row .col-md-4{
   background-color: rgba(252, 240, 240,0);
 }
+.carousel{
+    margin: auto;
+    width: 34rem;
+}
+.status{
+  margin-top: 0.7rem;
+}

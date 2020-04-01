@@ -90,7 +90,7 @@
             </a>
           </div>
           <!-- the above are the default pictures -->
-  
+
           <h4 class="text-theme">{{CurrentPost.title}}</h4>
           <h5> ${{ CurrentPost.price}} </h5>
           <span *ngFor="let tags of CurrentPost.tags" class="tagsDisplay">
@@ -100,7 +100,7 @@
           Category: {{ CurrentPost.category}}<br>
           Condition: {{ CurrentPost.condition}}<br>
           Status: {{ CurrentPost.status}}<br>
-          
+
           👁{{ CurrentPost.viewCount}} views<br>
           <div class="d-flex justify-content-between align-items-center">
             <button type="button" class='btn btn-outline-success' style="float: left;" aria-label="back"

@@ -82,7 +82,7 @@ export class ProfileService {
     }))
     .subscribe(transformedPosts => {
       this.soldPost = transformedPosts;
-      this.soldUpdated.next([...this.posts]);
+      this.soldUpdated.next([...this.soldPost]);
     });
   }
 

@@ -70,15 +70,18 @@ export class ProfileComponent implements OnInit,  OnDestroy {
     //sold
     this.profileService.getMySoldPosts();
     this.soldSub = this.profileService.getSoldPostUpdateListener()
-      .subscribe((posts: Post[]) => {
-        this.sold  =  posts;
+      .subscribe((sold: Post[]) => {
+        this.sold  =  sold;
+      //   for(var i = 0;i<this.sold.length;i++){
+      //   console.log(this.sold[i].title);
+      // }
       });
 
     //pending
     this.profileService.getMyPendingPosts();
     this.pendingSub = this.profileService.getPendingPostUpdateListener()
-      .subscribe((posts: Post[]) => {
-        this.pending  =  posts;
+      .subscribe((pending: Post[]) => {
+        this.pending  =  pending;
       });
 
     //purchased

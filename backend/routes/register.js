@@ -29,6 +29,8 @@ router.post('/', (req, res, next) => {
   newUser.email = req.body.email;
   newUser.username = req.body.username;
   newUser.password = utility.md5(req.body.password, 'base64');
+  newUser.ratings = 0;
+  newUser.ratingCount = 0;
 
 
   let tempToken = req.body.username;

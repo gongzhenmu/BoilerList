@@ -8,8 +8,11 @@ const userSchema = mongoose.Schema({
   token: {type: String},
   avatarUrl: {type: String, required: false, default: "http://localhost:3000/images/avatar/default.jpg "},
   userPosts:[{type:Schema.ObjectId, ref: 'Post'}],
-  userTags:{type:[String]},
-  userFavorites: [{type: Schema.ObjectId, ref: 'Favorite'}]
+  // userTags:{type:[String]},
+  userFavorites: [{type: Schema.ObjectId, ref: 'Favorite'}],
+  phone: {type: Number},
+  ratings:{type: Number},
+  ratingCount:{type: Number}
 });
 
 module.exports = mongoose.model("User",userSchema,'User');

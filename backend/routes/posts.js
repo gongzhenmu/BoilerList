@@ -49,7 +49,7 @@ router.put("/:id",(req, res, next) => {
     viewCount: req.body.viewCount,
   });
   Post.updateOne({_id: req.params.id} , post).then(updatedPost => {
-    console.log(updatedPost);
+    //console.log(updatedPost);
     res.status(201).json({
       message: "Post updated successfully",
       postId: updatedPost._id

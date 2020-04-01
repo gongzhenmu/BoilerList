@@ -13,6 +13,7 @@ const postSchema = mongoose.Schema({
   condition: {type: String, required: false},
   status: {type: String, required: false},
   viewCount: {type: Number, required: false},
+  buyer:{type: String, required: false, default: ''},
 
   createdTime:{type: Date, default: Date.now},
   likedBy: {type: String},

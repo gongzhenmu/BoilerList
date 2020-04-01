@@ -102,7 +102,7 @@ export class PostCreateComponent implements OnInit {
         return 'OpenBox';
         break;
       case 4:
-        return 'New';
+        return 'Like New';
         break;
       default:
         return 'New';

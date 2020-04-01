@@ -7,7 +7,8 @@ const registerRoutes =  require('./routes/register');
 const loginRoutes = require('./routes/login');
 const profileRoutes = require('./routes/profile');
 const tagsRoutes = require('./routes/tags');
-const findUserRoutes = require('./routes/findUser')
+const findUserRoutes = require('./routes/findUser');
+const lists = require('./routes/lists');
 const path = require("path");
 
 const cors = require("cors");
@@ -53,5 +54,8 @@ app.use('/api/profile', profileRoutes);
 app.use('/api/tags', tagsRoutes);
 //----------------------tags------------------------
 app.use('/api/findUser', findUserRoutes);
+//-----------------------------------------
+app.use('/api/lists',lists);
+
 
 module.exports = app;

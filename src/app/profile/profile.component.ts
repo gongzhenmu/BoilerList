@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 })
 
 export class ProfileComponent implements OnInit,  OnDestroy {
+  showposts: Post[] = [];
   posts: Post[] = [];
   sold: Post[] = [];
   purchased: Post[] = [];
@@ -112,9 +113,9 @@ export class ProfileComponent implements OnInit,  OnDestroy {
     this.goBack();
   }
 
-  onPending(post: Post) {
-    this.profileService.updateStatus(post, 'pending');
-  }
+  // onPending(post: Post) {
+  //   this.profileService.updateStatus(post, 'pending');
+  // }
 
   onSold(post: Post) {
     this.profileService.updateStatus(post, 'sold');
@@ -129,6 +130,7 @@ export class ProfileComponent implements OnInit,  OnDestroy {
   }
   showMyLists(){
     this.MyPosts = true;
+    this.showposts = this.posts;
   }
   goBack(){
     this.MyPosts = true;
@@ -181,6 +183,15 @@ export class ProfileComponent implements OnInit,  OnDestroy {
     window.location.reload();
   }
   showSoldList(){
-    
+    this.MyPosts = true;
+    this.showposts = this.sold;
+  }
+  showPendingList(){
+    this.MyPosts = true;
+    this.showposts = this.pending;
+  }
+  showPurchaseList(){
+    this.MyPosts = true;
+    this.showposts = this.purchased;
   }
 }

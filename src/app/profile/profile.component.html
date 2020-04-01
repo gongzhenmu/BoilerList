@@ -1,11 +1,10 @@
 <div class="nav-scroller bg-white box-shadow">
   <nav class="nav nav-underline">
     <a class="nav-link active" href="javascript:history.go(0)">Profile</a>
-    <a class="nav-link" (click)="showMyLists();" routerLink="/profile">My Posts</a>
-    <a class="nav-link" (click)="showSoldList();" routerLink="/profile">Sold List</a>
-    <a class="nav-link" routerLink="/profile">Purchase List</a>
-    <a class="nav-link" routerLink="/profile">Link</a>
-    <a class="nav-link" routerLink="/profile">Link</a>
+    <a class="nav-link" (click)="showMyLists();" routerLink="/profile">MyPosts</a>
+    <a class="nav-link" (click)="showSoldList();" routerLink="/profile">Sold</a>
+    <a class="nav-link" (click)="showPendingList();"routerLink="/profile">Pending</a>
+    <a class="nav-link" (click)="showPurchaseList();" routerLink="/profile">Purchased</a>
 
   </nav>
 </div>
@@ -48,7 +47,7 @@
 <div class="album py-6" *ngIf="MyPosts && !showList">
   <div class="container">
     <div class="row">
-      <div class="col-md-3" *ngFor="let post of posts">
+      <div class="col-md-3" *ngFor="let post of showposts">
         <div class="card mb-4 box-shadow">
           <img class="card-img" src="assets/bright4.jpg" alt="Card image" height="170">
           <div class="card-body">
@@ -120,7 +119,7 @@
           <button type="button" class='btn btn-outline-success' style="float: left;" aria-label="back"
             (click)="goBack();" style="float: right;">Back</button>
           <button class='btn btn-outline-primary' (click)="onAvailable(CurrentPost)">Mark as Available</button>
-          <button class='btn btn-outline-warning' (click)="onPending(CurrentPost)">Mark as Pending</button>
+          <!-- <button class='btn btn-outline-warning' (click)="onPending(CurrentPost)">Mark as Pending</button> -->
           <button class='btn btn-outline-danger' (click)="onSold(CurrentPost)">Mark as Sold</button>
           <a class='btn btn-outline-info' [routerLink]="['post-edit', CurrentPost.id]">EDIT</a>
           <button class='btn btn-outline-dark' (click)="onDelete(CurrentPost.id)">Delete</button>

@@ -1,5 +1,33 @@
+<div class="album py-6">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3" *ngFor="let post of posts">
+        <div class="card mb-4 box-shadow">
+          <!-- <div class="card-header">
+              
+          </div> -->
+          <img class="card-img" src="assets/bright4.jpg" alt="Card image" height="170">
+          <div class="card-body">
+              <h6 class="text-theme">{{ post.title}}</h6>
+            <h5> ${{ post.price}} </h5>
+            <span *ngFor="let tags of post.tags" class=" tagsDisplay">
+                #{{tags}}
+            </span> <br>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="status">
+                {{post.status}}
+              </div>
+              <small class="text-muted">Owner:<a href="/profile/{{post.owner}}">{{ post.owner}}</a> </small>
+             
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <mat-accordion multi="true" *ngIf="posts.length > 0">
+<!-- <mat-accordion multi="true" *ngIf="posts.length > 0">
     <mat-expansion-panel *ngFor="let post of posts" (opened)="incrementViewCount(post)">
       <mat-expansion-panel-header>
         {{ post.title}}
@@ -13,24 +41,6 @@
       Owner: <a href="/profile/{{post.owner}}">{{ post.owner}}</a><br>
       👁{{ post.viewCount}} views<br>
       <mat-action-row>
-
       </mat-action-row>
     </mat-expansion-panel>
-  </mat-accordion>
-
-<!-- <br>
-<div class="container">
-    <div *ngFor='let post of this.posts' class="row post">
-      <div class="card" style=" width: 60rem;">
-        <div class="card-header">
-          &nbsp; &nbsp; <strong>{{ post.title}}</strong>
-        </div>
-        <div class="card-body">
-          <p> Price: ${{ post.price}}</p>
-          <p>Description: {{ post.content}}</p>
-          <p>Posted by: <a href="/profile/{{post.owner}}">{{ post.owner}}</a></p>
-        </div>
-      </div>
-    </div>
-</div>
-<br> -->
+  </mat-accordion> -->

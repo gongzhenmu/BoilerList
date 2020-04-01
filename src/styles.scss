@@ -43,9 +43,22 @@ $theme-map: null;
           background-color: rgba(253, 253, 253, 0.1) !important;
           border-radius: 6px;
         }
+        .tagsDisplay{
+          background-color: rgb(170, 35, 170);
+          color: #fff;
+          border-radius: 8px; 
+          padding: 4px 4px;
+          border-color: purple;
+        }
       }
       @if themed('name') == 'dark' {
-        
+        .tagsDisplay{
+          background-color: rgb(22, 145, 134);
+          color: #fff;
+          border-radius: 8px; 
+          padding: 4px 4px;
+          border-color: rgb(22, 145, 134);
+        }
         .card {
           background-color: rgba(15, 15, 15, 0.7) !important;
           border-radius: 6px;
@@ -79,6 +92,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   text-size-adjust: auto !important;
   text-align: center;
 }
+
 .card{
   height: auto;
   margin-top: auto;

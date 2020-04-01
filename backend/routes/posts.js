@@ -46,10 +46,11 @@ router.put("/:id",(req, res, next) => {
     category: req.body.category,
     condition: req.body.condition,
     status: req.body.status,
+    buyer:req.body.buyer,
     viewCount: req.body.viewCount,
   });
   Post.updateOne({_id: req.params.id} , post).then(updatedPost => {
-    //console.log(updatedPost);
+    console.log(updatedPost);
     res.status(201).json({
       message: "Post updated successfully",
       postId: updatedPost._id

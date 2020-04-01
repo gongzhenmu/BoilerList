@@ -38,6 +38,9 @@ export class ProfileComponent implements OnInit,  OnDestroy {
   imgAfterCompressed: string;
   compressedFile: File;
   isCompressed: boolean = false;
+  showList = false;
+  MyPosts = false;
+  CurrentPost: Post;
 
   ngOnInit() {
     this.route.paramMap.pipe(
@@ -69,9 +72,33 @@ export class ProfileComponent implements OnInit,  OnDestroy {
     this.postsSub.unsubscribe();
     this.profileSub.unsubscribe();
   }
-
-  onDelete(postId: string){
+  
+  onDelete(postId: string) {
     this.profileService.deletePost(postId);
+    this.goBack();
+  }
+
+  onPending(post: Post) {
+    this.profileService.updateStatus(post, 'pending');
+  }
+
+  onSold(post: Post) {
+    this.profileService.updateStatus(post, 'sold');
+  }
+
+  onAvailable(post: Post) {
+    this.profileService.updateStatus(post, 'available');
+  }
+  showDetails(post: Post){
+    this.showList = true;
+    this.CurrentPost = post;
+  }
+  showMyLists(){
+    this.MyPosts = true;
+  }
+  goBack(){
+    this.MyPosts = true;
+    this.showList = false;
   }
 
   onImagePicked(){

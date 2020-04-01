@@ -58,7 +58,10 @@ a:active {
 }
 .carousel{
     margin: auto;
-    width: 34rem;
+    
+}
+.detailcard{
+  width: 75% !important;
 }
 .status{
   margin-top: 0.7rem;

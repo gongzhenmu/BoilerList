@@ -7,8 +7,8 @@
             <div class="card" style="width: 19rem;">
                 <!-- if change password not enabled -->
                 <div *ngIf="!changePass" style="text-align: center;" class="card-body">
-                    <button class='btn btn-outline-primary' aria-label="back" (click)="editPosts()"
-                        style="float: left;">Edit Posts</button>
+                    <!-- <button class='btn btn-outline-primary' aria-label="back" (click)="editPosts()"
+                        style="float: left;">Edit Posts</button> -->
                     <button class='btn btn-outline-info' routerLink="/profile" aria-label="back"
                         style="float: right;">Back</button>
                     <br>
@@ -97,7 +97,7 @@
     </div>
 </div>
 <br>
-<mat-accordion multi="true" *ngIf="posts.length > 0 && editPost">
+<!-- <mat-accordion multi="true" *ngIf="posts.length > 0 && editPost">
     <mat-expansion-panel *ngFor="let post of posts">
         <mat-expansion-panel-header>
             {{ post.title}}
@@ -118,4 +118,4 @@
             <button mat-button color="secondary" (click)="cancelEditPosts()">Back</button>
         </mat-action-row>
     </mat-expansion-panel>
-</mat-accordion>
+</mat-accordion> -->

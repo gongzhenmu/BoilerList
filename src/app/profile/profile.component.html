@@ -1,60 +1,118 @@
-<div id="profile">
+<div id="profile" *ngIf="!MyPosts">
   <br>
-  <br>
-  <!-- <div class="topButtons" *ngIf="(this.uid$ | async) != this.authModule.auth.currentUser.uid">
-      <button class="btn btn-posts btn-primary col" (click)="Posts();">Posts</button>
-      <br>
-    </div> -->
   <br>
   <div class="container">
     <div class="d-flex justify-content-center h-100">
-        <div class="card" style="width: 18rem;">
-          <div class="card-body" style="text-align: center;">
-            <button *ngIf="currentUserPage" type="button" routerLink="/profileEdit" aria-label="Edit profile"
-              class="btn btn-outline-primary" style="float: right;">Edit</button>
-            <br>
-            <br>
-            <div class="profile-picture">
-              <img [src]="profile.avatarUrl" alt='profile picture'
-                style="border-radius: 50%; width: 8rem; height: 8rem; " aria-label="profile picture">
-            </div>
-            <br>
-            <hr>
-            <div>
-              <p class="card-username">Username: {{ profile.username }}
-                <br>
-              </p>
-              <p class="card-email">Email: {{ profile.email }}
-                <br>
-              </p>
-            </div>
-            <!-- <button *ngIf="currentUserPage && !choosedPicture" class="btn btn-outline-primary" type="button"
-              (click)="filePicker.click()">
-              Change Your Avatar</button>
-            <input type="file" accept="image/png, image/jpeg" #filePicker (change)="onImagePicked()" style="width: 0em; height: 0em;">
-            <div class=" image-preview" *ngIf="imagePreview != '' && imagePreview" >
-              <img [src]="imagePreview" aria-label="image preview">
-            </div>
-            <button *ngIf="currentUserPage && choosedPicture" class="btn btn-outline-primary" type="submit"
-              (click)="onImageSubmit()">Upload</button>
-              <br *ngIf="currentUserPage">
-              <br *ngIf="currentUserPage"> -->
+      <div class="card" style="width: 18rem;">
+        <div class="card-body" style="text-align: center;">
+          <button *ngIf="currentUserPage" type="button" aria-label="Edit profile" class="btn btn-outline-info"
+            (click)="showMyLists();" style="float: left;">MyPosts</button>
+          <button *ngIf="currentUserPage" type="button" routerLink="/profileEdit" aria-label="Edit profile"
+            class="btn btn-outline-primary" style="float: right;">Edit</button>
+          <br>
+          <br>
+          <div class="profile-picture">
+            <img [src]="profile.avatarUrl" alt='profile picture' style="border-radius: 50%; width: 8rem; height: 8rem; "
+              aria-label="profile picture">
+          </div>
+          <br>
+          <hr>
+          <div>
+            <p class="card-username">Username: {{ profile.username }}
+              <br>
+            </p>
+            <p class="card-email">Email: {{ profile.email }}
+              <br>
+            </p>
           </div>
         </div>
       </div>
+    </div>
   </div>
 </div>
 <br>
-<!-- <mat-accordion multi="true" *ngIf="posts.length > 0 && currentUserPage">
-  <mat-expansion-panel *ngFor="let post of posts">
-    <mat-expansion-panel-header>
-      {{ post.title}}
-    </mat-expansion-panel-header>
-    Price: ${{ post.price}}<br>
-    Description: {{ post.content}}<br>
-    <mat-action-row>
-      <a mat-button color="primary" [routerLink]="['post-edit', post.id]">EDIT</a>
-      <button mat-button color="warn" (click)="onDelete(post.id)">Delete</button>
-    </mat-action-row>
-  </mat-expansion-panel>
-</mat-accordion> -->
+<!-- show posts list -->
+<div class="album py-6" *ngIf="MyPosts && !showList">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3" *ngFor="let post of posts">
+        <div class="card mb-4 box-shadow">
+          <img class="card-img" src="assets/bright4.jpg" alt="Card image" height="170">
+          <div class="card-body">
+            <h6 class="text-theme"><a (click)="showDetails(post)"> {{post.title}}</a></h6>
+            <h5> ${{ post.price}} </h5>
+            <span *ngFor="let tags of post.tags" class=" tagsDisplay">
+              #{{tags}}
+            </span> <br>
+            &nbsp;
+            <div class="status">
+              {{post.status}}
+              <button class='btn btn-sm btn-outline-primary' style="float: right;"
+                (click)="showDetails(post)">view</button>
+            </div>
+            <br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- show the showDetails -->
+<div class="container" *ngIf="showList">
+    <div class="d-flex justify-content-center h-100">
+      <div class="card detailcard">
+        <div class="card-body" style="text-align: center;">
+          <!-- using default pictures -->
+          <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="float:center">
+            <ol class="carousel-indicators">
+              <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+              <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+              <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img class="d-block w-100" src="assets/bright4.jpg" alt="First slide">
+              </div>
+              <div class="carousel-item">
+                <img class="d-block w-100" src="assets/bright4.jpg" alt="Second slide">
+              </div>
+              <div class="carousel-item">
+                <img class="d-block w-100" src="assets/bright4.jpg" alt="Third slide">
+              </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+          <!-- the above are the default pictures -->
+  
+          <h4 class="text-theme">{{CurrentPost.title}}</h4>
+          <h5> ${{ CurrentPost.price}} </h5>
+          <span *ngFor="let tags of CurrentPost.tags" class="tagsDisplay">
+            #{{tags}}
+          </span> <br>
+          Description: {{ CurrentPost.content}}<br>
+          Category: {{ CurrentPost.category}}<br>
+          Condition: {{ CurrentPost.condition}}<br>
+          Status: {{ CurrentPost.status}}<br>
+          
+          👁{{ CurrentPost.viewCount}} views<br>
+          <div class="d-flex justify-content-between align-items-center">
+            <button type="button" class='btn btn-outline-success' style="float: left;" aria-label="back"
+              (click)="goBack();" style="float: right;">Back</button>
+              <button class='btn btn-outline-primary'  (click)="onAvailable(CurrentPost)">Mark as Available</button>
+              <button class='btn btn-outline-warning' (click)="onPending(CurrentPost)">Mark as Pending</button>
+              <button class='btn btn-outline-danger' (click)="onSold(CurrentPost)">Mark as Sold</button>
+              <a class='btn btn-outline-info' [routerLink]="['post-edit', CurrentPost.id]">EDIT</a>
+              <button class='btn btn-outline-dark' (click)="onDelete(CurrentPost.id)">Delete</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

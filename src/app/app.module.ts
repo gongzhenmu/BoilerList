@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { PostCreateComponent } from './posts/post-create/post-create.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 import {
   MatInputModule,
   MatCardModule,
@@ -66,6 +68,7 @@ const appRoutes: Routes = [
     MatExpansionModule,
     HttpClientModule,
     MatSliderModule,
+    NgbModule,
     RouterModule.forRoot(
       appRoutes,
       {enableTracing: true} // <-- debugging purposes only

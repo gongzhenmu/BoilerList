@@ -28,23 +28,32 @@
               aria-label="profile picture">
           </div>
           <br>
+          <h5 class="text-theme">{{ profile.username }}</h5>
+          
+          <ng-template #t let-fill="fill">
+              <span class="star" [class.full]="fill === 100">
+                <span class="half" [style.width.%]="fill">&hearts;</span>&hearts;
+              </span>
+            </ng-template>
+            <ngb-rating [(rate)]="displayRaing" [starTemplate]="t" [readonly]="true" [max]="5"></ngb-rating>
+            <small >({{profile.ratingCount}})</small>
           <hr>
           <div>
-            <p class="card-username">Username: {{ profile.username }}
-              <br>
-            </p>
+            
             <p class="card-email">Email: {{ profile.email }}
               <br>
             </p>
             <p class="card-email">Contact Info: {{ profile.contact }}
               <br>
             </p>
+
+              <!-- <pre>Rate: <b>{{displayRaing}}</b></pre>
             <p class="card-email">rating: {{ profile.ratings }}
               <br>
             </p>
-            <p class="card-email">ratingCount: {{ profile.ratingCount }}
+            <p class="card-email">ratingCount:
               <br>
-            </p>
+            </p> -->
 
           </div>
         </div>

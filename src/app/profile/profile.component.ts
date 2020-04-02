@@ -62,6 +62,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   rateTheSeller = false;
   canRateSeller = false;
   rating: number;
+  displayRaing: number;
   ngOnInit() {
     this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
@@ -108,6 +109,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.profileSub = this.profileService.getMyProfileUpdateListener()
       .subscribe((profile: Profile) => {
         this.profile = profile;
+        this.displayRaing = this.profile.ratings/this.profile.ratingCount;
       });
     this.profile.username = this.otherUsername;
     

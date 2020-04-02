@@ -28,6 +28,7 @@ export class PostsService {
             tags: post.tags,
             status: post.status,
             viewCount: post.viewCount,
+            buyer: post.buyer
           };
         });
       }))
@@ -45,9 +46,9 @@ export class PostsService {
     return {...this.posts.find(p => p.id === id)};
   }
 
-  addPost(title: string, content: string, price: string, owner: string, category: string, condition: string, tags: string[], status: string, viewCount: number) {
+  addPost(title: string, content: string, price: string, owner: string, category: string, condition: string, tags: string[], status: string, viewCount: number, buyer: string) {
     // tslint:disable-next-line:max-line-length
-    const post: Post = { id: null, title: title, content: content, price: price, owner: owner, category: category, condition: condition, tags: tags, status: status, viewCount: viewCount};
+    const post: Post = { id: null, title: title, content: content, price: price, owner: owner, category: category, condition: condition, tags: tags, status: status, viewCount: viewCount, buyer: buyer};
     console.log('Post created!');
     console.log(post);
     this.http
@@ -61,9 +62,9 @@ export class PostsService {
   }
 
   // tslint:disable-next-line:max-line-length
-  updatePost(id: string, title: string, content: string, price: string, owner: string, category: string, condition: string, tags: string[], status: string, viewCount: number) {
+  updatePost(id: string, title: string, content: string, price: string, owner: string, category: string, condition: string, tags: string[], status: string, viewCount: number, buyer: string) {
     // tslint:disable-next-line:max-line-length
-    const post: Post = { id: id, title: title, content: content, price: price, owner: owner, category: category, condition: condition, tags: tags, status: status, viewCount: viewCount};
+    const post: Post = { id: id, title: title, content: content, price: price, owner: owner, category: category, condition: condition, tags: tags, status: status, viewCount: viewCount, buyer: buyer};
     this.http.put(this.posturl + '/' + id, post).subscribe(resData => {
       const updatedPosts = [...this.posts];
       const oldPostIndex = updatedPosts.findIndex(p => p.id === post.id);
@@ -92,5 +93,20 @@ export class PostsService {
       this.posts = updatedPosts;
       this.postsUpdated.next([...this.posts]);
     });
+  }
+  updateBuyer(post: Post, username: string){
+    const tempPost = post;
+    tempPost.buyer = username;
+    tempPost.status = 'pending'
+    console.log(tempPost.buyer+"here is update");
+    this.http.put(this.posturl + '/' + tempPost.id, post).subscribe(resData => {
+      const updatedPosts = [...this.posts];
+      const oldPostIndex = updatedPosts.findIndex(p => p.id === post.id);
+      updatedPosts[oldPostIndex] = post;
+      this.posts = updatedPosts;
+      console.log(updatedPosts[oldPostIndex].buyer+"here after update");
+      this.postsUpdated.next([...this.posts]);
+    });
+    
   }
 }

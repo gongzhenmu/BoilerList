@@ -5,20 +5,18 @@
         <div class="card mb-4 box-shadow">
           <img class="card-img" src="assets/bright4.jpg" alt="Card image" height="170">
           <div class="card-body">
-            <h6 class="text-theme" ><a (click)="showDetails(post)"> {{post.title}}</a></h6>
+            <h6 class="text-theme"><a (click)="showDetails(post)"> {{post.title}}</a></h6>
             <h5> ${{ post.price}} </h5>
             <span *ngFor="let tags of post.tags" class=" tagsDisplay">
               #{{tags}}
             </span> <br>
-              <div class="status">
-                {{post.status}}
-                <button class='btn btn-sm btn-outline-primary' style="float: right;"(click)="showDetails(post)">view</button>
-         
-              </div>
-              <br>
-              <!-- <p class="text-muted" style="float: left;">Seller:<a href="/profile/{{post.owner}}">{{ post.owner}}</a>
-              </p> -->
- </div>
+            <div class="status">
+              {{post.status}}
+              <button class='btn btn-sm btn-outline-primary' style="float: right;"
+                (click)="showDetails(post)">view</button>
+            </div>
+            <br>
+          </div>
         </div>
       </div>
     </div>
@@ -27,7 +25,7 @@
 
 <div class="container" *ngIf="!showList">
   <div class="d-flex justify-content-center h-100">
-    <div class="card">
+    <div class="card detailcard">
 
       <div class="card-body" style="text-align: center;">
         <!-- using default pictures -->
@@ -61,6 +59,7 @@
 
         <h4 class="text-theme">{{CurrentPost.title}}</h4>
         <h5> ${{ CurrentPost.price}} </h5>
+        <hr>
         <span *ngFor="let tags of CurrentPost.tags" class="tagsDisplay">
           #{{tags}}
         </span> <br>
@@ -69,11 +68,12 @@
         Condition: {{ CurrentPost.condition}}<br>
         Status: {{ CurrentPost.status}}<br>
         Seller: <a href="/profile/{{CurrentPost.owner}}">{{ CurrentPost.owner}}</a><br>
+        Buyer: {{CurrentPost.buyer}}<br>
         👁{{ CurrentPost.viewCount}} views<br>
         <div class="d-flex justify-content-between align-items-center">
           <button type="button" class='btn btn-outline-info' style="float: left;" aria-label="back"
-          onClick="history.go(0)" style="float: right;">Back</button>
-          <button type="button" class='btn btn-outline-primary' style="float: right;">Purchase</button>
+            onClick="history.go(0)" style="float: right;">Back</button>
+          <button type="button" (click)="purchaseItem(CurrentPost);" class='btn btn-outline-primary' style="float: right;">Purchase</button>
         </div>
       </div>
     </div>

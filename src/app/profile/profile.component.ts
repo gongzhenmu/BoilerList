@@ -15,17 +15,25 @@ import { Router } from '@angular/router';
 })
 
 export class ProfileComponent implements OnInit,  OnDestroy {
+  showposts: Post[] = [];
   posts: Post[] = [];
+  sold: Post[] = [];
+  purchased: Post[] = [];
+  pending: Post[] = [];
   public profile: Profile = {
     username: '',
     email: '',
     password: '',
     avatarUrl: '',
   }
-
+  private soldSub: Subscription;
+  private purchasedSub: Subscription;
+  private pendingSub: Subscription;
   private postsSub: Subscription;
   private profileSub: Subscription;
-  constructor(private imageCompress: NgxImageCompressService, 
+
+
+  constructor(private imageCompress: NgxImageCompressService,
     private router: Router,
     private route: ActivatedRoute, public profileService: ProfileService) { };
   public otherUsername;
@@ -38,6 +46,9 @@ export class ProfileComponent implements OnInit,  OnDestroy {
   imgAfterCompressed: string;
   compressedFile: File;
   isCompressed: boolean = false;
+  showList = false;
+  MyPosts = false;
+  CurrentPost: Post;
 
   ngOnInit() {
     this.route.paramMap.pipe(
@@ -51,12 +62,36 @@ export class ProfileComponent implements OnInit,  OnDestroy {
       this.otherUsername = this.currentUser;
       this.currentUserPage = true;
     }
+    //total
     this.profileService.getMyPosts();
     this.postsSub = this.profileService.getMyPostsUpdateListener()
       .subscribe((posts: Post[]) => {
         this.posts  =  posts;
       });
+    //sold
+    this.profileService.getMySoldPosts();
+    this.soldSub = this.profileService.getSoldPostUpdateListener()
+      .subscribe((sold: Post[]) => {
+        this.sold  =  sold;
+      //   for(var i = 0;i<this.sold.length;i++){
+      //   console.log(this.sold[i].title);
+      // }
+      });
 
+    //pending
+    this.profileService.getMyPendingPosts();
+    this.pendingSub = this.profileService.getPendingPostUpdateListener()
+      .subscribe((pending: Post[]) => {
+        this.pending  =  pending;
+      });
+
+    //purchased
+    this.profileService.getMySoldPosts();
+    this.purchasedSub = this.profileService.getPurchasePostUpdateListener()
+      .subscribe((posts: Post[]) => {
+        this.purchased  =  posts;
+      });
+    //profileInfo
     this.profileService.getMyProfile(this.otherUsername);
     this.profileSub = this.profileService.getMyProfileUpdateListener()
       .subscribe((profile: Profile) => {
@@ -68,10 +103,38 @@ export class ProfileComponent implements OnInit,  OnDestroy {
   ngOnDestroy(){
     this.postsSub.unsubscribe();
     this.profileSub.unsubscribe();
+    this.soldSub.unsubscribe();
+    this.purchasedSub.unsubscribe();
+    this.pendingSub.unsubscribe();
   }
 
-  onDelete(postId: string){
+  onDelete(postId: string) {
     this.profileService.deletePost(postId);
+    this.goBack();
+  }
+
+  // onPending(post: Post) {
+  //   this.profileService.updateStatus(post, 'pending');
+  // }
+
+  onSold(post: Post) {
+    this.profileService.updateStatus(post, 'sold');
+  }
+
+  onAvailable(post: Post) {
+    this.profileService.updateStatus(post, 'available');
+  }
+  showDetails(post: Post){
+    this.showList = true;
+    this.CurrentPost = post;
+  }
+  showMyLists(){
+    this.MyPosts = true;
+    this.showposts = this.posts;
+  }
+  goBack(){
+    this.MyPosts = true;
+    this.showList = false;
   }
 
   onImagePicked(){
@@ -118,5 +181,17 @@ export class ProfileComponent implements OnInit,  OnDestroy {
       this.profileService.addAvatar(this.imageFile, this.profile.username);
     }
     window.location.reload();
+  }
+  showSoldList(){
+    this.MyPosts = true;
+    this.showposts = this.sold;
+  }
+  showPendingList(){
+    this.MyPosts = true;
+    this.showposts = this.pending;
+  }
+  showPurchaseList(){
+    this.MyPosts = true;
+    this.showposts = this.purchased;
   }
 }

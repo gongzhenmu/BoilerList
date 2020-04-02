@@ -6,9 +6,9 @@ export interface Post {
   owner: string;
   category: string;
   condition: string;
-  // status: string;
   tags: string[];
   status: string;
   viewCount: number;
+  buyer: string;
 }
 

@@ -9,6 +9,7 @@ import {Tag} from '@angular/compiler/src/i18n/serializers/xml_helper';
 export class PostsService {
 
   private posts: Post[] = [];
+  private myPost: Post;
   private postsUpdated = new Subject<Post[]>();
 
   private posturl = 'http://localhost:3000/api/posts';
@@ -43,7 +44,24 @@ export class PostsService {
   }
 
   getPost(id: string) {
-    return {...this.posts.find(p => p.id === id)};
+    return this.http.get<{ message: string; posts: any }>(this.posturl)
+      .pipe(map((postData) => {
+        return postData.posts.map(post => {
+          return {
+            title: post.title,
+            content: post.content,
+            price: post.price,
+            owner: post.owner,
+            id: post._id,
+            category: post.category,
+            condition: post.condition,
+            tags: post.tags,
+            status: post.status,
+            viewCount: post.viewCount,
+            buyer: post.buyer
+          };
+        });
+      })).toPromise();
   }
 
   addPost(title: string, content: string, price: string, owner: string, category: string, condition: string, tags: string[], status: string, viewCount: number, buyer: string) {
@@ -107,6 +125,6 @@ export class PostsService {
       console.log(updatedPosts[oldPostIndex].buyer+"here after update");
       this.postsUpdated.next([...this.posts]);
     });
-    
+
   }
 }

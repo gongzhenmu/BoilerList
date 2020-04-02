@@ -39,7 +39,13 @@ export class PostCreateComponent implements OnInit {
     tags: [],
     viewCount: 0,
     buyer: ''
-  };
+  }
+
+  public postGadget: object = {
+    condition: 2,
+    tags: ['123', '321', '888'],
+  }
+
   private price: FormControl;
 
   // Tag Configuration
@@ -87,6 +93,35 @@ export class PostCreateComponent implements OnInit {
     {value: 'Video Games & Consoles', viewValue: 'Video Games & Consoles'}
   ];
 
+  // Construct router and initialize at the beginning
+  constructor(public postsService: PostsService, public route: ActivatedRoute, private router: Router) {}
+
+  ngOnInit(): void {
+    this.route.paramMap.subscribe((paramMap) => {
+      if (paramMap.has('postId')) {
+        console.log('进入post-edit模式!');
+        this.mode = 'edit';
+        this.postId = paramMap.get('postId');
+        console.log('postid: ' + this.postId);
+        this.postsService.getPost(this.postId).then(transformedPosts => {
+          this.post = {...transformedPosts.find(p => p.id === this.postId)};
+          this.postGadget
+          console.log('post长这样子');
+          console.log(this.post);
+          console.log(this.post.title);
+        });
+      } else {
+        this.mode = 'create';
+        this.postId = null;
+      }
+    });
+
+    this.price = new FormControl('', [
+      Validators.required,
+      Validators.pattern('^[0-9]*$'),
+    ]);
+  }
+
   // thumb Label functions
   formatLabel(value: number) {
     switch (value) {
@@ -101,6 +136,28 @@ export class PostCreateComponent implements OnInit {
         break;
       case 3:
         return 'OpenBox';
+        break;
+      case 4:
+        return 'Like New';
+        break;
+      default:
+        return 'New';
+        break;
+    }
+  }
+  formatCondition(value: string) {
+    switch (value) {
+      case 'Broken':
+        return 0;
+        break;
+      case 'Refurbished':
+        return '';
+        break;
+      case 'Used':
+        return '';
+        break;
+      case 'OpenBox':
+        return '';
         break;
       case 4:
         return 'Like New';
@@ -133,27 +190,7 @@ export class PostCreateComponent implements OnInit {
     }
   }
 
-  // Post functions
-  constructor(public postsService: PostsService, public route: ActivatedRoute, private router: Router) {}
-  ngOnInit(): void {
-
-    this.price = new FormControl('', [
-      Validators.required,
-      Validators.pattern('^[0-9]*$'),
-    ]);
-
-    this.route.paramMap.subscribe((paramMap) => {
-      if (paramMap.has('postId')) {
-        this.mode = 'edit';
-        this.postId = paramMap.get('postId');
-        this.post = this.postsService.getPost(this.postId);
-      } else {
-        this.mode = 'create';
-        this.postId = null;
-      }
-    });
-  }
-
+  // Post function
   onSavePost(form: NgForm) {
     console.log('FORM VALUE!!!');
     console.log(form.value);

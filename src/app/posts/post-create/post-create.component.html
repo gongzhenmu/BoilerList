@@ -28,9 +28,8 @@
     <mat-form-field class="half-width">
       <mat-label>Category</mat-label>
       <mat-select
-        [ngModel]="post.category"
-        #category="ngModel"
         name="category"
+        [ngModel]="post.category"
       >
         <mat-option *ngFor="let category of categories" [value]="category.value">
           {{category.viewValue}}
@@ -52,8 +51,7 @@
 
     <h4>How new is your item for sale?</h4>
       <mat-slider
-        [ngModel]="post.condition"
-        #condition="ngModel"
+        [ngModel]="postGadget.condition"
         name="condition"
         thumbLabel
         [displayWith]="formatLabel"

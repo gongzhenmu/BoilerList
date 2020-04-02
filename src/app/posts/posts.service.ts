@@ -32,6 +32,7 @@ export class PostsService {
             buyer: post.buyer,
             imageUrls: post.imageUrls,
             mainImage: post.mainImage
+
           };
         });
       }))
@@ -60,7 +61,10 @@ export class PostsService {
             tags: post.tags,
             status: post.status,
             viewCount: post.viewCount,
-            buyer: post.buyer
+            buyer: post.buyer,
+            imageUrls: post.imageUrls,
+            mainImage: post.mainImage,
+            rated: post.rated
           };
         });
       })).toPromise();
@@ -68,7 +72,7 @@ export class PostsService {
 
   addPost(title: string, content: string, price: string, owner: string, category: string, condition: string, tags: string[], status: string, viewCount: number, buyer: string, imageFiles: File[]) {
     // tslint:disable-next-line:max-line-length
-    const post: Post = { id: null, title: title, content: content, price: price, owner: owner, category: category, condition: condition, tags: tags, status: status, viewCount: viewCount, buyer: buyer, imageUrls: null, mainImage: null};
+    const post: Post = { id: null, title: title, content: content, price: price, owner: owner, category: category, condition: condition, tags: tags, status: status, viewCount: viewCount, buyer: buyer, imageUrls: null, mainImage: null, rated:false};
     const imageData = new FormData();
 
     this.http
@@ -83,7 +87,7 @@ export class PostsService {
         }
         imageData.append('postid', post.id);
         this.http
-        .post<{imageUrls: string[], mainImage: string}>(this.posturl+'/upload-images', imageData)
+        .post<{imageUrls: string[], mainImage: string}>(this.posturl + '/upload-images', imageData)
         .subscribe(resData => {
             post.imageUrls = resData.imageUrls;
             post.mainImage = resData.mainImage;
@@ -102,7 +106,7 @@ export class PostsService {
   // tslint:disable-next-line:max-line-length
   updatePost(id: string, title: string, content: string, price: string, owner: string, category: string, condition: string, tags: string[], status: string, viewCount: number, buyer: string, imageUrls: string[], mainImage: string) {
     // tslint:disable-next-line:max-line-length
-    const post: Post = { id: id, title: title, content: content, price: price, owner: owner, category: category, condition: condition, tags: tags, status: status, viewCount: viewCount, buyer: buyer, imageUrls: imageUrls, mainImage: mainImage};
+    const post: Post = { id: id, title: title, content: content, price: price, owner: owner, category: category, condition: condition, tags: tags, status: status, viewCount: viewCount, buyer: buyer, imageUrls: imageUrls, mainImage: mainImage, rated: false};
     this.http.put(this.posturl + '/' + id, post).subscribe(resData => {
       const updatedPosts = [...this.posts];
       const oldPostIndex = updatedPosts.findIndex(p => p.id === post.id);
@@ -145,4 +149,19 @@ export class PostsService {
     });
 
   }
+
+  setRated(post: Post){
+    const tempPost = post;
+    tempPost.rated = true;
+    this.http.put(this.posturl + '/' + tempPost.id, post).subscribe(resData => {
+      const updatedPosts = [...this.posts];
+      const oldPostIndex = updatedPosts.findIndex(p => p.id === post.id);
+      updatedPosts[oldPostIndex] = post;
+      this.posts = updatedPosts;
+      this.postsUpdated.next([...this.posts]);
+    });
+
+  }
+
+
 }

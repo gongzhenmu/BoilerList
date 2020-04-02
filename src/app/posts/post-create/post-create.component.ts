@@ -42,7 +42,8 @@ export class PostCreateComponent implements OnInit {
     viewCount: 0,
     buyer: '',
     imageUrls: [],
-    mainImage: ''
+    mainImage: '',
+    rated: false
   };
 
 

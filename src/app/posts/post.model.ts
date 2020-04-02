@@ -12,5 +12,6 @@ export interface Post {
   buyer: string;
   imageUrls: string[];
   mainImage: string;
+  rated: boolean;
 }
 

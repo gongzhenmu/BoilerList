@@ -48,6 +48,7 @@ router.post("", checkAuth,(req, res, next) => {
     viewCount: req.body.viewCount,
     imageUrls: null,
     mainImage: " mainImage"
+
   });
   post.save().then(createdPost => {
     res.status(201).json({
@@ -115,6 +116,7 @@ router.put("/:id",(req, res, next) => {
     status: req.body.status,
     buyer:req.body.buyer,
     viewCount: req.body.viewCount,
+    rated:req.body.rated
   });
   Post.updateOne({_id: req.params.id} , post).then(updatedPost => {
     console.log(updatedPost);
@@ -124,6 +126,10 @@ router.put("/:id",(req, res, next) => {
     });
   });
 });
+
+
+
+
 
 router.delete("/:id", checkAuth,(req, res, next) => {
   Post.deleteOne({ _id: req.params.id }).then(result => {

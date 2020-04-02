@@ -20,6 +20,7 @@ const postSchema = mongoose.Schema({
 
   imageUrls: [{type: String}],
   mainImage: {type: String},
+  rated: {type: Boolean, default:false}
 
 
   //username: {type: String}

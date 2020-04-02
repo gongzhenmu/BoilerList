@@ -5,6 +5,7 @@ const checkAuth = require('../middleware/checkAuth');
 
 //add post to DB
 router.post("", checkAuth,(req, res, next) => {
+  console.log("adding posts: " + req.body);
   const post = new Post({
     title: req.body.title,
     content: req.body.content,
@@ -15,6 +16,8 @@ router.post("", checkAuth,(req, res, next) => {
     condition: req.body.condition,
     status: req.body.status,
     viewCount: req.body.viewCount,
+    imageUrls: null,
+    mainImage: " mainImage"
   });
   post.save().then(createdPost => {
     res.status(201).json({
@@ -22,6 +25,11 @@ router.post("", checkAuth,(req, res, next) => {
       postId: createdPost._id
     });
   });
+});
+
+//add post images to DB
+router.post("/upload-images", checkAuth, (req, res, next) => {
+  console.log("adding posts images: " + req.body);
 });
 
 //get posts from DB

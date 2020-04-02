@@ -15,7 +15,7 @@ module.exports = (req, res, next) => {
                 return
             }
             res.locals.username = user.username;
-            console.log('the username is middleware', res.locals.username);
+            //console.log('the username is middleware', res.locals.username);
 
         });
         next();

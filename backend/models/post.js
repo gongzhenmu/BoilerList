@@ -18,6 +18,9 @@ const postSchema = mongoose.Schema({
   createdTime:{type: Date, default: Date.now},
   likedBy: {type: String},
 
+  imageUrls: [{type: String}],
+  mainImage: {type: String},
+
 
   //username: {type: String}
   /*createdDate:{type: Date, required: true},

@@ -115,14 +115,12 @@ export class PostsService {
   updateBuyer(post: Post, username: string){
     const tempPost = post;
     tempPost.buyer = username;
-    tempPost.status = 'pending'
-    console.log(tempPost.buyer+"here is update");
+    tempPost.status = 'pending';
     this.http.put(this.posturl + '/' + tempPost.id, post).subscribe(resData => {
       const updatedPosts = [...this.posts];
       const oldPostIndex = updatedPosts.findIndex(p => p.id === post.id);
       updatedPosts[oldPostIndex] = post;
       this.posts = updatedPosts;
-      console.log(updatedPosts[oldPostIndex].buyer+"here after update");
       this.postsUpdated.next([...this.posts]);
     });
 

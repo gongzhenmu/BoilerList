@@ -59,7 +59,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
   pendingList = false;
   notAvailable = false;
   purchaseUser = false;
-
+  rateTheSeller = false;
+  sellerRating: number;
   ngOnInit() {
     this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
@@ -120,7 +121,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   onDelete(postId: string) {
     this.profileService.deletePost(postId);
-    this.goBack();
+    this.router.navigate(['/profile']);
   }
 
   // onPending(post: Post) {
@@ -129,12 +130,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   onSold(post: Post) {
     this.profileService.updateStatus(post, 'sold');
+    this.router.navigate(['/profile']);
   }
 
   onAvailable(post: Post) {
-    this.profileService.updateStatus(post, 'available');
     this.postsService.updateBuyer(post, 'None');
-    this.goBack();
+    this.profileService.updateStatus(post, 'available');
+    this.router.navigate(['/profile']);
   }
   showDetails(post: Post) {
     this.showList = true;
@@ -161,6 +163,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   goBack() {
     this.MyPosts = true;
     this.showList = false;
+    this.rateTheSeller = false;
   }
 
   onImagePicked() {
@@ -220,5 +223,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
   showPurchaseList() {
     this.MyPosts = true;
     this.showposts = this.purchased;
+  }
+  rateSeller(){
+    this.rateTheSeller = true;
+  }
+  updateRating(){
+    this.profileService.updateRating(this.CurrentPost.owner, this.sellerRating);
+    this.goBack();
   }
 }

@@ -43,9 +43,8 @@ export class PostCreateComponent implements OnInit {
     buyer: ''
   }
 
-  public postGadget: object = {
+  public postGadget: object = { // translate from string to number
     condition: 0,
-    tags: ['123', '321', '888'],
   }
 
   private price: FormControl;
@@ -115,7 +114,14 @@ export class PostCreateComponent implements OnInit {
         console.log('postid: ' + this.postId);
         this.postsService.getPost(this.postId).then(transformedPosts => {
           this.post = {...transformedPosts.find(p => p.id === this.postId)};
+          // @ts-ignore
           this.postGadget.condition = this.formatCondition(this.post.condition);
+          // tslint:disable-next-line:prefer-for-of
+          for (let i = 0; i < this.post.tags.length; i++){
+            this.tags.push({name: this.post.tags[i]});
+          }
+
+          console.log( this.tags);
           console.log('post长这样子');
           console.log(this.post);
           console.log(this.post.title);

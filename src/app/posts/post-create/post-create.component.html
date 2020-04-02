@@ -62,7 +62,6 @@
       <mat-chip-list
         #chipList
         aria-label="Fruit selection"
-
       >
         <mat-chip *ngFor="let tag of tags" [selectable]="selectable"
                   [removable]="removable" (removed)="remove(tag)">

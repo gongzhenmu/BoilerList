@@ -198,7 +198,7 @@ export class ProfileService {
       updatedPosts[oldPostIndex] = post;
       this.posts = updatedPosts;
       this.postsUpdated.next([...this.posts]);
-      alert('Post status is updated!');
+      alert('The post is available again!');
     });
   }
 

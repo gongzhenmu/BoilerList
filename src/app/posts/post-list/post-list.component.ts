@@ -16,6 +16,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   constructor(public postsService: PostsService) {}
   showList = true;
   CurrentPost: Post;
+  itemSold = false;
   public currentUser = localStorage.getItem('username');
 
   ngOnInit() {
@@ -38,10 +39,13 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.showList = false;
     this.CurrentPost = post;
     this.postsService.updateViewCount(post);
+    if(post.status != 'available')
+      this.itemSold = true;
+    else
+      this.itemSold = false;
   }
   purchaseItem(post: Post){
     this.postsService.updateBuyer(post, this.currentUser);
     this.showList = true;
-    console.log(this.currentUser);
   }
 }

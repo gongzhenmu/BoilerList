@@ -31,7 +31,7 @@ export class ProfileService {
   private soldUrl = 'http://localhost:3000/api/lists/sold';
   private purchaseUrl = 'http://localhost:3000/api/lists/purchased';
   private pengdingUrl = 'http://localhost:3000/api/lists/pending';
-  private rateUrl = 'http://localhost:3000/api/profile/rating';
+  private rateUrl = 'http://localhost:3000/api/profile/rate';
   private contactUrl = 'http://localhost:3000/api/profile/contactUpdate';
 
 
@@ -198,7 +198,6 @@ export class ProfileService {
       updatedPosts[oldPostIndex] = post;
       this.posts = updatedPosts;
       this.postsUpdated.next([...this.posts]);
-      alert('The post is available again!');
     });
   }
 

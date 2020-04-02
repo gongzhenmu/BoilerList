@@ -39,7 +39,7 @@
             <p class="card-email">Contact Info: {{ profile.contact }}
               <br>
             </p>
-            <p class="card-email">rating: {{ profile.rating }}
+            <p class="card-email">rating: {{ profile.ratings }}
               <br>
             </p>
             <p class="card-email">ratingCount: {{ profile.ratingCount }}
@@ -150,7 +150,7 @@
           <button *ngIf="!purchaseUser" class='btn btn-outline-primary' (click)="onAvailable(CurrentPost)">Cancel
             Sell</button>
           <!-- <button class='btn btn-outline-warning' (click)="onPending(CurrentPost)">Mark as Pending</button> -->
-          <button class='btn btn-outline-danger' (click)="onSold(CurrentPost)"> Complete Transaction</button>
+          <button class='btn btn-outline-danger' (click)="onSold(CurrentPost)"> Complete</button>
         </div>
       </div>
     </div>

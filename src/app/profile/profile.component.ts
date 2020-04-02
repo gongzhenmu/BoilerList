@@ -239,7 +239,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.rateTheSeller = true;
   }
   updateRating() {
-    this.profileService.updateRating(this.CurrentPost.owner, this.sellerRating);
-    this.goBack();
+    this.profileService.updateRating(this.CurrentPost.owner, this.sellerRating).subscribe(() => {
+      alert("Thank you");
+      this.goBack();
+    });
+
   }
+
 }

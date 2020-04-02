@@ -85,6 +85,7 @@ router.put("/update/:id", checkAuth, (req, res, next) => {
     tags: req.body.tags,
     category: req.body.category,
     condition: req.body.condition,
+    buyer:req.body.buyer,
     status: req.body.status,
   });
   Post.updateOne({_id: req.params.id} , post).then(updatedPost => {
@@ -189,20 +190,23 @@ router.post("/changePassword",checkAuth, (req,res,next) => {
 });
 
 
-router.post('/rating',checkAuth,(req,res,next)=>{
+
+
+router.post('/rate',checkAuth,(req,res,next)=>{
   const userData=req.body;
-  userM.findOneAndUpdate({username:userData.username},{$inc : {'ratingCount':1}});
-  userM.updateOne({username:userData.username},{ratings:userData.ratings}).then(updatePost =>{
-      res.status(200);
-  });
+  console.log("rate"+userData.rate);
+  userM.findOneAndUpdate({username:userData.username},{$inc : {ratingCount:1, ratings:userData.rate}}).then(updatePost =>{
+    res.status(200).send();
+  })
 
 });
 
 
 router.post('/contactUpdate',checkAuth,(req,res,next)=>{
   const userData=req.body;
+  console.log("contact here");
   userM.updateOne({username:userData.username},{contact:userData.contact}).then(updatePost =>{
-      res.status(200);
+      res.status(200).send();
   });
 
 });

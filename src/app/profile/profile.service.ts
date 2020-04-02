@@ -52,6 +52,7 @@ export class ProfileService {
           tags: post.tags,
           status: post.status,
           viewCount: post.viewCount,
+          buyer: post.buyer
         };
       });
     }))
@@ -77,6 +78,7 @@ export class ProfileService {
           tags: post.tags,
           status: post.status,
           viewCount: post.viewCount,
+          buyer: post.buyer
         };
       });
     }))
@@ -103,6 +105,7 @@ export class ProfileService {
           tags: post.tags,
           status: post.status,
           viewCount: post.viewCount,
+          buyer: post.buyer
         };
       });
     }))
@@ -128,6 +131,7 @@ export class ProfileService {
           tags: post.tags,
           status: post.status,
           viewCount: post.viewCount,
+          buyer: post.buyer
         };
       });
     }))

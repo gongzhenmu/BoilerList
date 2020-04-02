@@ -86,7 +86,7 @@ export class ProfileComponent implements OnInit,  OnDestroy {
       });
 
     //purchased
-    this.profileService.getMySoldPosts();
+    this.profileService.getMyPurchasePosts();
     this.purchasedSub = this.profileService.getPurchasePostUpdateListener()
       .subscribe((posts: Post[]) => {
         this.purchased  =  posts;

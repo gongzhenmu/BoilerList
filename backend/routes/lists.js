@@ -5,6 +5,8 @@ const postM = require('../models/post');
 const checkAuth = require('../middleware/checkAuth');
 //purchase history
 router.get("/purchased",checkAuth,(req,res,next)=>{
+  console.log("asking for purchase");
+  console.log(req.query.username);
   postM.find({
       status: 'sold',
       buyer: req.query.username
@@ -17,8 +19,7 @@ router.get("/purchased",checkAuth,(req,res,next)=>{
 
 //sold history
 router.get("/sold",checkAuth,(req,res,next)=>{
-  console.log("asking for sold history");
-  console.log(req.query.username);
+
   postM.find({
       status: 'sold',
       owner: req.query.username
@@ -31,6 +32,7 @@ router.get("/sold",checkAuth,(req,res,next)=>{
 
 //pengding
 router.get("/pending",checkAuth,(req,res,next)=>{
+
   postM.find({
       $or:[{status: 'pending',owner: req.query.username},{status: 'pending',buyer: req.query.username}]
   }).then(documents=>{

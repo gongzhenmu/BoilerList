@@ -180,5 +180,3 @@ export class PostCreateComponent implements OnInit {
     this.router.navigate(['/']);
     }
   }
-
-

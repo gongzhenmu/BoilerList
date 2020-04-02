@@ -11,8 +11,8 @@ const userSchema = mongoose.Schema({
   // userTags:{type:[String]},
   userFavorites: [{type: Schema.ObjectId, ref: 'Favorite'}],
   contact: {type: String, default: ''},
-  ratings:{type: Number},
-  ratingCount:{type: Number}
+  ratings:{type: Number, default: 0},
+  ratingCount:{type: Number,default: 0}
 });
 
 module.exports = mongoose.model("User",userSchema,'User');

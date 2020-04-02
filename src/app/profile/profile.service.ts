@@ -32,6 +32,7 @@ export class ProfileService {
   private purchaseUrl = 'http://localhost:3000/api/lists/purchased';
   private pengdingUrl = 'http://localhost:3000/api/lists/pending';
   private rateUrl = 'http://localhost:3000/api/profile/rating';
+  private contactUrl = 'http://localhost:3000/api/profile/contactUpdate';
 
 
   constructor(private http: HttpClient) {}
@@ -230,6 +231,10 @@ export class ProfileService {
 
   updateRating(username: string, rate: number) {
     return this.http.post<any>(this.rateUrl, {username, rate});
+  }
+
+  updateUpdate(username: string, contact: string) {
+    return this.http.post<any>(this.contactUrl, {username, contact});
   }
 
 

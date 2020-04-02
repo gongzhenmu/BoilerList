@@ -199,6 +199,15 @@ router.post('/rating',checkAuth,(req,res,next)=>{
 });
 
 
+router.post('/contactUpdate',checkAuth,(req,res,next)=>{
+  const userData=req.body;
+  userM.updateOne({username:userData.username},{contact:userData.contact}).then(updatePost =>{
+      res.status(200);
+  });
+
+});
+
+
 
 
 

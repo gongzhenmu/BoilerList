@@ -44,6 +44,12 @@ export class PostCreateComponent implements OnInit {
     imageUrls: [],
     mainImage: ''
   };
+
+
+  public postGadget: object = { // translate from string to number
+    condition: 0,
+  }
+
   private price: FormControl;
 
   // Tag Configuration
@@ -97,6 +103,45 @@ export class PostCreateComponent implements OnInit {
     {value: 'Video Games & Consoles', viewValue: 'Video Games & Consoles'}
   ];
 
+  // Construct router and initialize at the beginning
+  constructor(public postsService: PostsService,
+    public route: ActivatedRoute,
+    private router: Router,
+    public imageCompress: NgxImageCompressService) {}
+
+  ngOnInit(): void {
+    this.route.paramMap.subscribe((paramMap) => {
+      if (paramMap.has('postId')) {
+        console.log('进入post-edit模式!');
+        this.mode = 'edit';
+        this.postId = paramMap.get('postId');
+        console.log('postid: ' + this.postId);
+        this.postsService.getPost(this.postId).then(transformedPosts => {
+          this.post = {...transformedPosts.find(p => p.id === this.postId)};
+          // @ts-ignore
+          this.postGadget.condition = this.formatCondition(this.post.condition);
+          // tslint:disable-next-line:prefer-for-of
+          for (let i = 0; i < this.post.tags.length; i++){
+            this.tags.push({name: this.post.tags[i]});
+          }
+
+          console.log( this.tags);
+          console.log('post长这样子');
+          console.log(this.post);
+          console.log(this.post.title);
+        });
+      } else {
+        this.mode = 'create';
+        this.postId = null;
+      }
+    });
+
+    this.price = new FormControl('', [
+      Validators.required,
+      Validators.pattern('^[0-9]*$'),
+    ]);
+  }
+
   // thumb Label functions
   formatLabel(value: number) {
     switch (value) {
@@ -117,6 +162,28 @@ export class PostCreateComponent implements OnInit {
         break;
       default:
         return 'New';
+        break;
+    }
+  }
+  formatCondition(value: string) {
+    switch (value) {
+      case 'Broken':
+        return 0;
+        break;
+      case 'Refurbished':
+        return 1;
+        break;
+      case 'Used':
+        return 2;
+        break;
+      case 'OpenBox':
+        return 3;
+        break;
+      case 'Like New':
+        return 4;
+        break;
+      default:
+        return 5;
         break;
     }
   }
@@ -143,32 +210,12 @@ export class PostCreateComponent implements OnInit {
     }
   }
 
-  // Post functions
-  constructor(public imageCompress: NgxImageCompressService,public postsService: PostsService, public route: ActivatedRoute, private router: Router) {}
-  ngOnInit(): void {
-
-    this.price = new FormControl('', [
-      Validators.required,
-      Validators.pattern('^[0-9]*$'),
-    ]);
-
-    this.route.paramMap.subscribe((paramMap) => {
-      if (paramMap.has('postId')) {
-        this.mode = 'edit';
-        this.postId = paramMap.get('postId');
-        this.post = this.postsService.getPost(this.postId);
-      } else {
-        this.mode = 'create';
-        this.postId = null;
-      }
-    });
-  }
-
   onImagePicked(event){
     if((event.target as HTMLInputElement).files && (event.target as HTMLInputElement).files[0]){
       console.log("Create-post: %s has been chosen", (event.target as HTMLInputElement).files[0].name);
       var imageCount = (event.target as HTMLInputElement).files.length;
       for( let i = 0; i < imageCount; i ++){
+        console.log(imageCount + "files have been chosen");
         var imageFile = (event.target as HTMLInputElement).files[i];
         const imageName = imageFile.name;
         const reader = new FileReader();
@@ -191,10 +238,9 @@ export class PostCreateComponent implements OnInit {
         };
         this.imageFiles.push(imageFile);
         reader.readAsDataURL(imageFile);
-
       }
     }
-    console.log(this.imageUrls);
+    console.log("onImagePicked: " + this.imageUrls.length);
   }
 
   onSavePost(form: NgForm) {
@@ -208,10 +254,12 @@ export class PostCreateComponent implements OnInit {
     console.log('TAG LIST!!!');
     console.log(postTags);
     if (form.invalid) {
+        console.log("form is invalid");
         return;
       }
     if (this.mode === 'create') {
       // tslint:disable-next-line:max-line-length
+      console.log("addPosts: " + this.imageFiles.length);
         this.postsService.addPost(form.value.title, form.value.content, form.value.price, localStorage.getItem('username'),
           form.value.category, this.formatLabel(form.value.condition), postTags, 'available', 0, '', this.imageFiles);
       } else {
@@ -234,5 +282,3 @@ export class PostCreateComponent implements OnInit {
       return blob;
     }
   }
-
-

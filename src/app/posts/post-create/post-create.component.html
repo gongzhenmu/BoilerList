@@ -28,9 +28,8 @@
     <mat-form-field class="half-width">
       <mat-label>Category</mat-label>
       <mat-select
-        [ngModel]="post.category"
-        #category="ngModel"
         name="category"
+        [ngModel]="post.category"
       >
         <mat-option *ngFor="let category of categories" [value]="category.value">
           {{category.viewValue}}
@@ -53,7 +52,6 @@
     <h4>How new is your item for sale?</h4>
       <mat-slider
         [ngModel]="post.condition"
-        #condition="ngModel"
         name="condition"
         thumbLabel
         [displayWith]="formatLabel"
@@ -64,7 +62,6 @@
       <mat-chip-list
         #chipList
         aria-label="Fruit selection"
-
       >
         <mat-chip *ngFor="let tag of tags" [selectable]="selectable"
                   [removable]="removable" (removed)="remove(tag)">

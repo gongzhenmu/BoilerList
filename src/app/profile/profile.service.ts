@@ -31,6 +31,8 @@ export class ProfileService {
   private soldUrl = 'http://localhost:3000/api/lists/sold';
   private purchaseUrl = 'http://localhost:3000/api/lists/purchased';
   private pengdingUrl = 'http://localhost:3000/api/lists/pending';
+  private rateUrl = 'http://localhost:3000/api/profile/rating';
+  private contactUrl = 'http://localhost:3000/api/profile/contactUpdate';
 
 
   constructor(private http: HttpClient) {}
@@ -52,6 +54,7 @@ export class ProfileService {
           tags: post.tags,
           status: post.status,
           viewCount: post.viewCount,
+          buyer: post.buyer
         };
       });
     }))
@@ -77,6 +80,7 @@ export class ProfileService {
           tags: post.tags,
           status: post.status,
           viewCount: post.viewCount,
+          buyer: post.buyer
         };
       });
     }))
@@ -103,6 +107,7 @@ export class ProfileService {
           tags: post.tags,
           status: post.status,
           viewCount: post.viewCount,
+          buyer: post.buyer
         };
       });
     }))
@@ -128,6 +133,7 @@ export class ProfileService {
           tags: post.tags,
           status: post.status,
           viewCount: post.viewCount,
+          buyer: post.buyer
         };
       });
     }))
@@ -192,7 +198,7 @@ export class ProfileService {
       updatedPosts[oldPostIndex] = post;
       this.posts = updatedPosts;
       this.postsUpdated.next([...this.posts]);
-      alert('Post status is updated!');
+      alert('The post is available again!');
     });
   }
 
@@ -221,4 +227,18 @@ export class ProfileService {
     return this.http.post<any>(this.changePass, {username, password});
 
   }
+
+
+  updateRating(username: string, rate: number) {
+    return this.http.post<any>(this.rateUrl, {username, rate});
+  }
+
+  updateContact(username: string, contact: string) {
+    return this.http.post<any>(this.contactUrl, {username, contact});
+  }
+
+
+
+
+
 }

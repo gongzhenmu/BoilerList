@@ -16,6 +16,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   constructor(public postsService: PostsService) {}
   showList = true;
   CurrentPost: Post;
+  itemSold = false;
   public currentUser = localStorage.getItem('username');
 
   ngOnInit() {
@@ -23,12 +24,6 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.postsSub = this.postsService.getPostUpdateListener()
       .subscribe((posts: Post[]) => {
         this.posts = posts;
-        console.log("posts updated by shikang: ");
-        for(let i = 0; i < this.posts.length; i ++){
-          if(this.posts[i].owner == "shikang"){
-            console.log(this.posts[i]);
-          }
-        }
       });
 
 
@@ -46,10 +41,13 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.showList = false;
     this.CurrentPost = post;
     this.postsService.updateViewCount(post);
+    if(post.status != 'available')
+      this.itemSold = true;
+    else
+      this.itemSold = false;
   }
   purchaseItem(post: Post){
     this.postsService.updateBuyer(post, this.currentUser);
     this.showList = true;
-    console.log(this.currentUser);
   }
 }

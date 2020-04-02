@@ -1,14 +1,14 @@
-<div class="nav-scroller bg-white box-shadow">
+<div class="nav-scroller bg-white box-shadow" *ngIf="currentUserPage">
   <nav class="nav nav-underline">
     <a class="nav-link active" href="javascript:history.go(0)">Profile</a>
     <a class="nav-link" (click)="showMyLists();" routerLink="/profile">MyPosts</a>
     <a class="nav-link" (click)="showSoldList();" routerLink="/profile">Sold</a>
-    <a class="nav-link" (click)="showPendingList();"routerLink="/profile">Pending</a>
+    <a class="nav-link" (click)="showPendingList();" routerLink="/profile">Pending</a>
     <a class="nav-link" (click)="showPurchaseList();" routerLink="/profile">Purchased</a>
-
   </nav>
 </div>
-<div id="profile" *ngIf="!MyPosts">
+
+<div id="profile" *ngIf="!MyPosts && !rateTheSeller">
   <br>
   <br>
   <br>
@@ -36,6 +36,16 @@
             <p class="card-email">Email: {{ profile.email }}
               <br>
             </p>
+            <p class="card-email">Contact Info: {{ profile.contact }}
+              <br>
+            </p>
+            <p class="card-email">rating: {{ profile.rating }}
+              <br>
+            </p>
+            <p class="card-email">ratingCount: {{ profile.ratingCount }}
+              <br>
+            </p>
+
           </div>
         </div>
       </div>
@@ -44,7 +54,7 @@
 </div>
 <br>
 <!-- show posts list -->
-<div class="album py-6" *ngIf="MyPosts && !showList">
+<div class="album py-6" *ngIf="MyPosts && !showList && !rateTheSeller">
   <div class="container">
     <div class="row">
       <div class="col-md-3" *ngFor="let post of showposts">
@@ -69,8 +79,8 @@
     </div>
   </div>
 </div>
-<!-- show the showDetails -->
-<div class="container" *ngIf="showList">
+<!-- show the post detail page -->
+<div class="container" *ngIf="showList && !rateTheSeller">
   <div class="d-flex justify-content-center h-100">
     <div class="card detailcard">
       <div class="card-body" style="text-align: center;">
@@ -113,17 +123,58 @@
         Category: {{ CurrentPost.category}}<br>
         Condition: {{ CurrentPost.condition}}<br>
         Status: {{ CurrentPost.status}}<br>
-
+        Seller: <a href="/profile/{{CurrentPost.owner}}">{{ CurrentPost.owner}}</a><br>
+        <p *ngIf="notAvailable">
+          Buyer: <a href="/profile/{{CurrentPost.buyer}}">{{ CurrentPost.buyer}}</a>
+        </p>
         👁{{ CurrentPost.viewCount}} views<br>
-        <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex justify-content-between align-items-center" *ngIf="!pendingList">
+          <button type="button" class='btn btn-outline-success' style="float: left;" aria-label="back"
+            (click)="goBack();" style="float: left;">Back</button>
+          <button *ngIf="!notAvailable" class='btn btn-outline-primary' (click)="onAvailable(CurrentPost)">Mark as
+            Available</button>
+          <!-- <button class='btn btn-outline-warning' (click)="onPending(CurrentPost)">Mark as Pending</button> -->
+          <button *ngIf="!notAvailable" class='btn btn-outline-danger' (click)="onSold(CurrentPost)">Mark as
+            Sold</button>
+          <a *ngIf="!notAvailable" class='btn btn-outline-info' [routerLink]="['post-edit', CurrentPost.id]">EDIT</a>
+          <button *ngIf="!notAvailable" class='btn btn-outline-dark' (click)="onDelete(CurrentPost.id)">Delete</button>
+          <button *ngIf="canRateSeller" type="button" class='btn btn-outline-info' style="float: left;"
+            aria-label="rate seller" (click)="rateSeller();" style="float: right;">Rate the seller</button>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center" *ngIf="pendingList">
           <button type="button" class='btn btn-outline-success' style="float: left;" aria-label="back"
             (click)="goBack();" style="float: right;">Back</button>
-          <button class='btn btn-outline-primary' (click)="onAvailable(CurrentPost)">Mark as Available</button>
+          <button *ngIf="purchaseUser" class='btn btn-outline-primary' (click)="onAvailable(CurrentPost)">Cancel
+            Purchase</button>
+          <button *ngIf="!purchaseUser" class='btn btn-outline-primary' (click)="onAvailable(CurrentPost)">Cancel
+            Sell</button>
           <!-- <button class='btn btn-outline-warning' (click)="onPending(CurrentPost)">Mark as Pending</button> -->
-          <button class='btn btn-outline-danger' (click)="onSold(CurrentPost)">Mark as Sold</button>
-          <a class='btn btn-outline-info' [routerLink]="['post-edit', CurrentPost.id]">EDIT</a>
-          <button class='btn btn-outline-dark' (click)="onDelete(CurrentPost.id)">Delete</button>
+          <button class='btn btn-outline-danger' (click)="onSold(CurrentPost)"> Complete Transaction</button>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- if rate seller enabled -->
+<div *ngIf="rateTheSeller" class="container">
+  <div class="d-flex justify-content-center h-100">
+    <div class="card" style="width: 19rem;">
+      <div class="card-body">
+        <br>
+        <div class="form-group">
+          <label for="sellerRating">
+            Input Seller Rating:
+          </label>
+          <label for="sellerRating" class="sr-only">Seller Rating</label>
+          <input name="sellerRating" type="number" [(ngModel)]='sellerRating' id="sellerRating" class="form-control"
+            placeholder="1-5" required>
+        </div>
+        <br>
+        <button class='btn btn-outline-info' (click)="goBack()" aria-label="cancel">Cancel</button>
+        <button type="button" aria-label="Confirm" class="btn btn-outline-primary" style="float: right;"
+          (click)="updateRating()">Confirm</button>
       </div>
     </div>
   </div>

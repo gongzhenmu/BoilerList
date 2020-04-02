@@ -9,6 +9,7 @@ import {Tag} from '@angular/compiler/src/i18n/serializers/xml_helper';
 export class PostsService {
 
   private posts: Post[] = [];
+  private myPost: Post;
   private postsUpdated = new Subject<Post[]>();
 
   private posturl = 'http://localhost:3000/api/posts';
@@ -45,16 +46,30 @@ export class PostsService {
   }
 
   getPost(id: string) {
-    return {...this.posts.find(p => p.id === id)};
+    return this.http.get<{ message: string; posts: any }>(this.posturl)
+      .pipe(map((postData) => {
+        return postData.posts.map(post => {
+          return {
+            title: post.title,
+            content: post.content,
+            price: post.price,
+            owner: post.owner,
+            id: post._id,
+            category: post.category,
+            condition: post.condition,
+            tags: post.tags,
+            status: post.status,
+            viewCount: post.viewCount,
+            buyer: post.buyer
+          };
+        });
+      })).toPromise();
   }
 
   addPost(title: string, content: string, price: string, owner: string, category: string, condition: string, tags: string[], status: string, viewCount: number, buyer: string, imageFiles: File[]) {
     // tslint:disable-next-line:max-line-length
     const post: Post = { id: null, title: title, content: content, price: price, owner: owner, category: category, condition: condition, tags: tags, status: status, viewCount: viewCount, buyer: buyer, imageUrls: null, mainImage: null};
-    console.log('Post created!');
-    console.log(post);
     const imageData = new FormData();
-    console.log("imageFiles: " + imageFiles[0].name + imageFiles[1].name);
 
     this.http
       .post<{ message: string, postId: string}>(this.posturl, post)
@@ -71,7 +86,6 @@ export class PostsService {
         .post<{imageUrls: string[], mainImage: string}>(this.posturl+'/upload-images', imageData)
         .subscribe(resData => {
             post.imageUrls = resData.imageUrls;
-            console.log(resData.mainImage);
             post.mainImage = resData.mainImage;
             this.posts.push(post);
             this.postsUpdated.next([...this.posts]);
@@ -121,14 +135,12 @@ export class PostsService {
   updateBuyer(post: Post, username: string){
     const tempPost = post;
     tempPost.buyer = username;
-    tempPost.status = 'pending'
-    console.log(tempPost.buyer+"here is update");
+    tempPost.status = 'pending';
     this.http.put(this.posturl + '/' + tempPost.id, post).subscribe(resData => {
       const updatedPosts = [...this.posts];
       const oldPostIndex = updatedPosts.findIndex(p => p.id === post.id);
       updatedPosts[oldPostIndex] = post;
       this.posts = updatedPosts;
-      console.log(updatedPosts[oldPostIndex].buyer+"here after update");
       this.postsUpdated.next([...this.posts]);
     });
 

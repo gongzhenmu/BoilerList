@@ -39,8 +39,8 @@
                                 <div *ngIf="name.errors.maxlength">Name must not exceeds 30 characters long</div>
                                 <div *ngIf="name.errors.pattern">Name must be composed of pure letters and numbers</div>
                             </div>
-
                             <br>
+
                             <button (click)="onSubmit()" type="button" class="btn btn-primary" [disabled]="em.invalid || passwd.invalid || name.invalid">
                                     Register
                                 </button>

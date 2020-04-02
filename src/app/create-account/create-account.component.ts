@@ -14,7 +14,8 @@ export class CreateAccountComponent implements OnInit {
     registerUserData = {
         email: '',
         password: '',
-        username: ''
+        username: '',
+        contact: ''
     };
 
     constructor(

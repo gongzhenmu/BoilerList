@@ -10,7 +10,7 @@ const userSchema = mongoose.Schema({
   userPosts:[{type:Schema.ObjectId, ref: 'Post'}],
   // userTags:{type:[String]},
   userFavorites: [{type: Schema.ObjectId, ref: 'Favorite'}],
-  phone: {type: Number},
+  contact: {type: String, default: ''},
   ratings:{type: Number},
   ratingCount:{type: Number}
 });

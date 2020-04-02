@@ -23,7 +23,15 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.postsSub = this.postsService.getPostUpdateListener()
       .subscribe((posts: Post[]) => {
         this.posts = posts;
+        console.log("posts updated by shikang: ");
+        for(let i = 0; i < this.posts.length; i ++){
+          if(this.posts[i].owner == "shikang"){
+            console.log(this.posts[i]);
+          }
+        }
       });
+
+
   }
 
   onDelete(postId: string){

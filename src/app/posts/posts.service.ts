@@ -28,7 +28,9 @@ export class PostsService {
             tags: post.tags,
             status: post.status,
             viewCount: post.viewCount,
-            buyer: post.buyer
+            buyer: post.buyer,
+            imageUrls: post.imageUrls,
+            mainImage: post.mainImage
           };
         });
       }))
@@ -53,25 +55,28 @@ export class PostsService {
     console.log(post);
     const imageData = new FormData();
     console.log("imageFiles: " + imageFiles[0].name + imageFiles[1].name);
-    for(let i = 0; i < imageFiles.length; i++){
-      imageData.append('images[]', imageFiles[i], owner);
-      console.log("imageData: %d: %s added!",i, imageFiles[i].name);
-    }
+
     this.http
       .post<{ message: string, postId: string}>(this.posturl, post)
       .subscribe(resData => {
         const id = resData.postId;
         post.id = id;
-        console.log("post id: %s", post.id);
+        //console.log("post id: %s", post.id);
+        for(let i = 0; i < imageFiles.length; i++){
+          imageData.append('images', imageFiles[i], post.id+'-' + owner);
+          //console.log("imageData: %d: %s added!",i, imageFiles[i].name);
+        }
         imageData.append('postid', post.id);
         this.http
         .post<{imageUrls: string[], mainImage: string}>(this.posturl+'/upload-images', imageData)
         .subscribe(resData => {
             post.imageUrls = resData.imageUrls;
+            console.log(resData.mainImage);
             post.mainImage = resData.mainImage;
+            this.posts.push(post);
+            this.postsUpdated.next([...this.posts]);
         });
-        this.posts.push(post);
-        this.postsUpdated.next([...this.posts]);
+
       });
 
 

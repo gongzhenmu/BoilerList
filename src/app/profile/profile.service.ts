@@ -31,6 +31,7 @@ export class ProfileService {
   private soldUrl = 'http://localhost:3000/api/lists/sold';
   private purchaseUrl = 'http://localhost:3000/api/lists/purchased';
   private pengdingUrl = 'http://localhost:3000/api/lists/pending';
+  private rateUrl = 'http://localhost:3000/api/profile/rating';
 
 
   constructor(private http: HttpClient) {}
@@ -225,4 +226,14 @@ export class ProfileService {
     return this.http.post<any>(this.changePass, {username, password});
 
   }
+
+
+  updateRating(username: string, rate: number) {
+    return this.http.post<any>(this.rateUrl, {username, rate});
+  }
+
+
+
+
+
 }

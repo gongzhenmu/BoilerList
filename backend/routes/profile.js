@@ -189,6 +189,20 @@ router.post("/changePassword",checkAuth, (req,res,next) => {
 });
 
 
+router.post('/rating',checkAuth,(req,res,next)=>{
+  const userData=req.body;
+  userM.findOneAndUpdate({username:userData.username},{$inc : {'ratingCount':1}});
+  userM.updateOne({username:userData.username},{ratings:userData.ratings}).then(updatePost =>{
+      res.status(200);
+  });
+
+});
+
+
+
+
+
+
 
 
 module.exports = router;

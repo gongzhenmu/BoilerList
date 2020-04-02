@@ -44,7 +44,7 @@ export class PostCreateComponent implements OnInit {
   }
 
   public postGadget: object = {
-    condition: 2,
+    condition: 0,
     tags: ['123', '321', '888'],
   }
 
@@ -115,7 +115,7 @@ export class PostCreateComponent implements OnInit {
         console.log('postid: ' + this.postId);
         this.postsService.getPost(this.postId).then(transformedPosts => {
           this.post = {...transformedPosts.find(p => p.id === this.postId)};
-          this.postGadget
+          this.postGadget.condition = this.formatCondition(this.post.condition);
           console.log('post长这样子');
           console.log(this.post);
           console.log(this.post.title);
@@ -161,19 +161,19 @@ export class PostCreateComponent implements OnInit {
         return 0;
         break;
       case 'Refurbished':
-        return '';
+        return 1;
         break;
       case 'Used':
-        return '';
+        return 2;
         break;
       case 'OpenBox':
-        return '';
+        return 3;
         break;
-      case 4:
-        return 'Like New';
+      case 'Like New':
+        return 4;
         break;
       default:
-        return 'New';
+        return 5;
         break;
     }
   }
@@ -198,27 +198,6 @@ export class PostCreateComponent implements OnInit {
     if (index >= 0) {
       this.tags.splice(index, 1);
     }
-  }
-
-  // Post functions
-  constructor(public imageCompress: NgxImageCompressService,public postsService: PostsService, public route: ActivatedRoute, private router: Router) {}
-  ngOnInit(): void {
-
-    this.price = new FormControl('', [
-      Validators.required,
-      Validators.pattern('^[0-9]*$'),
-    ]);
-
-    this.route.paramMap.subscribe((paramMap) => {
-      if (paramMap.has('postId')) {
-        this.mode = 'edit';
-        this.postId = paramMap.get('postId');
-        this.post = this.postsService.getPost(this.postId);
-      } else {
-        this.mode = 'create';
-        this.postId = null;
-      }
-    });
   }
 
   onImagePicked(event){
@@ -252,7 +231,7 @@ export class PostCreateComponent implements OnInit {
     }
     console.log(this.imageUrls);
   }
-  
+
   onSavePost(form: NgForm) {
     console.log('FORM VALUE!!!');
     console.log(form.value);

@@ -79,6 +79,9 @@
       </mat-chip-list>
     </mat-form-field>
 
+    <img *ngFor='let url of imageUrls'  [src]="url" height="200"> <br/>
+    <input input type="file" accept="image/png, image/jpeg" #filePicker (change)="onImagePicked($event)" multiple>
+
     <button mat-raised-button
     color = "primary" type="submit">Save Post</button>
   </form>

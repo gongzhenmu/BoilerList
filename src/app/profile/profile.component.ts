@@ -60,6 +60,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   notAvailable = false;
   purchaseUser = false;
   rateTheSeller = false;
+  canRateSeller = false;
   sellerRating: number;
   ngOnInit() {
     this.route.paramMap.pipe(
@@ -121,7 +122,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   onDelete(postId: string) {
     this.profileService.deletePost(postId);
-    this.router.navigate(['/profile']);
+    window.location.reload();
   }
 
   // onPending(post: Post) {
@@ -130,13 +131,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   onSold(post: Post) {
     this.profileService.updateStatus(post, 'sold');
-    this.router.navigate(['/profile']);
+    window.location.reload();
   }
 
   onAvailable(post: Post) {
     this.postsService.updateBuyer(post, 'None');
     this.profileService.updateStatus(post, 'available');
-    this.router.navigate(['/profile']);
+    window.location.reload();
   }
   showDetails(post: Post) {
     this.showList = true;
@@ -146,19 +147,26 @@ export class ProfileComponent implements OnInit, OnDestroy {
     else
       this.notAvailable = false;
 
-    if (post.status == 'pending'){
+    if (post.status == 'pending') {
       this.pendingList = true;
-      if( post.buyer == this.currentUser)
+      if (post.buyer == this.currentUser)
         this.purchaseUser = true;
       else
-      this.purchaseUser = false;
+        this.purchaseUser = false;
     }
     else
       this.pendingList = false;
+
+    if (post.status == 'sold' && this.CurrentPost.buyer == this.currentUser)
+      this.canRateSeller = true;
+    else
+      this.canRateSeller = false;
+
   }
   showMyLists() {
     this.MyPosts = true;
     this.showposts = this.posts;
+    this.showList = false;
   }
   goBack() {
     this.MyPosts = true;
@@ -212,6 +220,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
   showSoldList() {
     this.MyPosts = true;
+    this.showList = false;
     this.showposts = this.sold;
 
   }
@@ -219,15 +228,17 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.MyPosts = true;
     this.showposts = this.pending;
     this.pendingList = true;
+    this.showList = false;
   }
   showPurchaseList() {
     this.MyPosts = true;
     this.showposts = this.purchased;
+    this.showList = false;
   }
-  rateSeller(){
+  rateSeller() {
     this.rateTheSeller = true;
   }
-  updateRating(){
+  updateRating() {
     this.profileService.updateRating(this.CurrentPost.owner, this.sellerRating);
     this.goBack();
   }

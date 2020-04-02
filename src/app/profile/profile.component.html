@@ -138,7 +138,7 @@
             Sold</button>
           <a *ngIf="!notAvailable" class='btn btn-outline-info' [routerLink]="['post-edit', CurrentPost.id]">EDIT</a>
           <button *ngIf="!notAvailable" class='btn btn-outline-dark' (click)="onDelete(CurrentPost.id)">Delete</button>
-          <button *ngIf="notAvailable" type="button" class='btn btn-outline-info' style="float: left;"
+          <button *ngIf="canRateSeller" type="button" class='btn btn-outline-info' style="float: left;"
             aria-label="rate seller" (click)="rateSeller();" style="float: right;">Rate the seller</button>
         </div>
 

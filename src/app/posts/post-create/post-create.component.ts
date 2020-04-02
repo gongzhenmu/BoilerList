@@ -103,7 +103,10 @@ export class PostCreateComponent implements OnInit {
   ];
 
   // Construct router and initialize at the beginning
-  constructor(public postsService: PostsService, public route: ActivatedRoute, private router: Router) {}
+  constructor(public postsService: PostsService,
+    public route: ActivatedRoute,
+    private router: Router,
+    public imageCompress: NgxImageCompressService) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((paramMap) => {

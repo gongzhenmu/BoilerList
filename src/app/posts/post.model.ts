@@ -10,5 +10,7 @@ export interface Post {
   status: string;
   viewCount: number;
   buyer: string;
+  imageUrls: string[];
+  mainImage: string;
 }
 

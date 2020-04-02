@@ -16,7 +16,10 @@ const postSchema = mongoose.Schema({
   buyer:{type: String, required: false, default:'None'},
 
   createdTime:{type: Date, default: Date.now},
-  likedBy: {type: String}
+  likedBy: {type: String},
+
+  imageUrls: [{type: String}],
+  mainImage: {type: String},
 
 
   //username: {type: String}

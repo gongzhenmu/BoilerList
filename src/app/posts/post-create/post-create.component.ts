@@ -40,8 +40,11 @@ export class PostCreateComponent implements OnInit {
     status: '',
     tags: [],
     viewCount: 0,
-    buyer: ''
-  }
+    buyer: '',
+    imageUrls: [],
+    mainImage: ''
+  };
+
 
   public postGadget: object = { // translate from string to number
     condition: 0,
@@ -58,9 +61,7 @@ export class PostCreateComponent implements OnInit {
   tags: Tag[] = [];
 
   //image
-  imageFile: File;
   imgAfterCompressed: string;
-  compressedFile: File;
   isCompressed: boolean = false;
   imageUrls = [];
   imageFiles: File[] = [];
@@ -214,12 +215,13 @@ export class PostCreateComponent implements OnInit {
       console.log("Create-post: %s has been chosen", (event.target as HTMLInputElement).files[0].name);
       var imageCount = (event.target as HTMLInputElement).files.length;
       for( let i = 0; i < imageCount; i ++){
-        this.imageFile = (event.target as HTMLInputElement).files[i];
-        const imageName = this.imageFile.name;
+        console.log(imageCount + "files have been chosen");
+        var imageFile = (event.target as HTMLInputElement).files[i];
+        const imageName = imageFile.name;
         const reader = new FileReader();
         reader.onload = () => {
           var imagePreview = reader.result as string;
-          if(this.imageFile.size/(1024*1024) > 1)
+          if(imageFile.size/(1024*1024) > 1)
           {
             this.isCompressed = true;
             this.imageCompress.compressFile(imagePreview, -1, 40, 40)
@@ -228,17 +230,17 @@ export class PostCreateComponent implements OnInit {
                 this.imgAfterCompressed = result;
                 imagePreview = result;
                 const imageBlob = this.dataURItoBlob(this.imgAfterCompressed.split(',')[1]);
-                this.compressedFile = new File([imageBlob], imageName, {type: 'image/jpeg'});
+                imageFile = new File([imageBlob], imageName, {type: 'image/jpeg'});
               }
             )
           }
            this.imageUrls.push(imagePreview);
         };
-        reader.readAsDataURL(this.imageFile);
-
+        this.imageFiles.push(imageFile);
+        reader.readAsDataURL(imageFile);
       }
     }
-    console.log(this.imageUrls);
+    console.log("onImagePicked: " + this.imageUrls.length);
   }
 
   onSavePost(form: NgForm) {
@@ -252,16 +254,18 @@ export class PostCreateComponent implements OnInit {
     console.log('TAG LIST!!!');
     console.log(postTags);
     if (form.invalid) {
+        console.log("form is invalid");
         return;
       }
     if (this.mode === 'create') {
       // tslint:disable-next-line:max-line-length
+      console.log("addPosts: " + this.imageFiles.length);
         this.postsService.addPost(form.value.title, form.value.content, form.value.price, localStorage.getItem('username'),
-          form.value.category, this.formatLabel(form.value.condition), postTags, 'available', 0, '');
+          form.value.category, this.formatLabel(form.value.condition), postTags, 'available', 0, '', this.imageFiles);
       } else {
         this.postsService.updatePost(this.postId, form.value.title,
           form.value.content, form.value.price, localStorage.getItem('username'),
-          form.value.category, this.formatLabel(form.value.condition), postTags, 'available', this.post.viewCount, this.post.buyer);
+          form.value.category, this.formatLabel(form.value.condition), postTags, 'available', this.post.viewCount, this.post.buyer, this.post.imageUrls, this.post.mainImage);
       }
     form.resetForm();
     this.router.navigate(['/']);

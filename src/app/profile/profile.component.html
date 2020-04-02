@@ -1,13 +1,13 @@
-<div class="nav-scroller bg-white box-shadow">
+<div class="nav-scroller bg-white box-shadow" *ngIf="currentUserPage">
   <nav class="nav nav-underline">
     <a class="nav-link active" href="javascript:history.go(0)">Profile</a>
     <a class="nav-link" (click)="showMyLists();" routerLink="/profile">MyPosts</a>
     <a class="nav-link" (click)="showSoldList();" routerLink="/profile">Sold</a>
-    <a class="nav-link" (click)="showPendingList();"routerLink="/profile">Pending</a>
+    <a class="nav-link" (click)="showPendingList();" routerLink="/profile">Pending</a>
     <a class="nav-link" (click)="showPurchaseList();" routerLink="/profile">Purchased</a>
-
   </nav>
 </div>
+
 <div id="profile" *ngIf="!MyPosts">
   <br>
   <br>
@@ -36,6 +36,16 @@
             <p class="card-email">Email: {{ profile.email }}
               <br>
             </p>
+            <p class="card-email">Contact Info: {{ profile.contact }}
+              <br>
+            </p>
+            <p class="card-email">rating: {{ profile.rating }}
+              <br>
+            </p>
+            <p class="card-email">ratingCount: {{ profile.ratingCount }}
+              <br>
+            </p>
+
           </div>
         </div>
       </div>
@@ -69,7 +79,7 @@
     </div>
   </div>
 </div>
-<!-- show the showDetails -->
+<!-- show the post detail page -->
 <div class="container" *ngIf="showList">
   <div class="d-flex justify-content-center h-100">
     <div class="card detailcard">

@@ -25,6 +25,9 @@ export class ProfileComponent implements OnInit,  OnDestroy {
     email: '',
     password: '',
     avatarUrl: '',
+    contact: '',
+    ratings: 0,
+    ratingCount: 0
   }
   private soldSub: Subscription;
   private purchasedSub: Subscription;

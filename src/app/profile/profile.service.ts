@@ -233,7 +233,7 @@ export class ProfileService {
     return this.http.post<any>(this.rateUrl, {username, rate});
   }
 
-  updateUpdate(username: string, contact: string) {
+  updateContact(username: string, contact: string) {
     return this.http.post<any>(this.contactUrl, {username, contact});
   }
 

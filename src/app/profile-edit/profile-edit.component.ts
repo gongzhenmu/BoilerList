@@ -18,15 +18,20 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     username: '',
     email: '',
     password: '',
-    avatarUrl: ''
+    avatarUrl: '',
+    contact: '',
+    ratings: 0,
+    ratingCount: 0
   }
   password = '';
   newPass1 = '';
   newPass2 = '';
+  contact = '';
   public inputUsername = localStorage.getItem('username');
   public changePass = false;
   public passedVeri = false;
   public editPost = false;
+  public changeCont = false;
   private profileSub: Subscription;
   constructor(private imageCompress: NgxImageCompressService,
     public profileService: ProfileService,
@@ -97,6 +102,9 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   changePassword() {
     this.changePass = true;
   }
+  changeContact() {
+    this.changeCont = true;
+  }
   // verify if the password is correct
   passwordVeri() {
     this.profileService.verifyPassword(this.currentUser, this.password)
@@ -160,5 +168,19 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   }
   cancelEditPosts(){
     this.editPost = false;
+  }
+  updateContact(){
+    this.profileService.updateContact(this.currentUser, this.contact)
+        .subscribe(() => {
+          alert("Contact Updated");
+          this.router.navigate(['/profile']);
+        }, err => {
+          if (err.status === 500) {
+            alert('Server Error!');
+          } else if (err.status === 401) {
+            alert('Please use another password!');
+          }
+        });
+        this.router.navigate(['/profile']);
   }
 }

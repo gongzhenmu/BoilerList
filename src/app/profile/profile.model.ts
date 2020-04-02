@@ -3,4 +3,7 @@ export interface Profile {
   email: string;
   password: string;
   avatarUrl: string;
+  contact: string;
+  ratings: number;
+  ratingCount: number;
 }

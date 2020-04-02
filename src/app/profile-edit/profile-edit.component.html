@@ -6,7 +6,7 @@
         <div class="d-flex justify-content-center h-100">
             <div class="card" style="width: 19rem;">
                 <!-- if change password not enabled -->
-                <div *ngIf="!changePass" style="text-align: center;" class="card-body">
+                <div *ngIf="!changePass && !changeCont" style="text-align: center;" class="card-body">
                     <!-- <button class='btn btn-outline-primary' aria-label="back" (click)="editPosts()"
                         style="float: left;">Edit Posts</button> -->
                     <button class='btn btn-outline-info' routerLink="/profile" aria-label="back"
@@ -24,9 +24,15 @@
                     </p>
                     <p class="card-email">Email: {{ profile.email }}
                     </p>
+                    <p class="card-email">Contact Info: {{ profile.contact }}
+                        </p>
                     <hr>
                     <button *ngIf="!choosedPicture" type="button" aria-label="change password"
                         class="btn btn-md btn-outline-primary" (click)="changePassword()">Change password</button>
+                    <br>
+                    <br>
+                    <button *ngIf="!choosedPicture" type="button" aria-label="change password"
+                        class="btn btn-md btn-outline-primary" (click)="changeContact()">Change Contact Info</button>
                     <br>
                     <br>
                     <button *ngIf="!choosedPicture" class="btn btn-outline-primary" type="button"
@@ -41,7 +47,22 @@
                         (click)="onImageSubmit()">Upload</button>
                     <br>
                 </div>
-
+                <!-- if change contact enabled -->
+                <div *ngIf="changeCont" class="card-body">
+                        <br>
+                        <div class="form-group">
+                            <label for="contact">
+                                Input your new Contact Information:
+                            </label>
+                            <label for="inputContact" class="sr-only">Contact Information</label>
+                            <input name="contact" [(ngModel)]='contact' id="inputContact"
+                                class="form-control" placeholder="contact" required>
+                        </div>
+                        <br>
+                        <button class='btn btn-outline-info' routerLink="/profile" aria-label="cancel">Cancel</button>
+                        <button type="button" aria-label="Confirm" class="btn btn-outline-primary" style="float: right;"
+                            (click)="updateContact()">Confirm</button>
+                    </div>
                 <!-- if change password enabled and need verification -->
                 <div *ngIf="changePass && !passedVeri" class="card-body">
                     <br>

@@ -135,7 +135,7 @@
           <!-- <button class='btn btn-outline-warning' (click)="onPending(CurrentPost)">Mark as Pending</button> -->
           <button *ngIf="!notAvailable" class='btn btn-outline-danger' (click)="onSold(CurrentPost)">Mark as
             Sold</button>
-          <a *ngIf="!notAvailable" class='btn btn-outline-info' [routerLink]="['post-edit', CurrentPost.id]">EDIT</a>
+          <a *ngIf="!notAvailable" class='btn btn-outline-info' [routerLink]="['post-edit', CurrentPost.id]">Edit</a>
           <button *ngIf="!notAvailable" class='btn btn-outline-dark' (click)="onDelete(CurrentPost.id)">Delete</button>
           <button *ngIf="canRateSeller && !CurrentPost.rated" type="button" class='btn btn-outline-info'
             style="float: left;" aria-label="rate seller" (click)="rateSeller();" style="float: right;">Rate the

@@ -15,9 +15,9 @@ mat-slider {
   width: 50%;
 }
 .editImages{
-  border-radius: 90%;
-  height: 10% !important;
+  height: 20% !important;
   width: 10% !important;
+  margin: auto;
 }
 .editImages:hover{
   border-color: aqua;

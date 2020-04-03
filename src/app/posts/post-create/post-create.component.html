@@ -45,24 +45,26 @@
     <img *ngFor='let url of imageUrls' [src]="url" height="200"> <br />
     <input *ngIf="!editPost" input type="file" accept="image/png, image/jpeg" #filePicker (change)="onImagePicked($event)" multiple>
 
-    <button mat-raised-button color="primary" type="submit" style="float: right;">Save Post</button>
-   <div *ngIf="editPost" class="post-pictures">
-      <p>Click images to change your main image display:</p>
+    <div *ngIf="editPost" class="post-pictures">
+      <p>Click the image that you want to be your post's main image:</p>
       <img class="editImages" [src]=post.imageUrls[0] alt='post image picture1' aria-label="post picture1"
-        (click)="changeto0();">
+        (click)="changeto0();">&nbsp;
       <img class="editImages" [src]=post.imageUrls[1] alt='post image picture2' aria-label="post picture2"
-        (click)="changeto1();">
+        (click)="changeto1();">&nbsp;
       <img class="editImages" [src]=post.imageUrls[2] alt='post image picture3' aria-label="post picture3"
-        (click)="changeto2();">
-      <p *ngIf="imageIndex == 0">
-        You have chose the first image
-      </p>
-      <p *ngIf="imageIndex == 1">
-        You have chose the second image
-      </p>
-      <p *ngIf="imageIndex == 2">
-          You have chose the third image
-      </p>
+        (click)="changeto2();">&nbsp;
+      <div *ngIf="imageIndex == 0" class="alert alert-primary" role="alert">
+        You have chose the FIRST image
+      </div>
+      <div *ngIf="imageIndex == 1" class="alert alert-primary" role="alert">
+        You have chose the SECOND image
+      </div>
+      <div *ngIf="imageIndex == 2" class="alert alert-primary" role="alert">
+          You have chose the THIRD image
+      </div>
     </div>
+    <button mat-raised-button color="primary" type="submit" style="float: right;">Save Post</button>
+    <br>
+    <br>
   </form>
 </mat-card>

@@ -39,22 +39,12 @@
             <small >({{profile.ratingCount}})</small>
           <hr>
           <div>
-
             <p class="card-email">Email: {{ profile.email }}
               <br>
             </p>
             <p class="card-email">Contact Info: {{ profile.contact }}
               <br>
             </p>
-
-              <!-- <pre>Rate: <b>{{displayRaing}}</b></pre>
-            <p class="card-email">rating: {{ profile.ratings }}
-              <br>
-            </p>
-            <p class="card-email">ratingCount:
-              <br>
-            </p> -->
-
           </div>
         </div>
       </div>
@@ -68,7 +58,7 @@
     <div class="row">
       <div class="col-md-3" *ngFor="let post of showposts">
         <div class="card mb-4 box-shadow">
-          <img class="card-img" src="assets/bright4.jpg" alt="Card image" height="170">
+          <img class="card-img" [src] = post.mainImage alt="Card image" height="170">
           <div class="card-body">
             <h6 class="text-theme"><a (click)="showDetails(post)"> {{post.title}}</a></h6>
             <h5> ${{ post.price}} </h5>

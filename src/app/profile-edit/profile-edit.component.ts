@@ -58,6 +58,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     this.profileSub = this.profileService.getMyProfileUpdateListener()
       .subscribe((profile: Profile) => {
         this.profile = profile;
+        this.contact = profile.contact;
       });
   }
   ngOnDestroy() {

@@ -5,6 +5,7 @@ import { Post } from '../posts/post.model';
 import { Profile } from '../profile/profile.model';
 import { map } from 'rxjs/operators';
 import {mimeType } from './mime-type.validator';
+import { environment } from 'src/environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class ProfileService {
@@ -24,15 +25,15 @@ export class ProfileService {
 
 
   //backend
-  private profileUrl = 'http://localhost:3000/api/profile';
-  private verifyPass = 'http://localhost:3000/api/profile/verify';
-  private changePass = 'http://localhost:3000/api/profile/changePassword';
+  private profileUrl = environment.apiUrl + '/profile';
+  private verifyPass = environment.apiUrl + '/profile/verify';
+  private changePass = environment.apiUrl + '/profile/changePassword';
  //list url
-  private soldUrl = 'http://localhost:3000/api/lists/sold';
-  private purchaseUrl = 'http://localhost:3000/api/lists/purchased';
-  private pengdingUrl = 'http://localhost:3000/api/lists/pending';
-  private rateUrl = 'http://localhost:3000/api/profile/rate';
-  private contactUrl = 'http://localhost:3000/api/profile/contactUpdate';
+  private soldUrl = environment.apiUrl + '/lists/sold';
+  private purchaseUrl = environment.apiUrl + '/lists/purchased';
+  private pengdingUrl = environment.apiUrl + '/lists/pending';
+  private rateUrl = environment.apiUrl + '/profile/rate';
+  private contactUrl = environment.apiUrl + '/profile/contactUpdate';
 
 
   constructor(private http: HttpClient) {}

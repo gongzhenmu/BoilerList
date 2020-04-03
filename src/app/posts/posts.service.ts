@@ -4,6 +4,7 @@ import {  HttpClient } from '@angular/common/http';
 import { Post } from './post.model';
 import { map } from 'rxjs/operators';
 import {Tag} from '@angular/compiler/src/i18n/serializers/xml_helper';
+import { environment } from 'src/environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class PostsService {
@@ -12,7 +13,7 @@ export class PostsService {
   private myPost: Post;
   private postsUpdated = new Subject<Post[]>();
 
-  private posturl = 'http://localhost:3000/api/posts';
+  private posturl = environment.apiUrl + '/posts';
   constructor(private http: HttpClient) {}
   getPosts() {
     this.http.get<{ message: string; posts: any }>(this.posturl)
@@ -187,7 +188,7 @@ export class PostsService {
       updatedPosts[oldPostIndex] = post;
       this.posts = updatedPosts;
       this.postsUpdated.next([...this.posts]);
-    })
+    });
   }
 
 }

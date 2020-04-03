@@ -112,7 +112,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.displayRaing = this.profile.ratings/this.profile.ratingCount;
       });
     this.profile.username = this.otherUsername;
-    
+
   }
 
   ngOnDestroy() {

@@ -60,8 +60,13 @@ a:active {
     margin: auto;
     
 }
+.d-block{
+  height: 35rem !important;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
 .detailcard{
-  width: 75% !important;
+  width: 70% !important;
 }
 .status{
   margin-top: 0.7rem;

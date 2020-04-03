@@ -97,6 +97,12 @@ $theme-map: null;
           overflow: hidden;
           color: rgb(22, 145, 134);
         }
+        .bg-white{
+          background-color: rgba(27, 26, 26, 0.926) !important;
+        }
+        // .text-theme{
+        //   color: #fff !important;
+        // }
       }
   }
 }

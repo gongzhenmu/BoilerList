@@ -51,14 +51,14 @@
 
     <h4>How new is your item for sale?</h4>
       <mat-slider
-        [ngModel]="post.condition"
+        [ngModel]="postGadget.condition"
         name="condition"
         thumbLabel
         [displayWith]="formatLabel"
         tickInterval="1"
         min="0"
         max="4"></mat-slider><br>
-        
+
     <mat-form-field class="example-chip-list">
       <mat-chip-list
         #chipList

@@ -47,7 +47,7 @@ export class PostCreateComponent implements OnInit {
   };
 
 
-  public postGadget: object = { // translate from string to number
+  public postGadget: any = { // translate from string to number
     condition: 0,
   }
 

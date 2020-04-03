@@ -176,6 +176,32 @@ router.put("/:id",(req, res, next) => {
   });
 });
 
+//update mainImage
+router.post("/updateMainImage", checkAuth, (req,res, next) => {
+  const post = new Post({
+    _id: req.body.id,
+    title: req.body.title,
+    content: req.body.content,
+    price: req.body.price,
+    owner: req.body.owner,
+    tags: req.body.tags,
+    category: req.body.category,
+    condition: req.body.condition,
+    status: req.body.status,
+    buyer:req.body.buyer,
+    viewCount: req.body.viewCount,
+    rated:req.body.rated,
+    imageUrls: req.body.imageUrls,
+    mainImage: req.body.mainImage
+  });
+  Post.updateOne({_id: req.params.id} , post).then(updatedPost => {
+    console.log(updatedPost);
+    res.status(201).json({
+      message: "Post updated successfully",
+    });
+  });
+})
+
 
 
 

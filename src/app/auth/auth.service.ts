@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -15,11 +16,11 @@ export class AuthService {
   private username: string;
 
 // private _checkUrl = 'http://localhost:3000/api/checkUserNameAndEmail';
-  private loginUserURL = 'http://localhost:3000/api/login';
-  private createUserURL = 'http://localhost:3000/api/register';
-  private deleteAccountURL = 'http://localhost:3000/api/delete';
-  private checkUsernameAvailability = 'http://localhost:3000/api/register/checkUsername';
-  private checkEmailAvailability = 'http://localhost:3000/api/register/checkEmail';
+  private loginUserURL = environment.apiUrl + '/login';
+  private createUserURL = environment.apiUrl + '/register';
+  private deleteAccountURL = environment.apiUrl + '/delete';
+  private checkUsernameAvailability = environment.apiUrl + '/register/checkUsername';
+  private checkEmailAvailability = environment.apiUrl + '/register/checkEmail';
 
   constructor(private http: HttpClient, private router: Router) { }
   getToken() {

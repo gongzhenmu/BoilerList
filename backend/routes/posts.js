@@ -15,9 +15,9 @@ const image_storage = multer.diskStorage({
   destination: (req, file, cb) => {
 
     const isValid = MIMIE_TYPE_MAP[file.mimetype];
-    const postid = file.originalname.toLocaleLowerCase().split('-')[0];
+    const new_directory = file.originalname.toLocaleLowerCase();
     let error = new Error("Invalid mime type");
-    var path = "backend/images/posts/" + postid + "/";
+    var path = "backend/images/posts/" + new_directory + "/";
     if( !fs.existsSync(path)){
       fs.mkdirSync(path);
     }
@@ -33,9 +33,8 @@ const image_storage = multer.diskStorage({
     cb(null, name + '-' + Date.now() + '.' + ext);
   }
 });
-//add post to DB
-router.post("", checkAuth,(req, res, next) => {
-  console.log("adding posts: " + req.body);
+
+router.post("", checkAuth, multer({storage: image_storage}).array("images", 9), (req,res,next) => {
   const post = new Post({
     title: req.body.title,
     content: req.body.content,
@@ -45,52 +44,94 @@ router.post("", checkAuth,(req, res, next) => {
     category: req.body.category,
     condition: req.body.condition,
     status: req.body.status,
-    viewCount: req.body.viewCount,
+    viewCount: parseInt(req.body.viewCount),
     imageUrls: null,
     mainImage: " mainImage"
-
   });
-  post.save().then(createdPost => {
-    res.status(201).json({
-      message: "Post added successfully",
-      postId: createdPost._id
-    });
-  });
-});
 
-//add post images to DB
-router.post("/upload-images", multer({storage: image_storage}).array("images", 9), (req, res, next) => {
-  console.log("adding images to postid: " + req.body.postid);
   var imageUrls = new Array();
   const image_url = req.protocol + "://" + req.get("host");
-  const postid = req.body.postid;
   const files = req.files;
   if(!files){
     console.log("no file uploaded to backend");
   }
   else{
     for(let i = 0; i < files.length; i++){
-      const imagePath = image_url + "/images/posts/" + postid + "/"+ files[i].filename;
+      const imagePath = image_url + "/images/posts/" + post.title + '-' + post.owner + "/"+ files[i].filename;
       imageUrls.push(imagePath);
     }
-
-    Post.updateOne({_id: postid}, {imageUrls: imageUrls, mainImage: imageUrls[0]},(err, updatedPost) => {
-      if(err){
-        res.status.send("server error when uploading images");
-        return
-      }
-      else{
-        res.status(200).json({
-          message: "post images stored successfully",
-          imageUrls: imageUrls,
-          mainImage: imageUrls[0]
-        });
-      }
-    });
-
   }
+  post.imageUrls = imageUrls;
+  post.mainImage = imageUrls[0];
 
+  post.save().then(createdPost => {
+    res.status(201).json({
+      message: "Post added successfully",
+      postId: createdPost._id,
+      imageUrls: imageUrls,
+      mainImage: imageUrls[0],
+    });
+  });
 });
+
+//add post to DB
+// router.post("", checkAuth,(req, res, next) => {
+//   console.log("adding posts: " + req.body);
+//   const post = new Post({
+//     title: req.body.title,
+//     content: req.body.content,
+//     price: req.body.price,
+//     owner: req.body.owner,
+//     tags: req.body.tags,
+//     category: req.body.category,
+//     condition: req.body.condition,
+//     status: req.body.status,
+//     viewCount: number(req.body.viewCount),
+//     imageUrls: null,
+//     mainImage: " mainImage"
+//   });
+//   console.log("tags:" + req.body.tags);
+//   post.save().then(createdPost => {
+//     res.status(201).json({
+//       message: "Post added successfully",
+//       postId: createdPost._id
+//     });
+//   });
+// });
+
+// add post images to DB
+// router.post("/upload-images", multer({storage: image_storage}).array("images", 9), (req, res, next) => {
+//   console.log("adding images to postid: " + req.body.test);
+//   var imageUrls = new Array();
+//   const image_url = req.protocol + "://" + req.get("host");
+//   const postid = req.body.postid;
+//   const files = req.files;
+//   if(!files){
+//     console.log("no file uploaded to backend");
+//   }
+//   else{
+//     for(let i = 0; i < files.length; i++){
+//       const imagePath = image_url + "/images/posts/" + postid + "/"+ files[i].filename;
+//       imageUrls.push(imagePath);
+//     }
+
+//     Post.updateOne({_id: postid}, {imageUrls: imageUrls, mainImage: imageUrls[0]},(err, updatedPost) => {
+//       if(err){
+//         res.status.send("server error when uploading images");
+//         return
+//       }
+//       else{
+//         res.status(200).json({
+//           message: "post images stored successfully",
+//           imageUrls: imageUrls,
+//           mainImage: imageUrls[0]
+//         });
+//       }
+//     });
+
+//   }
+
+// });
 
 //get posts from DB
 router.get('',checkAuth,(req, res, next) => {
@@ -116,7 +157,9 @@ router.put("/:id",(req, res, next) => {
     status: req.body.status,
     buyer:req.body.buyer,
     viewCount: req.body.viewCount,
-    rated:req.body.rated
+    rated:req.body.rated,
+    imageUrls: req.body.imageUrls,
+    mainImage: req.body.mainImage
   });
   Post.updateOne({_id: req.params.id} , post).then(updatedPost => {
     console.log(updatedPost);

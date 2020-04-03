@@ -73,33 +73,48 @@ export class PostsService {
   addPost(title: string, content: string, price: string, owner: string, category: string, condition: string, tags: string[], status: string, viewCount: number, buyer: string, imageFiles: File[]) {
     // tslint:disable-next-line:max-line-length
     const post: Post = { id: null, title: title, content: content, price: price, owner: owner, category: category, condition: condition, tags: tags, status: status, viewCount: viewCount, buyer: buyer, imageUrls: null, mainImage: null, rated:false};
-    const imageData = new FormData();
+    const postData = new FormData();
+    postData.append('title', title);
+    postData.append('content', content);
+    postData.append('price', price);
+    postData.append('owner', owner);
+    postData.append('category', category);
+    postData.append('condition', condition);
+    postData.append('status', status);
+    postData.append('viewCount', viewCount.toString());
+    postData.append('rated', 'false');
+
+    for(let i = 0; i < tags.length; i++){
+      postData.append('tags', tags[i]);
+    }
+    //postData.append()
+    for(let i = 0; i < imageFiles.length; i++){
+      postData.append('images', imageFiles[i], title + '-' + owner);
+    }
 
     this.http
-      .post<{ message: string, postId: string}>(this.posturl, post)
+      .post<{ message: string, postId: string, imageUrls: string[], mainImage: string}>(this.posturl, postData)
       .subscribe(resData => {
         const id = resData.postId;
         post.id = id;
+        post.imageUrls = resData.imageUrls;
+        post.mainImage = resData.mainImage;
+        this.posts.push(post);
+        this.postsUpdated.next([...this.posts]);
         //console.log("post id: %s", post.id);
-        for(let i = 0; i < imageFiles.length; i++){
-          imageData.append('images', imageFiles[i], post.id +'-' + owner);
-          //console.log("imageData: %d: %s added!",i, imageFiles[i].name);
-        }
-        imageData.append('postid', post.id);
-        this.http
-        .post<{imageUrls: string[], mainImage: string}>(this.posturl + '/upload-images', imageData)
-        .subscribe(resData => {
-            post.imageUrls = resData.imageUrls;
-            post.mainImage = resData.mainImage;
-            this.posts.push(post);
-            this.postsUpdated.next([...this.posts]);
-            window.location.reload();
-        });
+
+        // postData.append('test', "testing string");
+        // postData.append('postid', post.id);
+        // this.http
+        // .post<{imageUrls: string[], mainImage: string}>(this.posturl + '/upload-images', postData)
+        // .subscribe(resData => {
+        //     post.imageUrls = resData.imageUrls;
+        //     post.mainImage = resData.mainImage;
+
+        //     //window.location.reload();
+        // });
 
       });
-
-
-
 
   }
 

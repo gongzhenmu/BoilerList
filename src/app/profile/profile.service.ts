@@ -83,7 +83,10 @@ export class ProfileService {
           tags: post.tags,
           status: post.status,
           viewCount: post.viewCount,
-          buyer: post.buyer
+          buyer: post.buyer,
+          imageUrls: post.imageUrls,
+          mainImage: post.mainImage,
+          rated: post.rated
         };
       });
     }))
@@ -110,7 +113,10 @@ export class ProfileService {
           tags: post.tags,
           status: post.status,
           viewCount: post.viewCount,
-          buyer: post.buyer
+          buyer: post.buyer,
+          imageUrls: post.imageUrls,
+          mainImage: post.mainImage,
+          rated: post.rated
         };
       });
     }))
@@ -136,7 +142,10 @@ export class ProfileService {
           tags: post.tags,
           status: post.status,
           viewCount: post.viewCount,
-          buyer: post.buyer
+          buyer: post.buyer,
+          imageUrls: post.imageUrls,
+          mainImage: post.mainImage,
+          rated: post.rated
         };
       });
     }))

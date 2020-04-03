@@ -82,17 +82,17 @@ export class PostsService {
         post.id = id;
         //console.log("post id: %s", post.id);
         for(let i = 0; i < imageFiles.length; i++){
-          imageData.append('images', imageFiles[i], post.id+'-' + owner);
+          imageData.append('images', imageFiles[i], post.id +'-' + owner);
           //console.log("imageData: %d: %s added!",i, imageFiles[i].name);
         }
         imageData.append('postid', post.id);
         this.http
         .post<{imageUrls: string[], mainImage: string}>(this.posturl + '/upload-images', imageData)
         .subscribe(resData => {
-            // post.imageUrls = resData.imageUrls;
-            // post.mainImage = resData.mainImage;
-            // this.posts.push(post);
-            // this.postsUpdated.next([...this.posts]);
+            post.imageUrls = resData.imageUrls;
+            post.mainImage = resData.mainImage;
+            this.posts.push(post);
+            this.postsUpdated.next([...this.posts]);
             window.location.reload();
         });
 

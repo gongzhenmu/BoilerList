@@ -277,12 +277,11 @@ export class PostCreateComponent implements OnInit {
         this.postsService.addPost(form.value.title, form.value.content, form.value.price, localStorage.getItem('username'),
           form.value.category, this.formatLabel(form.value.condition), postTags, 'available', 0, '', this.imageFiles);
       } else {
+        if(this.imageIndex != 111)
+          this.post.mainImage = this.post.imageUrls[this.imageIndex]
         this.postsService.updatePost(this.postId, form.value.title,
           form.value.content, form.value.price, localStorage.getItem('username'),
-          form.value.category, this.formatLabel(form.value.condition), postTags, 'available', this.post.viewCount, this.post.buyer, this.post.imageUrls, this.post.mainImage);
-          if(this.imageIndex != 111)
-            this.postsService.updateMainImage(this.post.id, this.post.imageUrls[this.imageIndex]);
-            
+          form.value.category, this.formatLabel(form.value.condition), postTags, 'available', this.post.viewCount, this.post.buyer, this.post.imageUrls, this.post.mainImage);   
       }
     form.resetForm();
     this.router.navigate(['/']);

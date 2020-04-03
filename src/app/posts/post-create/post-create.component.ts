@@ -212,6 +212,10 @@ export class PostCreateComponent implements OnInit {
   }
 
   onImagePicked(event){
+    if(this.imageFiles.length >= 3){
+      alert("at most 3 photos allowed");
+      return;
+    }
     if((event.target as HTMLInputElement).files && (event.target as HTMLInputElement).files[0]){
       console.log("Create-post: %s has been chosen", (event.target as HTMLInputElement).files[0].name);
       var imageCount = (event.target as HTMLInputElement).files.length;
@@ -241,10 +245,15 @@ export class PostCreateComponent implements OnInit {
         reader.readAsDataURL(imageFile);
       }
     }
-    console.log("onImagePicked: " + this.imageUrls.length);
+
   }
 
   onSavePost(form: NgForm) {
+    if(this.imageFiles.length == 0){
+      alert("please choose a photo");
+      return;
+    }
+    console.log("onImagePicked: " + this.imageUrls.length);
     console.log('FORM VALUE!!!');
     console.log(form.value);
     const postTags: string[] = [];

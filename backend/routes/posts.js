@@ -61,6 +61,11 @@ router.post("", checkAuth, multer({storage: image_storage}).array("images", 9), 
       const imagePath = image_url + "/images/posts/" + post.title + '-' + post.owner + "/"+ files[i].filename;
       imageUrls.push(imagePath);
     }
+    var fileNums = files.length;
+    while(fileNums <= 3){
+      imageUrls.push(image_url + "/images/posts/default/bright4.jpg");
+      fileNums++;
+    }
   }
   post.imageUrls = imageUrls;
   post.mainImage = imageUrls[0];

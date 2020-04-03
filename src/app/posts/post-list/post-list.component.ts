@@ -52,5 +52,6 @@ export class PostListComponent implements OnInit, OnDestroy {
   purchaseItem(post: Post){
     this.postsService.updateBuyer(post, this.currentUser);
     this.showList = true;
+    alert("Success! \nYou can now go to your pending list to change this transaction status!");
   }
 }

@@ -89,7 +89,7 @@ export class PostsService {
     }
     //postData.append()
     for(let i = 0; i < imageFiles.length; i++){
-      postData.append('images', imageFiles[i], title + '-' + owner);
+      postData.append('images', imageFiles[i], title + '-' + owner + '-' + imageFiles[i].name);
     }
 
     this.http

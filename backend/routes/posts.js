@@ -15,7 +15,7 @@ const image_storage = multer.diskStorage({
   destination: (req, file, cb) => {
 
     const isValid = MIMIE_TYPE_MAP[file.mimetype];
-    const new_directory = file.originalname.toLocaleLowerCase();
+    const new_directory = file.originalname.toLocaleLowerCase().split('-', 2).join('-');
     let error = new Error("Invalid mime type");
     var path = "backend/images/posts/" + new_directory + "/";
     if( !fs.existsSync(path)){
@@ -30,7 +30,7 @@ const image_storage = multer.diskStorage({
     console.log("disk_storage: storing file: " + file.originalname);
     const name = file.originalname.toLocaleLowerCase().split('-')[1];
     const ext = MIMIE_TYPE_MAP[file.mimetype];
-    cb(null, name + '-' + Date.now() + '.' + ext);
+    cb(null, name + '-' + Date.now() + '-' + file.originalname.toLocaleLowerCase().split('-')[2].split('.')[0] + '.' + ext);
   }
 });
 
@@ -57,6 +57,7 @@ router.post("", checkAuth, multer({storage: image_storage}).array("images", 9), 
   }
   else{
     for(let i = 0; i < files.length; i++){
+      console.log(files[i].filename);
       const imagePath = image_url + "/images/posts/" + post.title + '-' + post.owner + "/"+ files[i].filename;
       imageUrls.push(imagePath);
     }

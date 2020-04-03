@@ -37,7 +37,7 @@
                     <br>
                     <button *ngIf="!choosedPicture" class="btn btn-outline-primary" type="button"
                         (click)="filePicker.click()">
-                        Change Your Avatar</button>
+                        Change Avatar</button>
                     <input type="file" accept="image/png, image/jpeg" #filePicker (change)="onImagePicked()"
                         style="width: 0em; height: 0em;">
                     <div class=" image-preview" *ngIf="imagePreview != '' && imagePreview">

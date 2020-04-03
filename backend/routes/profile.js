@@ -87,7 +87,9 @@ router.put("/update/:id", checkAuth, (req, res, next) => {
     condition: req.body.condition,
     buyer:req.body.buyer,
     status: req.body.status,
-    rated:req.body.rated
+    rated:req.body.rated,
+    imageUrls: req.body.imageUrls,
+    mainImage: req.body.mainImage
   });
   Post.updateOne({_id: req.params.id} , post).then(updatedPost => {
     console.log(updatedPost);

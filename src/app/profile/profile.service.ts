@@ -219,7 +219,7 @@ export class ProfileService {
     avatarData.append('image', image, username);
     avatarData.append('username', username);
     this.http.post< {message: string; imagePath: string}>(
-      'http://localhost:3000/api/profile/avatar-upload',
+      environment.apiUrl + '/profile/avatar-upload',
       avatarData
     )
     .subscribe(responseData => {

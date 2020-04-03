@@ -29,6 +29,7 @@ export class PostCreateComponent implements OnInit {
   enteredContent = '';
   private mode = 'create';
   private postId: string;
+  editPost = false;
   public post: Post = {
     id: '',
     title: '',
@@ -60,6 +61,7 @@ export class PostCreateComponent implements OnInit {
   addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   tags: Tag[] = [];
+  imageIndex: number = 111;
 
   //image
   imgAfterCompressed: string;
@@ -115,6 +117,7 @@ export class PostCreateComponent implements OnInit {
       if (paramMap.has('postId')) {
         console.log('进入post-edit模式!');
         this.mode = 'edit';
+        this.editPost = true;
         this.postId = paramMap.get('postId');
         console.log('postid: ' + this.postId);
         this.postsService.getPost(this.postId).then(transformedPosts => {
@@ -134,6 +137,7 @@ export class PostCreateComponent implements OnInit {
       } else {
         this.mode = 'create';
         this.postId = null;
+        this.editPost = false;
       }
     });
 
@@ -267,6 +271,8 @@ export class PostCreateComponent implements OnInit {
         this.postsService.updatePost(this.postId, form.value.title,
           form.value.content, form.value.price, localStorage.getItem('username'),
           form.value.category, this.formatLabel(form.value.condition), postTags, 'available', this.post.viewCount, this.post.buyer, this.post.imageUrls, this.post.mainImage);
+          // if(this.imageIndex != 111)
+            
       }
     form.resetForm();
     this.router.navigate(['/']);
@@ -281,5 +287,14 @@ export class PostCreateComponent implements OnInit {
       }
       const blob = new Blob([int8Array], { type: 'image/jpeg' });
       return blob;
+    }
+    changeto0(){
+      this.imageIndex = 0;
+    }
+    changeto1(){
+      this.imageIndex = 1;
+    }
+    changeto2(){
+      this.imageIndex = 2;
     }
   }

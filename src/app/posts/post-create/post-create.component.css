@@ -14,3 +14,11 @@ mat-slider {
 .half-width {
   width: 50%;
 }
+.editImages{
+  border-radius: 90%;
+  height: 10% !important;
+  width: 10% !important;
+}
+.editImages:hover{
+  border-color: aqua;
+}

@@ -1,36 +1,19 @@
-
- <mat-card>
+<mat-card>
   <form (submit)="onSavePost(postForm)" #postForm="ngForm">
     <mat-form-field>
-      <input matInput
-      type = "text"
-      name="title"
-      [ngModel]="post.title"
-      #title="ngModel"
-      required
-      minlength="3"
-      placeholder="Title"
-      >
+      <input matInput type="text" name="title" [ngModel]="post.title" #title="ngModel" required minlength="3"
+        placeholder="Title">
       <mat-error *ngIf="title.invalid">Min title length is 3 </mat-error>
     </mat-form-field>
     <mat-form-field>
-      <textarea matInput
-      rows='4'
-      name="content"
-      [ngModel]="post.content"
-      required
-      minlength="1"
-      placeholder="Description"
-      #content="ngModel"></textarea>
+      <textarea matInput rows='4' name="content" [ngModel]="post.content" required minlength="1"
+        placeholder="Description" #content="ngModel"></textarea>
       <mat-error *ngIf="content.invalid">Content cannot be empty </mat-error>
     </mat-form-field>
 
     <mat-form-field class="half-width">
       <mat-label>Category</mat-label>
-      <mat-select
-        name="category"
-        [ngModel]="post.category"
-      >
+      <mat-select name="category" [ngModel]="post.category">
         <mat-option *ngFor="let category of categories" [value]="category.value">
           {{category.viewValue}}
         </mat-option>
@@ -38,57 +21,48 @@
     </mat-form-field>
 
     <mat-form-field class="half-width">
-      <input matInput
-             type="number"
-             name="price"
-             [ngModel]="post.price"
-             required
-             minlength="1"
-             placeholder="Price"
-             #price="ngModel">
+      <input matInput type="number" name="price" [ngModel]="post.price" required minlength="1" placeholder="Price"
+        #price="ngModel">
       <mat-error *ngIf="price.invalid">Content cannot be empty or non-numeric</mat-error>
     </mat-form-field>
 
     <h4>How new is your item for sale?</h4>
-      <mat-slider
-        [ngModel]="postGadget.condition"
-        name="condition"
-        thumbLabel
-        [displayWith]="formatLabel"
-        tickInterval="1"
-        min="0"
-        max="4"></mat-slider><br>
+    <mat-slider [ngModel]="postGadget.condition" name="condition" thumbLabel [displayWith]="formatLabel"
+      tickInterval="1" min="0" max="4"></mat-slider><br>
 
     <mat-form-field class="example-chip-list">
-      <mat-chip-list
-        #chipList
-        aria-label="Fruit selection"
-      >
-        <mat-chip *ngFor="let tag of tags" [selectable]="selectable"
-                  [removable]="removable" (removed)="remove(tag)">
+      <mat-chip-list #chipList aria-label="Fruit selection">
+        <mat-chip *ngFor="let tag of tags" [selectable]="selectable" [removable]="removable" (removed)="remove(tag)">
           {{tag.name}}
           <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
         </mat-chip>
-        <input placeholder="Add upto 3 Tags for Your Item..."
-               [matChipInputFor]="chipList"
-               [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-               [matChipInputAddOnBlur]="addOnBlur"
-               (matChipInputTokenEnd)="add($event)">
+        <input placeholder="Add upto 3 Tags for Your Item..." [matChipInputFor]="chipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+          (matChipInputTokenEnd)="add($event)">
       </mat-chip-list>
     </mat-form-field>
 
-    <img *ngFor='let url of imageUrls'  [src]="url" height="200"> <br/>
-    <input input type="file" accept="image/png, image/jpeg" #filePicker (change)="onImagePicked($event)" multiple>
+    <img *ngFor='let url of imageUrls' [src]="url" height="200"> <br />
+    <input *ngIf="!editPost" input type="file" accept="image/png, image/jpeg" #filePicker (change)="onImagePicked($event)" multiple>
 
-    <button mat-raised-button
-    color = "primary" type="submit" style="float: right;">Save Post</button>
+    <button mat-raised-button color="primary" type="submit" style="float: right;">Save Post</button>
+   <div *ngIf="editPost" class="post-pictures">
+      <p>Click images to change your main image display:</p>
+      <img class="editImages" [src]=post.imageUrls[0] alt='post image picture1' aria-label="post picture1"
+        (click)="changeto0();">
+      <img class="editImages" [src]=post.imageUrls[1] alt='post image picture2' aria-label="post picture2"
+        (click)="changeto1();">
+      <img class="editImages" [src]=post.imageUrls[2] alt='post image picture3' aria-label="post picture3"
+        (click)="changeto2();">
+      <p *ngIf="imageIndex == 0">
+        You have chose the first image
+      </p>
+      <p *ngIf="imageIndex == 1">
+        You have chose the second image
+      </p>
+      <p *ngIf="imageIndex == 2">
+          You have chose the third image
+      </p>
+    </div>
   </form>
-
-
 </mat-card>
-
-
-
-
-
-

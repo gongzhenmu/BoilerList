@@ -61,6 +61,11 @@ router.post("", checkAuth, multer({storage: image_storage}).array("images", 9), 
       const imagePath = image_url + "/images/posts/" + post.title + '-' + post.owner + "/"+ files[i].filename;
       imageUrls.push(imagePath);
     }
+    var fileNums = files.length;
+    while(fileNums <= 3){
+      imageUrls.push(image_url + "/images/posts/default/bright4.jpg");
+      fileNums++;
+    }
   }
   post.imageUrls = imageUrls;
   post.mainImage = imageUrls[0];
@@ -170,6 +175,32 @@ router.put("/:id",(req, res, next) => {
     });
   });
 });
+
+//update mainImage
+router.post("/updateMainImage", checkAuth, (req,res, next) => {
+  const post = new Post({
+    _id: req.body.id,
+    title: req.body.title,
+    content: req.body.content,
+    price: req.body.price,
+    owner: req.body.owner,
+    tags: req.body.tags,
+    category: req.body.category,
+    condition: req.body.condition,
+    status: req.body.status,
+    buyer:req.body.buyer,
+    viewCount: req.body.viewCount,
+    rated:req.body.rated,
+    imageUrls: req.body.imageUrls,
+    mainImage: req.body.mainImage
+  });
+  Post.updateOne({_id: req.params.id} , post).then(updatedPost => {
+    console.log(updatedPost);
+    res.status(201).json({
+      message: "Post updated successfully",
+    });
+  });
+})
 
 
 

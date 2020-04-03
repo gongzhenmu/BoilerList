@@ -113,7 +113,6 @@ export class PostsService {
 
         //     //window.location.reload();
         // });
-
       });
 
   }
@@ -179,5 +178,16 @@ export class PostsService {
 
   }
 
+  updateMainImage(postid: string, imageUrl: string){
+    const updatedPosts = [...this.posts];
+    const oldPostIndex = updatedPosts.findIndex(p => p.id === postid);
+    var post = updatedPosts.find(p => p.id == postid);
+    post.mainImage = imageUrl;
+    this.http.put(this.posturl + '/updateMainImage' , post).subscribe(resData => {
+      updatedPosts[oldPostIndex] = post;
+      this.posts = updatedPosts;
+      this.postsUpdated.next([...this.posts]);
+    })
+  }
 
 }

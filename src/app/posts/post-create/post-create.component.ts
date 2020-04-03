@@ -253,10 +253,10 @@ export class PostCreateComponent implements OnInit {
   }
 
   onSavePost(form: NgForm) {
-    if(this.imageFiles.length == 0){
-      alert("please choose a photo");
-      return;
-    }
+    // if(this.imageFiles.length == 0){
+    //   alert("please choose a photo");
+    //   return;
+    // }
     console.log("onImagePicked: " + this.imageUrls.length);
     console.log('FORM VALUE!!!');
     console.log(form.value);
@@ -280,7 +280,8 @@ export class PostCreateComponent implements OnInit {
         this.postsService.updatePost(this.postId, form.value.title,
           form.value.content, form.value.price, localStorage.getItem('username'),
           form.value.category, this.formatLabel(form.value.condition), postTags, 'available', this.post.viewCount, this.post.buyer, this.post.imageUrls, this.post.mainImage);
-          // if(this.imageIndex != 111)
+          if(this.imageIndex != 111)
+            this.postsService.updateMainImage(this.post.id, this.post.imageUrls[this.imageIndex]);
             
       }
     form.resetForm();

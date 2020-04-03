@@ -89,10 +89,11 @@ export class PostsService {
         this.http
         .post<{imageUrls: string[], mainImage: string}>(this.posturl + '/upload-images', imageData)
         .subscribe(resData => {
-            post.imageUrls = resData.imageUrls;
-            post.mainImage = resData.mainImage;
-            this.posts.push(post);
-            this.postsUpdated.next([...this.posts]);
+            // post.imageUrls = resData.imageUrls;
+            // post.mainImage = resData.mainImage;
+            // this.posts.push(post);
+            // this.postsUpdated.next([...this.posts]);
+            window.location.reload();
         });
 
       });

@@ -28,13 +28,15 @@ export class ProfileService {
   private profileUrl = environment.apiUrl + '/profile';
   private verifyPass = environment.apiUrl + '/profile/verify';
   private changePass = environment.apiUrl + '/profile/changePassword';
+  private feedbackUrl = environment.apiUrl + '/profile/feedback';
+
  //list url
   private soldUrl = environment.apiUrl + '/lists/sold';
   private purchaseUrl = environment.apiUrl + '/lists/purchased';
   private pengdingUrl = environment.apiUrl + '/lists/pending';
   private rateUrl = environment.apiUrl + '/profile/rate';
   private contactUrl = environment.apiUrl + '/profile/contactUpdate';
-  private feedbackUrl = environment.apiUrl + '/profile/feedback';
+
 
 
   constructor(private http: HttpClient) {}
@@ -234,6 +236,9 @@ export class ProfileService {
   verifyPassword(username: string, password: string) {
     return this.http.post<any>(this.verifyPass, {username, password});
   }
+  sendFeedback( feedback: string) {
+    return this.http.post<any>(this.feedbackUrl, { feedback});
+  }
 
 
   updatePassword(username: string, password: string) {
@@ -249,8 +254,8 @@ export class ProfileService {
   updateContact(username: string, contact: string) {
     return this.http.post<any>(this.contactUrl, {username, contact});
   }
-  sendFeedback(feedback:string){
-    return this.http.post<any>(this.feedbackUrl, {feedback});
-  }
+
+
+
 
 }

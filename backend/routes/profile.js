@@ -1,12 +1,27 @@
 const express = require('express');
 const router = express.Router();
 const utils = require('utility');
+const nodemailer = require('nodemailer');
 
 const userM = require('../models/user');
 const Post = require('../models/post');
 
 const checkAuth = require('../middleware/checkAuth');
 const multer = require("multer");
+
+//feedback emails
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'gzmcsproject@gmail.com',
+    pass: 'cs407niubi'
+  }
+});
+
+
+
+
+
 
 const MIMIE_TYPE_MAP = {
   'image/png': 'png',
@@ -30,18 +45,7 @@ const avatar_storage = multer.diskStorage({
   }
 });
 
-// router.post('/getOthers', checkAuth, (req, res) => {
-//     const data = req.body;
-//     try {
-//         if (data.username === '' || data.username == null) {
-//             res.status(400).send();
-//             return;
-//         }
-//     }
-//     catch (e) {
-//         res.status(400).send();
-//         return;
-//     }
+
 
 //get current user's uploaded posts from DB
 router.get('', checkAuth, (req, res, next) =>{
@@ -134,6 +138,7 @@ router.post("/avatar-upload", multer({storage: avatar_storage}).single("image"),
 router.post("/verify",checkAuth, (req,res,next) => {
 
   const userData = req.body;
+
   userM.findOne({username: userData.username}, (err, user)=> {
 
 
@@ -155,6 +160,8 @@ router.post("/verify",checkAuth, (req,res,next) => {
   });
 
 });
+
+
 
 router.post("/changePassword",checkAuth, (req,res,next) => {
   const userData = req.body;
@@ -213,6 +220,48 @@ router.post('/contactUpdate',checkAuth,(req,res,next)=>{
   });
 
 });
+
+
+
+
+//feedback
+router.post("/feedback",checkAuth, (req,res,next) => {
+
+
+  var mailOptions = {
+    from: 'gzmcsproject@gmail.com',
+    to: 'gzmcsproject@gmail.com',
+    subject: 'user feedback',
+    text: req.body.feedback
+  };
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      res.status(501).send();
+    } else {
+      console.log("sent");
+      res.status(200).send();
+    }
+  });
+
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

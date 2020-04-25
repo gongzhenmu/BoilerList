@@ -15,6 +15,9 @@ export class FeedbackComponent implements OnInit {
     if (!feedback) {
       return;
     }
-    this.ps.sendFeedback(feedback);
+    this.ps.sendFeedback(feedback).subscribe(() => {
+      alert("Thank you");
+    });
+
   }
 }

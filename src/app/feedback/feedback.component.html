@@ -1,0 +1,29 @@
+<form class="col-span-3  form-signin">
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col">
+                <div class="card">
+                    <div class="card-header text-black">
+                        <h3 class="text-theme">Leave us feedback to help us improve</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="inputFeedback" class="sr-only">Input your feedback</label>
+                            <div class="form-group align-items-center ">
+                                <textarea #feedback class="form-control form-control-lg" id="exampleFormControlTextarea1"
+                                    rows="3" spellcheck="false" placeholder="Your feedback..."></textarea>
+                            </div>
+                        </div>
+                        <button (click)="add('', feedback.value); feedback.value = ''" 
+                        class="btn btn-lg btn-primary btn-block" type="submit">
+                        Send it</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

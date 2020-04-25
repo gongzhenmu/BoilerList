@@ -29,6 +29,8 @@ import { AuthInterceptor } from './auth/auth-interceptor';
 import { AuthGuard } from './auth/auth.guard';
 import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 import { NgxImageCompressService } from 'ngx-image-compress';
+import { SearchComponent } from './search/search.component';
+import { FeedbackComponent } from './feedback/feedback.component';
 
 
 const appRoutes: Routes = [
@@ -39,8 +41,10 @@ const appRoutes: Routes = [
   { path: '',  component: PostListComponent, canActivate: [AuthGuard] },
   { path: 'login',      component: LoginComponent },
   { path: 'profile',      component: ProfileComponent , canActivate: [AuthGuard]},
+  { path: 'search',      component: SearchComponent , canActivate: [AuthGuard]},
   { path: 'profile/:username', component: ProfileComponent, canActivate: [AuthGuard]},
   { path: 'profileEdit',      component: ProfileEditComponent , canActivate: [AuthGuard]},
+  { path: 'feedback', component:FeedbackComponent, canActivate:[AuthGuard]},
   { path: '**', component: PageNotFoundComponent }
 ];
 
@@ -54,7 +58,9 @@ const appRoutes: Routes = [
     PageNotFoundComponent,
     LoginComponent,
     ProfileComponent,
-    ProfileEditComponent
+    ProfileEditComponent,
+    SearchComponent,
+    FeedbackComponent
   ],
   imports: [
     BrowserModule,

@@ -34,6 +34,7 @@ export class ProfileService {
   private pengdingUrl = environment.apiUrl + '/lists/pending';
   private rateUrl = environment.apiUrl + '/profile/rate';
   private contactUrl = environment.apiUrl + '/profile/contactUpdate';
+  private feedbackUrl = environment.apiUrl + '/profile/feedback';
 
 
   constructor(private http: HttpClient) {}
@@ -248,9 +249,8 @@ export class ProfileService {
   updateContact(username: string, contact: string) {
     return this.http.post<any>(this.contactUrl, {username, contact});
   }
-
-
-
-
+  sendFeedback(feedback:string){
+    return this.http.post<any>(this.feedbackUrl, {feedback});
+  }
 
 }

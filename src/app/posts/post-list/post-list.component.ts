@@ -61,7 +61,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   public filter: Filter = {
     category: '',
     minValue: 0,
-    maxValue: 5000,
+    maxValue: 1000,
     condition: '',
     status: ''
   };
@@ -72,9 +72,13 @@ export class PostListComponent implements OnInit, OnDestroy {
     maxValue: 1000,
     options: {
       floor: 0,
-      ceil: 5000,
+      ceil: 2000,
       translate: (value: number): string => {
-        return '$' + value;
+        if (value === 2000) {
+          return '$' + value + '+';
+        } else {
+            return '$' + value;
+        }
       }
     },
   };
@@ -101,12 +105,12 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.showList = false;
     this.CurrentPost = post;
     this.postsService.updateViewCount(post);
-    if (post.status != 'available') {
+    if (post.status !== 'available') {
       this.itemSold = true;
     } else {
       this.itemSold = false;
     }
-    if (post.owner == this.currentUser) {
+    if (post.owner === this.currentUser) {
       this.ownPost = true;
     } else {
       this.ownPost = false;

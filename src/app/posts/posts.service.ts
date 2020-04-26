@@ -227,7 +227,11 @@ export class PostsService {
             matched = (post.condition === condition);
           }
           if (matched) {
-            matched = (parseInt(post.price, 10) >= minValue && parseInt(post.price, 10) <= maxValue);
+            if (maxValue === 2000) {
+              matched = (parseInt(post.price, 10) >= minValue);
+            } else {
+              matched = (parseInt(post.price, 10) >= minValue && parseInt(post.price, 10) <= maxValue);
+            }
           }
           return matched;
         });

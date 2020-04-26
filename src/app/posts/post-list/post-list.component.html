@@ -21,7 +21,7 @@
             <mat-radio-button value="Like New">Like New</mat-radio-button>&nbsp;&nbsp;
           </mat-radio-group><br>
           <mat-label>Select price range: </mat-label><br>
-          <ng5-slider (valueChange)="onChangeFilters(filterForm)" [(value)]="priceRange.minValue" [(highValue)]="priceRange.maxValue" [options]="priceRange.options"></ng5-slider>
+          <ng5-slider [(highValue)]="priceRange.maxValue" [(value)]="priceRange.minValue" [options]="priceRange.options" (valueChange)="onChangeFilters(filterForm)" (highValueChange)="onChangeFilters(filterForm)"></ng5-slider>
         </form>
       </mat-card>
       <div class="col-md-3" *ngFor="let post of posts">

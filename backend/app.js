@@ -33,14 +33,15 @@ mongoose.connect(db, {useNewUrlParser: true, useUnifiedTopology: true})
  app.use(bodyParser.json());
  app.use(cors());
  app.use("/images", express.static(path.join("backend/images")));
+//  app.use("/", express.static(path.join(__dirname, "angular")));
 
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, GET, DELETE, OPTIONS');
-  next();
-});
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, GET, DELETE, OPTIONS');
+//   next();
+// });
 
  //--------------------------post----------------------
  app.use("/api/posts",postRoutes);
@@ -58,6 +59,14 @@ app.use('/api/tags', tagsRoutes);
 app.use('/api/findUser', findUserRoutes);
 //-----------------------------------------
 app.use('/api/lists',lists);
+
+
+
+
+
+// app.use((req, res, next) => {
+//   res.sendFile(path.join(__dirname, "angular", "index.html"));
+// });
 
 
 

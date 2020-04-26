@@ -1,41 +1,54 @@
 const express = require("express");
 const router = express.Router();
-const mongoose = require("mongoose");
+const nodemailer = require('nodemailer');
+const utils = require('utility');
 const User = require('../models/user');
-const email = require("emailjs");
-const jwt = require('jsonwebtoken');
-const checkAuth = require("../middleware/checkAuth");
-const utility = require('utility');
+var generator = require('generate-password');
 
-const server = email.server.connect({
-  user: "bolerlist@hotmail.com",
-  password: "cs407project",
-  host: "smtp.live.com",
-  ssl: true
+
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'gzmcsproject@gmail.com',
+    pass: 'cs407niubi'
+  }
 });
 
 router.post('/findPassword', (req, res)=>{
-  console.log('Try to find password for the user: ', req.body.username);
-  User.findOne({ username: req.body.username },(err, user) =>{
+  console.log('Try to find password for the user: ', req.body.email);
+  User.findOne({ email: req.body.email },(err, user) =>{
     if(err){
       console.log('Find user failed.', err);
     } else if (!user) {
       console.log('Find user failed.');
       res.status(401).send('Cannot find user');
     } else {
-      server.send({
-        text: 'Your password is: ' + user.password,
-        from: "",
-        to: user.email,
-        cc: "",
-        subject: "BoilerList:Password Recovery Email",
-      }, function(err, message) {
+      var password = generator.generate({
+        length: 10,
+        numbers: true
+      });
+      var encryptedPass = utils.md5(password, 'base64');
+      User.updateOne({email: user.email}, {password:encryptedPass}, (err) => {
         if (err) {
-          console.log('Send email failed.', err);
-          res.status(200).send(err);
+          res.status(500).send('server error');
+          return
+        }
+        res.status(200).send();
+
+      });
+      var mailOptions = {
+        from: 'gzmcsproject@gmail.com',
+        to: user.email,
+        subject: 'password info --BoilerList',
+        text: 'Your temporary password is: ' + encryptedPass + '\n'+'Please update you password as soon as possible'
+      };
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          res.status(501).send();
         } else {
-          console.log('Send email success!');
-          res.status(200).send(message);
+          console.log("sent");
+          res.status(200).send();
         }
       });
     }
@@ -43,27 +56,6 @@ router.post('/findPassword', (req, res)=>{
 });
 
 
-router.post('/updatePassword', (req, res)=> {
-  console.log('the header:', req.headers);
-  User.updateOne(
-    {
-      username: req.body.username,
-      password: req.body.oldPassword
-    }, {
-      password: req.body.newPassword
-
-    },
-    function(err, data){
-
-      if(err) {
-        console.log('update info failed.', err);
-        return res.status(400).send(err);
-      } else {
-        console.log('update info success!');
-        return res.status(200).send(data);
-      }
-    })
-});
 
 
 module.exports = router;

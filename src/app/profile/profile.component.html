@@ -1,11 +1,15 @@
-<div class="nav-scroller bg-white box-shadow" *ngIf="currentUserPage">
-  <nav class="nav nav-underline">
+<div class="nav-scroller bg-white box-shadow" >
+  <nav class="nav nav-underline"*ngIf="currentUserPage">
     <a class="nav-link text-theme" href="javascript:history.go(0)">Profile</a>
     <a class="nav-link text-theme" (click)="showMyLists();" routerLink="/profile">MyPosts</a>
     <a class="nav-link text-theme" (click)="showSoldList();" routerLink="/profile">Sold</a>
     <a class="nav-link text-theme" (click)="showPendingList();" routerLink="/profile">Pending</a>
     <a class="nav-link text-theme" (click)="showPurchaseList();" routerLink="/profile">Purchased</a>
   </nav>
+  <nav class="nav nav-underline" *ngIf="!currentUserPage">
+    <a class="nav-link text-theme" href="javascript:history.go(0)">Profile</a>
+    <a class="nav-link text-theme" (click)="showSellerLists();" [routerLink]="['/profile', profile.username]">Seller's List</a>
+     </nav>
 </div>
 
 <div id="profile" *ngIf="!MyPosts && !rateTheSeller">

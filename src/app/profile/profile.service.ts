@@ -42,8 +42,8 @@ export class ProfileService {
   constructor(private http: HttpClient) {}
 
 
-  getMyPosts() {
-    const httpParams = new HttpParams().set('username', localStorage.getItem('username'));
+  getMyPosts(username: string) {
+    const httpParams = new HttpParams().set('username', username);
     this.http.get<{message: string; posts: any}>(this.profileUrl, {params: httpParams})
     .pipe(map((postData) => {
       return postData.posts.map(post => {

@@ -75,8 +75,16 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.otherUsername = this.currentUser;
       this.currentUserPage = true;
     }
+        //profileInfo
+        this.profileService.getMyProfile(this.otherUsername);
+        this.profileSub = this.profileService.getMyProfileUpdateListener()
+          .subscribe((profile: Profile) => {
+            this.profile = profile;
+            this.displayRaing = this.profile.ratings/this.profile.ratingCount;
+          });
+        this.profile.username = this.otherUsername;
     //total
-    this.profileService.getMyPosts();
+    this.profileService.getMyPosts(this.profile.username);
     this.postsSub = this.profileService.getMyPostsUpdateListener()
       .subscribe((posts: Post[]) => {
         this.posts = posts;
@@ -104,14 +112,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
       .subscribe((posts: Post[]) => {
         this.purchased = posts;
       });
-    //profileInfo
-    this.profileService.getMyProfile(this.otherUsername);
-    this.profileSub = this.profileService.getMyProfileUpdateListener()
-      .subscribe((profile: Profile) => {
-        this.profile = profile;
-        this.displayRaing = this.profile.ratings/this.profile.ratingCount;
-      });
-    this.profile.username = this.otherUsername;
+    // //sellingList
+    //     this.profileService.getMyPosts(localStorage.getItem('username'));
+    // this.postsSub = this.profileService.getMyPostsUpdateListener()
+    //   .subscribe((posts: Post[]) => {
+    //     this.posts = posts;
+    //   });
+
 
   }
 
@@ -249,7 +256,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.postsService.setRated(this.CurrentPost);
       this.goBack();
     });
-
+  }
+  showSellerLists(){
+    this.MyPosts = true;
+    this.showposts = this.posts;
+    this.showList = false;
   }
 
 }

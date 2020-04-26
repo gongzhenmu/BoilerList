@@ -160,7 +160,7 @@ export class PostCreateComponent implements OnInit {
         return 'Used';
         break;
       case 3:
-        return 'OpenBox';
+        return 'Open Box';
         break;
       case 4:
         return 'Like New';
@@ -281,7 +281,7 @@ export class PostCreateComponent implements OnInit {
           this.post.mainImage = this.post.imageUrls[this.imageIndex]
         this.postsService.updatePost(this.postId, form.value.title,
           form.value.content, form.value.price, localStorage.getItem('username'),
-          form.value.category, this.formatLabel(form.value.condition), postTags, 'available', this.post.viewCount, this.post.buyer, this.post.imageUrls, this.post.mainImage);   
+          form.value.category, this.formatLabel(form.value.condition), postTags, 'available', this.post.viewCount, this.post.buyer, this.post.imageUrls, this.post.mainImage);
       }
     form.resetForm();
     this.router.navigate(['/']);

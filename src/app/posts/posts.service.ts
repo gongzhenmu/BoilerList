@@ -192,4 +192,47 @@ export class PostsService {
     });
   }
 
+  filterPosts(category: string | string | any, status: any, condition: any, minValue: number, maxValue: number) {
+    this.http.get<{ message: string; posts: any }>(this.posturl)
+      .pipe(map((postData) => {
+        return postData.posts.map(post => {
+          return {
+            title: post.title,
+            content: post.content,
+            price: post.price,
+            owner: post.owner,
+            id: post._id,
+            category: post.category,
+            condition: post.condition,
+            tags: post.tags,
+            status: post.status,
+            viewCount: post.viewCount,
+            buyer: post.buyer,
+            imageUrls: post.imageUrls,
+            mainImage: post.mainImage
+          };
+        });
+      }))
+      .subscribe(transformedPosts => {
+        this.posts = transformedPosts;
+        const updatedPosts = this.posts.filter(post => {
+          let matched = true;
+          if (category !== '' && matched) {
+            matched = (post.category === category);
+          }
+          if (status !== '' && matched) {
+            matched = (post.status === status);
+          }
+          if (condition !== '' && matched) {
+            matched = (post.condition === condition);
+          }
+          if (matched) {
+            matched = (parseInt(post.price, 10) >= minValue && parseInt(post.price, 10) <= maxValue);
+          }
+          return matched;
+        });
+        this.posts = updatedPosts;
+        this.postsUpdated.next([...this.posts]);
+      });
+  }
 }

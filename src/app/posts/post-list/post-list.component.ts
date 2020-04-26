@@ -81,18 +81,18 @@ export class PostListComponent implements OnInit, OnDestroy {
   public filter: Filter = {
     category: '',
     minValue: 0,
-    maxValue: 1000,
+    maxValue: 5000,
     condition: '',
     status: ''
   };
 
   // priceRange
   priceRange: PriceRangeSlider = {
-    minValue: 400,
-    maxValue: 600,
+    minValue: 0,
+    maxValue: 1000,
     options: {
       floor: 0,
-      ceil: 1000,
+      ceil: 5000,
       translate: (value: number): string => {
         return '$' + value;
       }
@@ -156,6 +156,8 @@ export class PostListComponent implements OnInit, OnDestroy {
     console.log('$' + this.priceRange.minValue + '-$' + this.priceRange.maxValue);
 
     // combine all filters to fetch matching posts
+    this.postsService.filterPosts(form.value.category, form.value.status ? 'pending' : 'available',
+      form.value.condition, this.priceRange.minValue, this.priceRange.maxValue);
   }
 
 }

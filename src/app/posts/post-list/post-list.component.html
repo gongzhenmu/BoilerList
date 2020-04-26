@@ -1,6 +1,27 @@
 <div class="album py-6" *ngIf="showList">
   <div class="container">
     <div class="row">
+      <div class="col-md-3 card box-shadow">
+        <h4>Filter Your Results</h4>
+        <mat-label>Select category: </mat-label>
+          <mat-select class="bg-white" name="category" placeholder="Select a category">
+            <mat-option *ngFor="let category of categories" [value]="category.value" >
+              {{category.viewValue}}
+            </mat-option>
+          </mat-select><br>
+        <mat-label>Select status: </mat-label>
+        <mat-slide-toggle>Show pending posts</mat-slide-toggle><br>
+        <mat-label>Select condition: </mat-label>
+        <mat-radio-group aria-label="Select the condition">
+          <mat-radio-button value="Broken">Broken</mat-radio-button>&nbsp;&nbsp;
+          <mat-radio-button value="Refurbished">Refurbished</mat-radio-button>&nbsp;&nbsp;
+          <mat-radio-button value="Used">Used</mat-radio-button>&nbsp;&nbsp;
+          <mat-radio-button value="Open Box">Open Box</mat-radio-button>&nbsp;&nbsp;
+          <mat-radio-button value="Like New">Like New</mat-radio-button>&nbsp;&nbsp;
+        </mat-radio-group>
+        <mat-label>Select price range: </mat-label>
+        <ng5-slider [(value)]="priceRange.minValue" [(highValue)]="priceRange.maxValue" [options]="priceRange.options"></ng5-slider>
+        </div>
       <div class="col-md-3" *ngFor="let post of posts">
         <div class="card mb-4 box-shadow">
           <img class="card-img" [src]= post.mainImage alt="Main Image of this item" height="170">

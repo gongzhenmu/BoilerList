@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AppComponent } from './app.component';
 import { PostCreateComponent } from './posts/post-create/post-create.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -15,7 +15,7 @@ import {
   MatToolbarModule,
   MatExpansionModule,
   MatSelectModule,
-  MatChipsModule, MatIconModule, MatRadioModule, MatSlideToggleModule
+  MatChipsModule, MatIconModule, MatRadioModule, MatSlideToggleModule, MatButtonToggleModule
 } from '@angular/material';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { PostListComponent } from './posts/post-list/post-list.component';
@@ -63,30 +63,32 @@ const appRoutes: Routes = [
     SearchComponent,
     FeedbackComponent
   ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    NoopAnimationsModule,
-    BrowserAnimationsModule,
-    MatInputModule,
-    MatCardModule,
-    MatButtonModule,
-    MatToolbarModule,
-    MatExpansionModule,
-    HttpClientModule,
-    MatSliderModule,
-    NgbModule,
-    RouterModule.forRoot(
-      appRoutes,
-      {enableTracing: true} // <-- debugging purposes only
-    ),
-    MatSelectModule,
-    MatChipsModule,
-    MatIconModule,
-    MatRadioModule,
-    MatSlideToggleModule,
-    Ng5SliderModule,
-  ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        NoopAnimationsModule,
+        BrowserAnimationsModule,
+        MatInputModule,
+        MatCardModule,
+        MatButtonModule,
+        MatToolbarModule,
+        MatExpansionModule,
+        HttpClientModule,
+        MatSliderModule,
+        NgbModule,
+        RouterModule.forRoot(
+            appRoutes,
+            {enableTracing: true} // <-- debugging purposes only
+        ),
+        MatSelectModule,
+        MatChipsModule,
+        MatIconModule,
+        MatRadioModule,
+        MatSlideToggleModule,
+        Ng5SliderModule,
+        MatButtonToggleModule,
+        ReactiveFormsModule,
+    ],
   providers: [
     AuthGuard, NgxImageCompressService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }

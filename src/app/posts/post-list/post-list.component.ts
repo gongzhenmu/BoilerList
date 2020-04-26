@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { Post } from '../post.model';
 import { PostsService } from '../posts.service';
 import { Options } from 'ng5-slider';
+import {FormBuilder, FormGroup, NgForm} from '@angular/forms';
 
 interface Category {
   value: string;
@@ -14,7 +15,14 @@ interface PriceRangeSlider {
   minValue: number;
   maxValue: number;
   options: Options;
-  translate(value: number): any;
+}
+
+interface Filter {
+  category: string;
+  minValue: number;
+  maxValue: number;
+  condition: string;
+  status: string;
 }
 
 @Component({
@@ -23,7 +31,6 @@ interface PriceRangeSlider {
   styleUrls: ['./post-list.component.css']
 })
 export class PostListComponent implements OnInit, OnDestroy {
-
   posts: Post[] = [];
   private postsSub: Subscription;
   constructor(public postsService: PostsService) {}
@@ -70,6 +77,16 @@ export class PostListComponent implements OnInit, OnDestroy {
     {value: 'Video Games & Consoles', viewValue: 'Video Games & Consoles'}
   ];
 
+  // Filters
+  public filter: Filter = {
+    category: '',
+    minValue: 0,
+    maxValue: 1000,
+    condition: '',
+    status: ''
+  };
+
+  // priceRange
   priceRange: PriceRangeSlider = {
     minValue: 400,
     maxValue: 600,
@@ -81,7 +98,7 @@ export class PostListComponent implements OnInit, OnDestroy {
       }
     },
   };
-
+  toggleMessage: any;
 
   ngOnInit() {
     this.postsService.getPosts();
@@ -89,9 +106,10 @@ export class PostListComponent implements OnInit, OnDestroy {
       .subscribe((posts: Post[]) => {
         this.posts = posts;
       });
+    this.toggleMessage = 'Show Pending Posts!';
   }
 
-  onDelete(postId: string){
+  onDelete(postId: string) {
     this.postsService.deletePost(postId);
   }
 
@@ -99,24 +117,47 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.postsSub.unsubscribe();
   }
 
-  showDetails(post: Post){
+  showDetails(post: Post) {
     this.showList = false;
     this.CurrentPost = post;
     this.postsService.updateViewCount(post);
-    if(post.status != 'available')
+    if (post.status != 'available') {
       this.itemSold = true;
-    else
+    } else {
       this.itemSold = false;
-    if(post.owner == this.currentUser)
+    }
+    if (post.owner == this.currentUser) {
       this.ownPost = true;
-    else
+    } else {
       this.ownPost = false;
+    }
   }
-  purchaseItem(post: Post){
+  purchaseItem(post: Post) {
     this.postsService.updateBuyer(post, this.currentUser);
     this.showList = true;
-    alert("Success! \nYou can now go to your pending list to change this transaction status!");
+    alert('Success! \nYou can now go to your pending list to change this transaction status!');
   }
+
+  onToggled(e) {
+    if (e.checked) {
+      this.toggleMessage = 'Show Available Posts!';
+    } else {
+      this.toggleMessage = 'Show Pending Posts!';
+    }
+  }
+  onChangeFilters(form: NgForm) {
+
+    // Get category, status, condition
+    console.log('FORM VALUE!!!');
+    console.log(form.value);
+
+    // Get price range
+    console.log('Price Range!!!');
+    console.log('$' + this.priceRange.minValue + '-$' + this.priceRange.maxValue);
+
+    // combine all filters to fetch matching posts
+  }
+
 }
 
 

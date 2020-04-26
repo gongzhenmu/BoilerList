@@ -15,7 +15,7 @@ import {
   MatToolbarModule,
   MatExpansionModule,
   MatSelectModule,
-  MatChipsModule, MatIconModule
+  MatChipsModule, MatIconModule, MatRadioModule, MatSlideToggleModule
 } from '@angular/material';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { PostListComponent } from './posts/post-list/post-list.component';
@@ -31,6 +31,7 @@ import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 import { NgxImageCompressService } from 'ngx-image-compress';
 import { SearchComponent } from './search/search.component';
 import { FeedbackComponent } from './feedback/feedback.component';
+import {Ng5SliderModule} from 'ng5-slider';
 
 
 const appRoutes: Routes = [
@@ -82,6 +83,9 @@ const appRoutes: Routes = [
     MatSelectModule,
     MatChipsModule,
     MatIconModule,
+    MatRadioModule,
+    MatSlideToggleModule,
+    Ng5SliderModule,
   ],
   providers: [
     AuthGuard, NgxImageCompressService,

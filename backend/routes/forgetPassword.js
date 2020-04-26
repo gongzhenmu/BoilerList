@@ -8,9 +8,9 @@ const checkAuth = require("../middleware/checkAuth");
 const utility = require('utility');
 
 const server = email.server.connect({
-  user: "",
-  password: "",
-  host: "",
+  user: "bolerlist@hotmail.com",
+  password: "cs407project",
+  host: "smtp.live.com",
   ssl: true
 });
 

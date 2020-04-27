@@ -18,9 +18,11 @@ export class ProfileService {
   private puchasePost: Post[];
   private soldPost: Post[];
   private pendingPost: Post[];
+  private searchPost: Post[];
   private soldUpdated  = new Subject<Post[]>();
   private pendingUpdated  = new Subject<Post[]>();
   private purchaseUpdated  = new Subject<Post[]>();
+  private searchUpdated = new Subject<Post[]>();
 
 
 
@@ -186,7 +188,11 @@ export class ProfileService {
           rated: post.rated
         };
       });
-    }));
+    }))
+    .subscribe(transformedPosts => {
+      this.searchPost = transformedPosts;
+      this.searchUpdated.next([...this.searchPost]);
+    });
   }
 
 
@@ -222,6 +228,9 @@ export class ProfileService {
 
   getPendingPostUpdateListener(){
     return this.pendingUpdated.asObservable();
+  }
+  getSearchPostUpdateListener(){
+    return this.searchUpdated.asObservable();
   }
 
   deletePost(postId: string) {

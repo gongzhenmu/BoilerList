@@ -15,8 +15,8 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-router.post('/findPassword', (req, res)=>{
-  console.log('Try to find password for the user: ', req.body.email);
+router.post('/', (req, res)=>{
+  // console.log('Try to find password for the user: ', req.body.email);
   User.findOne({ email: req.body.email },(err, user) =>{
     if(err){
       console.log('Find user failed.', err);
@@ -41,7 +41,7 @@ router.post('/findPassword', (req, res)=>{
         from: 'gzmcsproject@gmail.com',
         to: user.email,
         subject: 'password info --BoilerList',
-        text: 'Your temporary password is: ' + encryptedPass + '\n'+'Please update you password as soon as possible'
+        text: 'Your temporary password is: ' + password + '\n'+'Please update you password as soon as possible'
       };
       transporter.sendMail(mailOptions, function(error, info){
         if (error) {

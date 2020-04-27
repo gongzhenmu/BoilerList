@@ -9,6 +9,7 @@ const profileRoutes = require('./routes/profile');
 const tagsRoutes = require('./routes/tags');
 const findUserRoutes = require('./routes/findUser');
 const search = require('./routes/search');
+const forgetPassword = require('./routes/forgetPassword');
 
 
 const lists = require('./routes/lists');
@@ -62,6 +63,8 @@ app.use('/api/findUser', findUserRoutes);
 app.use('/api/lists',lists);
 //---------------------------------
 app.use('/api/search',search);
+//--------forgetpassword
+app.use('/api/forgetPassword',forgetPassword);
 
 
 

@@ -38,6 +38,10 @@ export class ProfileService {
   private contactUrl = environment.apiUrl + '/profile/contactUpdate';
 
 
+  //search
+  private searchUrl = environment.apiUrl + '/search';
+
+
 
   constructor(private http: HttpClient) {}
 
@@ -157,6 +161,32 @@ export class ProfileService {
       this.pendingPost = transformedPosts;
       this.pendingUpdated.next([...this.pendingPost]);
     });
+  }
+
+  // ----------------search ------------
+  getSearchPosts(title: string) {
+    const httpParams = new HttpParams().set('title', title);
+    this.http.get<{message: string; posts: any}>(this.searchUrl, {params: httpParams})
+    .pipe(map((postData) => {
+      return postData.posts.map(post => {
+        return {
+          title: post.title,
+          content: post.content,
+          price: post.price,
+          owner: post.owner,
+          id: post._id,
+          category: post.category,
+          condition: post.condition,
+          tags: post.tags,
+          status: post.status,
+          viewCount: post.viewCount,
+          buyer: post.buyer,
+          imageUrls: post.imageUrls,
+          mainImage: post.mainImage,
+          rated: post.rated
+        };
+      });
+    }));
   }
 
 

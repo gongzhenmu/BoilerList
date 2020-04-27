@@ -11,7 +11,7 @@ const checkAuth = require("../middleware/checkAuth");
 router.get('',checkAuth,(req, res, next) => {
   Post.find(
     {
-      title: { "$regex": req.body.keyword, "$options": "i" }
+      title: { "$regex": req.query.title, "$options": "i" }
     }
   ).then(documents => {
     console.log(documents);

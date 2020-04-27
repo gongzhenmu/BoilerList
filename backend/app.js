@@ -8,6 +8,7 @@ const loginRoutes = require('./routes/login');
 const profileRoutes = require('./routes/profile');
 const tagsRoutes = require('./routes/tags');
 const findUserRoutes = require('./routes/findUser');
+const search = require('./routes/search');
 
 
 const lists = require('./routes/lists');
@@ -59,7 +60,8 @@ app.use('/api/tags', tagsRoutes);
 app.use('/api/findUser', findUserRoutes);
 //-----------------------------------------
 app.use('/api/lists',lists);
-
+//---------------------------------
+app.use('/api/search',search);
 
 
 

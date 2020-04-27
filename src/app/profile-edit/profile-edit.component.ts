@@ -48,7 +48,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   compressedFile: File;
   isCompressed: boolean = false;
   ngOnInit() {
-    this.profileService.getMyPosts();
+    this.profileService.getMyPosts(localStorage.getItem('username'));
     this.postsSub = this.profileService.getMyPostsUpdateListener()
       .subscribe((posts: Post[]) => {
         this.posts = posts;

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { Post } from '../post.model';
@@ -56,6 +56,10 @@ export class PostListComponent implements OnInit, OnDestroy {
     {value: 'Furniture & Household Good', viewValue: 'Furniture & Household Good'},
     {value: 'Sports & Outdoor', viewValue: 'Sports & Outdoor'},
   ];
+
+  // Select filterForm from html and name it as form
+  // @ts-ignore
+  @ViewChild('filterForm') form: NgForm;
 
   // Filters
   public filter: Filter = {
@@ -144,6 +148,14 @@ export class PostListComponent implements OnInit, OnDestroy {
       form.value.condition, this.priceRange.minValue, this.priceRange.maxValue);
   }
 
+  onResetFilters() {
+    // Reset form
+    this.form.reset();
+
+    // get all posts
+    this.postsService.getPosts();
+
+  }
 }
 
 

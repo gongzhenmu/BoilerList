@@ -169,7 +169,7 @@ button span:before, button span:after
     display: block;
     margin-top: 1rem;
   }
-  
+
   a:link {
     color: green;
     background-color: transparent;
@@ -193,7 +193,7 @@ button span:before, button span:after
   :root {
     --jumbotron-padding-y: 3rem;
   }
-  
+
   .jumbotron {
     padding-top: var(--jumbotron-padding-y);
     padding-bottom: var(--jumbotron-padding-y);
@@ -206,26 +206,26 @@ button span:before, button span:after
       padding-bottom: calc(var(--jumbotron-padding-y) * 2);
     }
   }
-  
+
   .jumbotron p:last-child {
     margin-bottom: 0;
   }
-  
+
   .jumbotron-heading {
     font-weight: 300;
   }
-  
+
   .jumbotron .container {
     max-width: 40rem;
   }
-  
+
   .box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
   .album .container .row .col-md-4{
     background-color: rgba(252, 240, 240,0);
   }
   .carousel{
       margin: auto;
-      
+
   }
   .d-block{
     height: 35rem !important;
@@ -238,3 +238,17 @@ button span:before, button span:after
   .status{
     margin-top: 0.7rem;
   }
+
+.resetButton {
+  float: right;
+  background-color: DodgerBlue;
+  border: none;
+  color: white;
+  padding: 6px 8px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.resetButton:hover {
+  background-color: RoyalBlue;
+}

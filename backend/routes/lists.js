@@ -50,7 +50,7 @@ router.get("/pending",checkAuth,(req,res,next)=>{
 router.post("/addfavorite",(req,res,next)=>{
 
   userM.updateOne({username:req.body.username},
-    { $addToSet: { userFavorites: mongoose.Types.ObjectId('5e86e285a48737308845a8ab') }}
+    { $addToSet: { userFavorites: mongoose.Types.ObjectId(req.body.postId) }}
   ).then(documents=>{
     res.status(200).send();
   });

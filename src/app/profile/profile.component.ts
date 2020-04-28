@@ -245,6 +245,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.showposts = this.purchased;
     this.showList = false;
   }
+  showFavoriteList(){
+    this.MyPosts = true;
+    // this.showposts = this.favorite;
+    this.showList = false;
+  }
   rateSeller() {
     this.rateTheSeller = true;
   }

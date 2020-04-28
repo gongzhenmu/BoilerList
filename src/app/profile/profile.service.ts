@@ -23,30 +23,22 @@ export class ProfileService {
   private pendingUpdated  = new Subject<Post[]>();
   private purchaseUpdated  = new Subject<Post[]>();
   private searchUpdated = new Subject<Post[]>();
-
-
-
   //backend
   private profileUrl = environment.apiUrl + '/profile';
   private verifyPass = environment.apiUrl + '/profile/verify';
   private changePass = environment.apiUrl + '/profile/changePassword';
+  private forgetPass = environment.apiUrl + '/forgetPassword';
   private feedbackUrl = environment.apiUrl + '/profile/feedback';
-
  //list url
   private soldUrl = environment.apiUrl + '/lists/sold';
   private purchaseUrl = environment.apiUrl + '/lists/purchased';
   private pengdingUrl = environment.apiUrl + '/lists/pending';
   private rateUrl = environment.apiUrl + '/profile/rate';
   private contactUrl = environment.apiUrl + '/profile/contactUpdate';
-
-
   //search
   private searchUrl = environment.apiUrl + '/search';
 
-
-
   constructor(private http: HttpClient) {}
-
 
   getMyPosts(username: string) {
     const httpParams = new HttpParams().set('username', username);
@@ -105,7 +97,6 @@ export class ProfileService {
       this.soldUpdated.next([...this.soldPost]);
     });
   }
-
 
   getMyPurchasePosts() {
     const httpParams = new HttpParams().set('username', localStorage.getItem('username'));
@@ -195,7 +186,6 @@ export class ProfileService {
     });
   }
 
-
   getMyProfile(username) {
     const httpParams = new HttpParams().set('username', username);
     this.http.get<{
@@ -271,20 +261,17 @@ export class ProfileService {
     });
   }
 
-
   verifyPassword(username: string, password: string) {
     return this.http.post<any>(this.verifyPass, {username, password});
   }
+
   sendFeedback( feedback: string) {
     return this.http.post<any>(this.feedbackUrl, { feedback});
   }
 
-
   updatePassword(username: string, password: string) {
     return this.http.post<any>(this.changePass, {username, password});
-
   }
-
 
   updateRating(username: string, rate: number) {
     return this.http.post<any>(this.rateUrl, {username, rate});
@@ -294,7 +281,7 @@ export class ProfileService {
     return this.http.post<any>(this.contactUrl, {username, contact});
   }
 
-
-
-
+  forgetPassword(email: string) {
+    return this.http.post<any>(this.forgetPass, {email});
+  }
 }

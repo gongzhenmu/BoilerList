@@ -32,6 +32,7 @@ import { NgxImageCompressService } from 'ngx-image-compress';
 import { SearchComponent } from './search/search.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import {Ng5SliderModule} from 'ng5-slider';
+import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 
 
 const appRoutes: Routes = [
@@ -46,6 +47,7 @@ const appRoutes: Routes = [
   { path: 'profile/:username', component: ProfileComponent, canActivate: [AuthGuard]},
   { path: 'profileEdit',      component: ProfileEditComponent , canActivate: [AuthGuard]},
   { path: 'feedback', component:FeedbackComponent, canActivate:[AuthGuard]},
+  { path: 'forget-password', component:ForgetPasswordComponent},
   { path: '**', component: PageNotFoundComponent }
 ];
 
@@ -61,7 +63,8 @@ const appRoutes: Routes = [
     ProfileComponent,
     ProfileEditComponent,
     SearchComponent,
-    FeedbackComponent
+    FeedbackComponent,
+    ForgetPasswordComponent
   ],
     imports: [
         BrowserModule,

@@ -46,11 +46,22 @@ router.get("/pending",checkAuth,(req,res,next)=>{
 
 
 
-//-------favorite list -----------
+//-------add favorite list -----------
 router.post("/addfavorite",(req,res,next)=>{
 
   userM.updateOne({username:req.body.username},
     { $addToSet: { userFavorites: mongoose.Types.ObjectId(req.body.postId) }}
+  ).then(documents=>{
+    res.status(200).send();
+  });
+});
+
+
+
+router.post("/deletefavorite",(req,res,next)=>{
+
+  userM.updateOne({username:req.body.username},
+    { $pull: { userFavorites: mongoose.Types.ObjectId(req.body.postId) }}
   ).then(documents=>{
     res.status(200).send();
   });

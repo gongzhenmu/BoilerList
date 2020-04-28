@@ -107,6 +107,8 @@ export class SearchComponent implements OnInit, OnDestroy {
       .subscribe((searchResult: Post[]) => {
         this.searchResult = searchResult;
         this.searchResultBackUp = this.searchResult;
+        console.log('searchResultBackUp');
+        console.log(this.searchResultBackUp);
       });
   }
   showDetails(post: Post) {
@@ -139,7 +141,9 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
   onChangeFilters(form: NgForm) {
     this.searchResult = this.searchResultBackUp;
-    console.log(form.value);
+    console.log('Search Results!!!');
+    console.log(this.searchResult);
+
     // combine all filters to fetch matching posts
     const filteredPosts = this.searchResult.filter(post => {
       let matched = true;

@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { Post } from '../posts/post.model';
 import { ProfileService } from './profile.service';
 import { Profile } from './profile.model';
+import { Review } from './review.model';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
@@ -22,6 +23,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   purchased: Post[] = [];
   pending: Post[] = [];
   favorite: Post[] = [];
+  reviews: Review[] = [];
   public profile: Profile = {
     username: '',
     email: '',
@@ -37,6 +39,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   private postsSub: Subscription;
   private profileSub: Subscription;
   private favoriteSub: Subscription;
+  private reviewSub: Subscription;
 
 
   constructor(private imageCompress: NgxImageCompressService,
@@ -63,6 +66,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
   purchaseUser = false;
   rateTheSeller = false;
   canRateSeller = false;
+  SellerComment = false;
+  noReviews = false;
   rating: number;
   displayRaing: number;
   ngOnInit() {
@@ -128,7 +133,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
     //     this.posts = posts;
     //   });
 
-
+    //review
+    this.profileService.getRatingComment(this.otherUsername);
+    this.reviewSub = this.profileService.getRatingCommentUpdateListener()
+      .subscribe((reviews: Review[]) =>{
+        this.reviews = reviews;
+      })
   }
 
   ngOnDestroy() {
@@ -275,6 +285,14 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.MyPosts = true;
     this.showposts = this.posts;
     this.showList = false;
+    this.SellerComment = false;
+  }
+  showRatingComment(){
+    this.SellerComment = true;
+    this.showList = false;
+    this.MyPosts = true;
+    if(this.reviews.length == 0)
+      this.noReviews = true;
   }
 
 }

@@ -2,6 +2,7 @@ import { Injectable, ɵangular_packages_core_core_bm } from '@angular/core';
 import { Subject } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Post } from '../posts/post.model';
+import { Review } from './review.model';
 import { Profile } from '../profile/profile.model';
 import { map } from 'rxjs/operators';
 import { mimeType } from './mime-type.validator';
@@ -12,6 +13,7 @@ export class ProfileService {
 
   private posts: Post[];
   private profile: Profile;
+  private review: Review[];
   private postsUpdated = new Subject<Post[]>();
   private profileUpdated = new Subject<Profile>();
   //lists
@@ -25,6 +27,7 @@ export class ProfileService {
   private purchaseUpdated = new Subject<Post[]>();
   private searchUpdated = new Subject<Post[]>();
   private favoriteUpdated = new Subject<Post[]>();
+  private ratingCommentUpdated = new Subject<Review[]>();
   //backend
   private profileUrl = environment.apiUrl + '/profile';
   private verifyPass = environment.apiUrl + '/profile/verify';
@@ -41,6 +44,8 @@ export class ProfileService {
   private searchUrl = environment.apiUrl + '/search';
   //favorite
   private favoriteUrl = environment.apiUrl + '/lists/favoriteList';
+  //ratingcomment
+  private ratingcommentUrl = environment.apiUrl + '/profile/getReviews';
 
   constructor(private http: HttpClient) { }
 
@@ -260,6 +265,9 @@ export class ProfileService {
   getFavoriteListUpdateListener() {
     return this.favoriteUpdated.asObservable();
   }
+  getRatingCommentUpdateListener(){
+    return this.ratingCommentUpdated.asObservable();
+  }
 
   deletePost(postId: string) {
     this.http.delete(this.profileUrl + '/delete/' + postId)
@@ -321,5 +329,24 @@ export class ProfileService {
 
   forgetPassword(email: string) {
     return this.http.post<any>(this.forgetPass, { email });
+  }
+
+  getRatingComment(username: string) {
+    const httpParams = new HttpParams().set('username', username);
+    this.http.get<{ review: any }>(this.ratingcommentUrl, { params: httpParams })
+      .pipe(map((reviewData) => {
+        console.log(reviewData);
+        console.log(username);
+        return reviewData.review.map(review => {
+          return {
+            rate: review.rate,
+            content: review.content
+          };
+        });
+      }))
+      .subscribe(transformedReview => {
+        this.review = transformedReview;
+        this.ratingCommentUpdated.next([...this.review]);
+      });
   }
 }

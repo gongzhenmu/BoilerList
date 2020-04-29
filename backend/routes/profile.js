@@ -225,6 +225,7 @@ router.get("/getReviews",checkAuth,(req,res,next)=>{
     if(err){
       res.status(401).send();
     }else{
+      console.log(review);
       res.status(200).json({
         review:review
       });

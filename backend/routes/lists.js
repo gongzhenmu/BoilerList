@@ -86,6 +86,7 @@ router.get("/favoriteList",(req,res,next)=>{
     postM.find(
       {_id:{ $in: documents.userFavorites}}
     ).then(posts=>{
+      console.log(posts);
       res.status(200).json({
         posts:posts
       });

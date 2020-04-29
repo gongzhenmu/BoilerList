@@ -47,7 +47,7 @@ router.get("/pending",checkAuth,(req,res,next)=>{
 
 
 //-------add favorite list -----------
-router.post("/addfavorite",(req,res,next)=>{
+router.post("/addfavorite",checkAuth,(req,res,next)=>{
 
   userM.updateOne({username:req.body.username},
     { $addToSet: { userFavorites: mongoose.Types.ObjectId(req.body.postId) }},
@@ -63,7 +63,7 @@ router.post("/addfavorite",(req,res,next)=>{
 
 
 
-router.post("/deletefavorite",(req,res,next)=>{
+router.post("/deletefavorite",checkAuth,(req,res,next)=>{
 
   userM.updateOne({username:req.body.username},
     { $pull: { userFavorites: mongoose.Types.ObjectId(req.body.postId) }},
@@ -79,7 +79,7 @@ router.post("/deletefavorite",(req,res,next)=>{
 
 
 //-------favorite list -----------
-router.get("/favoriteList",(req,res,next)=>{
+router.get("/favoriteList",checkAuth,(req,res,next)=>{
   // const username = req.body.username;
   userM.findOne({username:req.query.username})
   .then(documents=>{

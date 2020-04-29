@@ -50,9 +50,14 @@ router.get("/pending",checkAuth,(req,res,next)=>{
 router.post("/addfavorite",(req,res,next)=>{
 
   userM.updateOne({username:req.body.username},
-    { $addToSet: { userFavorites: mongoose.Types.ObjectId(req.body.postId) }}
-  ).then(documents=>{
-    res.status(200).send();
+    { $addToSet: { userFavorites: mongoose.Types.ObjectId(req.body.postId) }},
+    (err, user) => {
+      if(err){
+        res.status(401).send();
+      }else{
+        res.status(200).send();
+      }
+
   });
 });
 
@@ -61,10 +66,15 @@ router.post("/addfavorite",(req,res,next)=>{
 router.post("/deletefavorite",(req,res,next)=>{
 
   userM.updateOne({username:req.body.username},
-    { $pull: { userFavorites: mongoose.Types.ObjectId(req.body.postId) }}
-  ).then(documents=>{
-    res.status(200).send();
-  });
+    { $pull: { userFavorites: mongoose.Types.ObjectId(req.body.postId) }},
+    (err, user) => {
+      if(err){
+        res.status(401).send();
+      }else{
+        res.status(200).send();
+      }
+
+    });
 });
 
 

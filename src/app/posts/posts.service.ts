@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import {  HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Post } from './post.model';
 import { map } from 'rxjs/operators';
-import {Tag} from '@angular/compiler/src/i18n/serializers/xml_helper';
+import { Tag } from '@angular/compiler/src/i18n/serializers/xml_helper';
 import { environment } from 'src/environments/environment';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class PostsService {
 
   private posts: Post[] = [];
@@ -14,7 +14,9 @@ export class PostsService {
   private postsUpdated = new Subject<Post[]>();
 
   private posturl = environment.apiUrl + '/posts';
-  constructor(private http: HttpClient) {}
+  private addFavoriteUrl = environment.apiUrl + '/lists/addfavorite';
+  private deleteFavoriteUrl = environment.apiUrl + '/lists/deletefavorite';
+  constructor(private http: HttpClient) { }
   getPosts() {
     this.http.get<{ message: string; posts: any }>(this.posturl)
       .pipe(map((postData) => {
@@ -73,7 +75,7 @@ export class PostsService {
 
   addPost(title: string, content: string, price: string, owner: string, category: string, condition: string, tags: string[], status: string, viewCount: number, buyer: string, imageFiles: File[]) {
     // tslint:disable-next-line:max-line-length
-    const post: Post = { id: null, title: title, content: content, price: price, owner: owner, category: category, condition: condition, tags: tags, status: status, viewCount: viewCount, buyer: buyer, imageUrls: null, mainImage: null, rated:false};
+    const post: Post = { id: null, title: title, content: content, price: price, owner: owner, category: category, condition: condition, tags: tags, status: status, viewCount: viewCount, buyer: buyer, imageUrls: null, mainImage: null, rated: false };
     const postData = new FormData();
     postData.append('title', title);
     postData.append('content', content);
@@ -85,16 +87,16 @@ export class PostsService {
     postData.append('viewCount', viewCount.toString());
     postData.append('rated', 'false');
 
-    for(let i = 0; i < tags.length; i++){
+    for (let i = 0; i < tags.length; i++) {
       postData.append('tags', tags[i]);
     }
     //postData.append()
-    for(let i = 0; i < imageFiles.length; i++){
+    for (let i = 0; i < imageFiles.length; i++) {
       postData.append('images', imageFiles[i], title + '-' + owner + '-' + imageFiles[i].name);
     }
 
     this.http
-      .post<{ message: string, postId: string, imageUrls: string[], mainImage: string}>(this.posturl, postData)
+      .post<{ message: string, postId: string, imageUrls: string[], mainImage: string }>(this.posturl, postData)
       .subscribe(resData => {
         const id = resData.postId;
         post.id = id;
@@ -122,14 +124,14 @@ export class PostsService {
   // tslint:disable-next-line:max-line-length
   updatePost(id: string, title: string, content: string, price: string, owner: string, category: string, condition: string, tags: string[], status: string, viewCount: number, buyer: string, imageUrls: string[], mainImage: string) {
     // tslint:disable-next-line:max-line-length
-    const post: Post = { id: id, title: title, content: content, price: price, owner: owner, category: category, condition: condition, tags: tags, status: status, viewCount: viewCount, buyer: buyer, imageUrls: imageUrls, mainImage: mainImage, rated: false};
+    const post: Post = { id: id, title: title, content: content, price: price, owner: owner, category: category, condition: condition, tags: tags, status: status, viewCount: viewCount, buyer: buyer, imageUrls: imageUrls, mainImage: mainImage, rated: false };
     this.http.put(this.posturl + '/' + id, post).subscribe(resData => {
       const updatedPosts = [...this.posts];
       const oldPostIndex = updatedPosts.findIndex(p => p.id === post.id);
       updatedPosts[oldPostIndex] = post;
       this.posts = updatedPosts;
       this.postsUpdated.next([...this.posts]);
-      });
+    });
   }
 
   deletePost(postId: string) {
@@ -141,7 +143,7 @@ export class PostsService {
       });
   }
 
-  updateViewCount(post: Post){
+  updateViewCount(post: Post) {
     const tempPost = post;
     tempPost.viewCount += 1;
     this.http.put(this.posturl + '/' + tempPost.id, post).subscribe(resData => {
@@ -152,7 +154,7 @@ export class PostsService {
       this.postsUpdated.next([...this.posts]);
     });
   }
-  updateBuyer(post: Post, username: string){
+  updateBuyer(post: Post, username: string) {
     const tempPost = post;
     tempPost.buyer = username;
     tempPost.status = 'pending';
@@ -166,7 +168,7 @@ export class PostsService {
 
   }
 
-  setRated(post: Post){
+  setRated(post: Post) {
     const tempPost = post;
     tempPost.rated = true;
     this.http.put(this.posturl + '/' + tempPost.id, post).subscribe(resData => {
@@ -179,13 +181,13 @@ export class PostsService {
 
   }
 
-  updateMainImage(postid: string, imageUrl: string){
+  updateMainImage(postid: string, imageUrl: string) {
     const updatedPosts = [...this.posts];
     const oldPostIndex = updatedPosts.findIndex(p => p.id === postid);
     var post = updatedPosts.find(p => p.id == postid);
     post.mainImage = imageUrl;
     console.log(imageUrl);
-    this.http.put(this.posturl + '/updateMainImage' , post).subscribe(resData => {
+    this.http.put(this.posturl + '/updateMainImage', post).subscribe(resData => {
       updatedPosts[oldPostIndex] = post;
       this.posts = updatedPosts;
       this.postsUpdated.next([...this.posts]);
@@ -239,4 +241,9 @@ export class PostsService {
         this.postsUpdated.next([...this.posts]);
       });
   }
+  addToFavorite(username:string, postId: string) {
+    
+    return this.http.post<any>(this.addFavoriteUrl, { username, postId });
+  }
+
 }

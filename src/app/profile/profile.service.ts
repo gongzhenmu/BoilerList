@@ -4,32 +4,34 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Post } from '../posts/post.model';
 import { Profile } from '../profile/profile.model';
 import { map } from 'rxjs/operators';
-import {mimeType } from './mime-type.validator';
+import { mimeType } from './mime-type.validator';
 import { environment } from 'src/environments/environment';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class ProfileService {
 
   private posts: Post[];
   private profile: Profile;
-  private postsUpdated  = new Subject<Post[]>();
-  private profileUpdated  = new Subject<Profile>();
+  private postsUpdated = new Subject<Post[]>();
+  private profileUpdated = new Subject<Profile>();
   //lists
   private puchasePost: Post[];
   private soldPost: Post[];
   private pendingPost: Post[];
   private searchPost: Post[];
-  private soldUpdated  = new Subject<Post[]>();
-  private pendingUpdated  = new Subject<Post[]>();
-  private purchaseUpdated  = new Subject<Post[]>();
+  private favoritePost: Post[];
+  private soldUpdated = new Subject<Post[]>();
+  private pendingUpdated = new Subject<Post[]>();
+  private purchaseUpdated = new Subject<Post[]>();
   private searchUpdated = new Subject<Post[]>();
+  private favoriteUpdated = new Subject<Post[]>();
   //backend
   private profileUrl = environment.apiUrl + '/profile';
   private verifyPass = environment.apiUrl + '/profile/verify';
   private changePass = environment.apiUrl + '/profile/changePassword';
   private forgetPass = environment.apiUrl + '/forgetPassword';
   private feedbackUrl = environment.apiUrl + '/profile/feedback';
- //list url
+  //list url
   private soldUrl = environment.apiUrl + '/lists/sold';
   private purchaseUrl = environment.apiUrl + '/lists/purchased';
   private pengdingUrl = environment.apiUrl + '/lists/pending';
@@ -37,160 +39,193 @@ export class ProfileService {
   private contactUrl = environment.apiUrl + '/profile/contactUpdate';
   //search
   private searchUrl = environment.apiUrl + '/search';
+  //favorite
+  private favoriteUrl = environment.apiUrl + '/lists/favoriteList';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getMyPosts(username: string) {
     const httpParams = new HttpParams().set('username', username);
-    this.http.get<{message: string; posts: any}>(this.profileUrl, {params: httpParams})
-    .pipe(map((postData) => {
-      return postData.posts.map(post => {
-        return {
-          title: post.title,
-          content: post.content,
-          price: post.price,
-          owner: post.owner,
-          id: post._id,
-          category: post.category,
-          condition: post.condition,
-          tags: post.tags,
-          status: post.status,
-          viewCount: post.viewCount,
-          buyer: post.buyer,
-          imageUrls: post.imageUrls,
-          mainImage: post.mainImage,
-          rated: post.rated
-        };
+    this.http.get<{ message: string; posts: any }>(this.profileUrl, { params: httpParams })
+      .pipe(map((postData) => {
+        return postData.posts.map(post => {
+          return {
+            title: post.title,
+            content: post.content,
+            price: post.price,
+            owner: post.owner,
+            id: post._id,
+            category: post.category,
+            condition: post.condition,
+            tags: post.tags,
+            status: post.status,
+            viewCount: post.viewCount,
+            buyer: post.buyer,
+            imageUrls: post.imageUrls,
+            mainImage: post.mainImage,
+            rated: post.rated
+          };
+        });
+      }))
+      .subscribe(transformedPosts => {
+        this.posts = transformedPosts;
+        this.postsUpdated.next([...this.posts]);
       });
-    }))
-    .subscribe(transformedPosts => {
-      this.posts = transformedPosts;
-      this.postsUpdated.next([...this.posts]);
-    });
   }
 
   getMySoldPosts() {
     const httpParams = new HttpParams().set('username', localStorage.getItem('username'));
-    this.http.get<{message: string; posts: any}>(this.soldUrl, {params: httpParams})
-    .pipe(map((postData) => {
-      return postData.posts.map(post => {
-        return {
-          title: post.title,
-          content: post.content,
-          price: post.price,
-          owner: post.owner,
-          id: post._id,
-          category: post.category,
-          condition: post.condition,
-          tags: post.tags,
-          status: post.status,
-          viewCount: post.viewCount,
-          buyer: post.buyer,
-          imageUrls: post.imageUrls,
-          mainImage: post.mainImage,
-          rated: post.rated
-        };
+    this.http.get<{ message: string; posts: any }>(this.soldUrl, { params: httpParams })
+      .pipe(map((postData) => {
+        return postData.posts.map(post => {
+          return {
+            title: post.title,
+            content: post.content,
+            price: post.price,
+            owner: post.owner,
+            id: post._id,
+            category: post.category,
+            condition: post.condition,
+            tags: post.tags,
+            status: post.status,
+            viewCount: post.viewCount,
+            buyer: post.buyer,
+            imageUrls: post.imageUrls,
+            mainImage: post.mainImage,
+            rated: post.rated
+          };
+        });
+      }))
+      .subscribe(transformedPosts => {
+        this.soldPost = transformedPosts;
+        this.soldUpdated.next([...this.soldPost]);
       });
-    }))
-    .subscribe(transformedPosts => {
-      this.soldPost = transformedPosts;
-      this.soldUpdated.next([...this.soldPost]);
-    });
   }
 
   getMyPurchasePosts() {
     const httpParams = new HttpParams().set('username', localStorage.getItem('username'));
-    this.http.get<{message: string; posts: any}>(this.purchaseUrl, {params: httpParams})
-    .pipe(map((postData) => {
-      return postData.posts.map(post => {
-        return {
-          title: post.title,
-          content: post.content,
-          price: post.price,
-          owner: post.owner,
-          id: post._id,
-          category: post.category,
-          condition: post.condition,
-          tags: post.tags,
-          status: post.status,
-          viewCount: post.viewCount,
-          buyer: post.buyer,
-          imageUrls: post.imageUrls,
-          mainImage: post.mainImage,
-          rated: post.rated
-        };
+    this.http.get<{ message: string; posts: any }>(this.purchaseUrl, { params: httpParams })
+      .pipe(map((postData) => {
+        return postData.posts.map(post => {
+          return {
+            title: post.title,
+            content: post.content,
+            price: post.price,
+            owner: post.owner,
+            id: post._id,
+            category: post.category,
+            condition: post.condition,
+            tags: post.tags,
+            status: post.status,
+            viewCount: post.viewCount,
+            buyer: post.buyer,
+            imageUrls: post.imageUrls,
+            mainImage: post.mainImage,
+            rated: post.rated
+          };
+        });
+      }))
+      .subscribe(transformedPosts => {
+        this.puchasePost = transformedPosts;
+        this.purchaseUpdated.next([...this.puchasePost]);
       });
-    }))
-    .subscribe(transformedPosts => {
-      this.puchasePost = transformedPosts;
-      this.purchaseUpdated.next([...this.puchasePost]);
-    });
   }
 
   getMyPendingPosts() {
     const httpParams = new HttpParams().set('username', localStorage.getItem('username'));
-    this.http.get<{message: string; posts: any}>(this.pengdingUrl, {params: httpParams})
-    .pipe(map((postData) => {
-      return postData.posts.map(post => {
-        return {
-          title: post.title,
-          content: post.content,
-          price: post.price,
-          owner: post.owner,
-          id: post._id,
-          category: post.category,
-          condition: post.condition,
-          tags: post.tags,
-          status: post.status,
-          viewCount: post.viewCount,
-          buyer: post.buyer,
-          imageUrls: post.imageUrls,
-          mainImage: post.mainImage,
-          rated: post.rated
-        };
+    this.http.get<{ message: string; posts: any }>(this.pengdingUrl, { params: httpParams })
+      .pipe(map((postData) => {
+        return postData.posts.map(post => {
+          return {
+            title: post.title,
+            content: post.content,
+            price: post.price,
+            owner: post.owner,
+            id: post._id,
+            category: post.category,
+            condition: post.condition,
+            tags: post.tags,
+            status: post.status,
+            viewCount: post.viewCount,
+            buyer: post.buyer,
+            imageUrls: post.imageUrls,
+            mainImage: post.mainImage,
+            rated: post.rated
+          };
+        });
+      }))
+      .subscribe(transformedPosts => {
+        this.pendingPost = transformedPosts;
+        this.pendingUpdated.next([...this.pendingPost]);
       });
-    }))
-    .subscribe(transformedPosts => {
-      this.pendingPost = transformedPosts;
-      this.pendingUpdated.next([...this.pendingPost]);
-    });
   }
 
   // ----------------search ------------
   getSearchPosts(title: string) {
     const httpParams = new HttpParams().set('title', title);
-    this.http.get<{message: string; posts: any}>(this.searchUrl, {params: httpParams})
-    .pipe(map((postData) => {
-      return postData.posts.map(post => {
-        return {
-          title: post.title,
-          content: post.content,
-          price: post.price,
-          owner: post.owner,
-          id: post._id,
-          category: post.category,
-          condition: post.condition,
-          tags: post.tags,
-          status: post.status,
-          viewCount: post.viewCount,
-          buyer: post.buyer,
-          imageUrls: post.imageUrls,
-          mainImage: post.mainImage,
-          rated: post.rated
-        };
+    this.http.get<{ message: string; posts: any }>(this.searchUrl, { params: httpParams })
+      .pipe(map((postData) => {
+        return postData.posts.map(post => {
+          return {
+            title: post.title,
+            content: post.content,
+            price: post.price,
+            owner: post.owner,
+            id: post._id,
+            category: post.category,
+            condition: post.condition,
+            tags: post.tags,
+            status: post.status,
+            viewCount: post.viewCount,
+            buyer: post.buyer,
+            imageUrls: post.imageUrls,
+            mainImage: post.mainImage,
+            rated: post.rated
+          };
+        });
+      }))
+      .subscribe(transformedPosts => {
+        this.searchPost = transformedPosts;
+        this.searchUpdated.next([...this.searchPost]);
       });
-    }))
-    .subscribe(transformedPosts => {
-      this.searchPost = transformedPosts;
-      this.searchUpdated.next([...this.searchPost]);
-    });
+  }
+
+  //get favorite list posts
+  getFavoriteList(username:string) {
+    const httpParams = new HttpParams().set('username', username);
+    this.http.get<{ message: string; posts: any }>(this.favoriteUrl, { params: httpParams })
+      .pipe(map((postData) => {
+        return postData.posts.map(post => {
+          return {
+            title: post.title,
+            content: post.content,
+            price: post.price,
+            owner: post.owner,
+            id: post._id,
+            category: post.category,
+            condition: post.condition,
+            tags: post.tags,
+            status: post.status,
+            viewCount: post.viewCount,
+            buyer: post.buyer,
+            imageUrls: post.imageUrls,
+            mainImage: post.mainImage,
+            rated: post.rated
+          };
+        });
+      }))
+      .subscribe(transformedPosts => {
+        this.favoritePost = transformedPosts;
+        this.favoriteUpdated.next([...this.favoritePost]);
+      });
   }
 
   getMyProfile(username) {
     const httpParams = new HttpParams().set('username', username);
     this.http.get<{
       user: any;
-      message: string; posts: any}>(this.profileUrl, {params: httpParams})
+      message: string; posts: any
+    }>(this.profileUrl, { params: httpParams })
       .pipe(map((postData) => {
         return postData.user;
       }))
@@ -208,19 +243,22 @@ export class ProfileService {
     return this.profileUpdated.asObservable();
   }
 
-  getPurchasePostUpdateListener(){
+  getPurchasePostUpdateListener() {
     return this.purchaseUpdated.asObservable();
   }
 
-  getSoldPostUpdateListener(){
+  getSoldPostUpdateListener() {
     return this.soldUpdated.asObservable();
   }
 
-  getPendingPostUpdateListener(){
+  getPendingPostUpdateListener() {
     return this.pendingUpdated.asObservable();
   }
-  getSearchPostUpdateListener(){
+  getSearchPostUpdateListener() {
     return this.searchUpdated.asObservable();
+  }
+  getFavoriteListUpdateListener() {
+    return this.favoriteUpdated.asObservable();
   }
 
   deletePost(postId: string) {
@@ -250,38 +288,38 @@ export class ProfileService {
     const avatarData = new FormData();
     avatarData.append('image', image, username);
     avatarData.append('username', username);
-    this.http.post< {message: string; imagePath: string}>(
+    this.http.post<{ message: string; imagePath: string }>(
       environment.apiUrl + '/profile/avatar-upload',
       avatarData
     )
-    .subscribe(responseData => {
-      const imagePath = responseData.imagePath;
-      (res) => console.log(res);
-      console.log('image uploaded!');
-    });
+      .subscribe(responseData => {
+        const imagePath = responseData.imagePath;
+        (res) => console.log(res);
+        console.log('image uploaded!');
+      });
   }
 
   verifyPassword(username: string, password: string) {
-    return this.http.post<any>(this.verifyPass, {username, password});
+    return this.http.post<any>(this.verifyPass, { username, password });
   }
 
-  sendFeedback( feedback: string) {
-    return this.http.post<any>(this.feedbackUrl, { feedback});
+  sendFeedback(feedback: string) {
+    return this.http.post<any>(this.feedbackUrl, { feedback });
   }
 
   updatePassword(username: string, password: string) {
-    return this.http.post<any>(this.changePass, {username, password});
+    return this.http.post<any>(this.changePass, { username, password });
   }
 
   updateRating(username: string, rate: number) {
-    return this.http.post<any>(this.rateUrl, {username, rate});
+    return this.http.post<any>(this.rateUrl, { username, rate });
   }
 
   updateContact(username: string, contact: string) {
-    return this.http.post<any>(this.contactUrl, {username, contact});
+    return this.http.post<any>(this.contactUrl, { username, contact });
   }
 
   forgetPassword(email: string) {
-    return this.http.post<any>(this.forgetPass, {email});
+    return this.http.post<any>(this.forgetPass, { email });
   }
 }

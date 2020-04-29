@@ -21,6 +21,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   sold: Post[] = [];
   purchased: Post[] = [];
   pending: Post[] = [];
+  favorite: Post[] = [];
   public profile: Profile = {
     username: '',
     email: '',
@@ -35,6 +36,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   private pendingSub: Subscription;
   private postsSub: Subscription;
   private profileSub: Subscription;
+  private favoriteSub: Subscription;
 
 
   constructor(private imageCompress: NgxImageCompressService,
@@ -112,6 +114,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
       .subscribe((posts: Post[]) => {
         this.purchased = posts;
       });
+
+    //favorite
+    this.profileService.getFavoriteList(localStorage.getItem('username'));
+    this.favoriteSub = this.profileService.getFavoriteListUpdateListener()
+      .subscribe((favorite: Post[]) =>{
+        this.favorite = favorite;
+      })
     // //sellingList
     //     this.profileService.getMyPosts(localStorage.getItem('username'));
     // this.postsSub = this.profileService.getMyPostsUpdateListener()
@@ -247,7 +256,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
   showFavoriteList(){
     this.MyPosts = true;
-    // this.showposts = this.favorite;
+    this.showposts = this.favorite;
     this.showList = false;
   }
   rateSeller() {

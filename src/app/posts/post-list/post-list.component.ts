@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { Post } from '../post.model';
 import { PostsService } from '../posts.service';
 import { Options } from 'ng5-slider';
-import {FormBuilder, FormGroup, NgForm} from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 
 interface Category {
   value: string;
@@ -142,6 +142,18 @@ export class PostListComponent implements OnInit, OnDestroy {
     // combine all filters to fetch matching posts
     this.postsService.filterPosts(form.value.category, form.value.status ? 'pending' : 'available',
       form.value.condition, this.priceRange.minValue, this.priceRange.maxValue);
+  }
+  addToFavoritePost(post: Post){
+    this.postsService.addToFavorite(localStorage.getItem('username'), post.id)
+    .subscribe(() => {
+      alert("Added to favorite list");
+    }, err => {
+      if (err.status === 500) {
+        alert('Server Error!');
+      } else if (err.status === 401) {
+        alert('Something went wrong');
+      }
+    });
   }
 
 }

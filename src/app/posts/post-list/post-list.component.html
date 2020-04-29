@@ -5,15 +5,18 @@
         <form #filterForm="ngForm">
           <h4>Filter Your Results</h4>
           <mat-label>Select category: </mat-label><br>
-            <mat-select class="bg-white" name="category" placeholder="Select a category" (selectionChange)="onChangeFilters(filterForm)" [ngModel]="filter.category">
-              <mat-option *ngFor="let category of categories" [value]="category.value" >
-                {{category.viewValue}}
-              </mat-option>
-            </mat-select><br>
+          <mat-select class="bg-white" name="category" placeholder="Select a category"
+            (selectionChange)="onChangeFilters(filterForm)" [ngModel]="filter.category">
+            <mat-option *ngFor="let category of categories" [value]="category.value">
+              {{category.viewValue}}
+            </mat-option>
+          </mat-select><br>
           <mat-label>Select status: </mat-label><br>
-          <mat-slide-toggle (change)="onToggled($event);onChangeFilters(filterForm)" [ngModel]="filter.status" name="status">{{toggleMessage}}</mat-slide-toggle><br>
+          <mat-slide-toggle (change)="onToggled($event);onChangeFilters(filterForm)" [ngModel]="filter.status"
+            name="status">{{toggleMessage}}</mat-slide-toggle><br>
           <mat-label>Select condition: </mat-label><br>
-          <mat-radio-group (change)="onChangeFilters(filterForm)" aria-label="Select the condition" [ngModel]="filter.condition" name="condition">
+          <mat-radio-group (change)="onChangeFilters(filterForm)" aria-label="Select the condition"
+            [ngModel]="filter.condition" name="condition">
             <mat-radio-button value="Broken">Broken</mat-radio-button>&nbsp;&nbsp;
             <mat-radio-button value="Refurbished">Refurbished</mat-radio-button>&nbsp;&nbsp;
             <mat-radio-button value="Used">Used</mat-radio-button>&nbsp;&nbsp;
@@ -21,12 +24,13 @@
             <mat-radio-button value="Like New">Like New</mat-radio-button>&nbsp;&nbsp;
           </mat-radio-group><br>
           <mat-label>Select price range: </mat-label><br>
-          <ng5-slider [(highValue)]="priceRange.maxValue" [(value)]="priceRange.minValue" [options]="priceRange.options" (valueChange)="onChangeFilters(filterForm)" (highValueChange)="onChangeFilters(filterForm)"></ng5-slider>
+          <ng5-slider [(highValue)]="priceRange.maxValue" [(value)]="priceRange.minValue" [options]="priceRange.options"
+            (valueChange)="onChangeFilters(filterForm)" (highValueChange)="onChangeFilters(filterForm)"></ng5-slider>
         </form>
       </mat-card>
       <div class="col-md-3" *ngFor="let post of posts">
         <div class="card mb-4 box-shadow">
-          <img class="card-img" [src]= post.mainImage alt="Main Image of this item" height="170">
+          <img class="card-img" [src]=post.mainImage alt="Main Image of this item" height="170">
           <div class="card-body">
             <h6 class="text-theme"><a (click)="showDetails(post)"> {{post.title}}</a></h6>
             <h5> ${{ post.price}} </h5>
@@ -63,10 +67,10 @@
               <img class="d-block w-100" [src]=CurrentPost.imageUrls[0] alt="First slide">
             </div>
             <div class="carousel-item">
-              <img class="d-block w-100 h-30" [src]=CurrentPost.imageUrls[1]  alt="Second slide">
+              <img class="d-block w-100 h-30" [src]=CurrentPost.imageUrls[1] alt="Second slide">
             </div>
             <div class="carousel-item">
-              <img class="d-block w-100 h-30" [src]=CurrentPost.imageUrls[2]  alt="Third slide">
+              <img class="d-block w-100 h-30" [src]=CurrentPost.imageUrls[2] alt="Third slide">
             </div>
           </div>
           <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -93,29 +97,19 @@
         Seller: <a href="/profile/{{CurrentPost.owner}}">{{ CurrentPost.owner}}</a><br>
         <!-- Buyer: {{CurrentPost.buyer}}<br> -->
         👁{{ CurrentPost.viewCount}} views<br>
-        <div class="d-flex justify-content-between align-items-center">
-          <button type="button" class='btn btn-outline-info' style="float: left;" aria-label="back"
-            onClick="history.go(0)" style="float: right;">Back</button>
-          <button *ngIf="!itemSold && !ownPost" type="button" (click)="purchaseItem(CurrentPost);" class='btn btn-outline-primary' style="float: right;">Purchase</button>
-        </div>
+
+        <button *ngIf="!favorite" class="unlike-btn" aria-label="like post" (click)="addToFavoritePost(CurrentPost);"
+          style="float:left !important;"></button>
+        <b style="float: left  !important;">&nbsp;Add to favorite</b>
+        <button type="button" class='btn btn-outline-info' style="float: right;" aria-label="back"
+          onClick="history.go(0)">Back</button>
+         
+        <button *ngIf="!itemSold && !ownPost" type="button" (click)="purchaseItem(CurrentPost);"
+        class='btn btn-outline-primary' style="float: right;">Purchase</button>
+        <!-- <button class="like-btn" aria-label="unlike post" (click)="unlikePost(post);"
+              [disabled]="this.pendingLike"></button> -->
+
       </div>
     </div>
   </div>
 </div>
-<!-- <mat-accordion multi="true" *ngIf="posts.length > 0">
-    <mat-expansion-panel *ngFor="let post of posts" (opened)="incrementViewCount(post)">
-      <mat-expansion-panel-header>
-        {{ post.title}}
-      </mat-expansion-panel-header>
-      Price: ${{ post.price}}<br>
-      Description: {{ post.content}}<br>
-      Category: {{ post.category}}<br>
-      Condition: {{ post.condition}}<br>
-      Tags: {{ post.tags.join(", ")}}<br>
-      Status: {{ post.status}}<br>
-      Owner: <a href="/profile/{{post.owner}}">{{ post.owner}}</a><br>
-      👁{{ post.viewCount}} views<br>
-      <mat-action-row>
-      </mat-action-row>
-    </mat-expansion-panel>
-  </mat-accordion> -->

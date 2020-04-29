@@ -5,6 +5,7 @@
     <a class="nav-link text-theme" (click)="showSoldList();" routerLink="/profile">Sold</a>
     <a class="nav-link text-theme" (click)="showPendingList();" routerLink="/profile">Pending</a>
     <a class="nav-link text-theme" (click)="showPurchaseList();" routerLink="/profile">Purchased</a>
+    <a class="nav-link text-theme" (click)="showFavoriteList();" routerLink="/profile">Favorite</a>
   </nav>
   <nav class="nav nav-underline" *ngIf="!currentUserPage">
     <a class="nav-link text-theme" href="javascript:history.go(0)">Profile</a>

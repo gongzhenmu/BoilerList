@@ -3,7 +3,8 @@
     <div class="row">
       <mat-card class="col-md-3 card box-shadow">
         <form #filterForm="ngForm">
-          <button class="resetButton" (click)="onResetFilters()">Reset</button><h4>Filter Your Results</h4>
+          <button class="resetButton" (click)="onResetFilters()">Reset</button>
+          <h4>Filter Your Results</h4>
           <mat-label>Select category: </mat-label><br>
           <mat-select class="bg-white" name="category" placeholder="Select a category"
             (selectionChange)="onChangeFilters(filterForm)" [ngModel]="filter.category">
@@ -98,14 +99,17 @@
         <!-- Buyer: {{CurrentPost.buyer}}<br> -->
         👁{{ CurrentPost.viewCount}} views<br>
 
-        <button *ngIf="!favorite" class="like-btn" aria-label="like post" (click)="addToFavoritePost(CurrentPost);"
+        <button *ngIf="!inFavorite" class="like-btn" aria-label="like post" (click)="addToFavoritePost(CurrentPost);"
           style="float:left !important;"></button>
-        <b style="float: left  !important;">&nbsp;Add to favorite</b>
+        <b *ngIf="!inFavorite" style="float: left  !important;">&nbsp;Add to favorite</b>
+        <button *ngIf="inFavorite" class="unlike-btn" aria-label="unlike post"
+          (click)="deleteFromFavoritePost(CurrentPost);" style="float:left !important;"></button>
+        <b *ngIf="inFavorite" style="float: left  !important;">&nbsp;Delete from favorite</b>
         <button type="button" class='btn btn-outline-info' style="float: right;" aria-label="back"
           onClick="history.go(0)">Back</button>
-         
+
         <button *ngIf="!itemSold && !ownPost" type="button" (click)="purchaseItem(CurrentPost);"
-        class='btn btn-outline-primary' style="float: right;">Purchase</button>
+          class='btn btn-outline-primary' style="float: right;">Purchase</button>
         <!-- <button class="like-btn" aria-label="unlike post" (click)="unlikePost(post);"
               [disabled]="this.pendingLike"></button> -->
 

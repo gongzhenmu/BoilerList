@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { Post } from '../post.model';
@@ -33,28 +33,29 @@ interface Filter {
 export class PostListComponent implements OnInit, OnDestroy {
   posts: Post[] = [];
   private postsSub: Subscription;
-  constructor(public postsService: PostsService) {}
+  constructor(public postsService: PostsService) { }
   showList = true;
   CurrentPost: Post;
   itemSold = false;
   public currentUser = localStorage.getItem('username');
   ownPost = false;
+  inFavorite = false;
 
   // Category Configuration
   categories: Category[] = [
-    {value: 'Book Exchange', viewValue: 'Book Exchange'},
-    {value: 'Rideshare', viewValue: 'Rideshare'},
-    {value: 'Housing, Rooms, Apartments, Sublets', viewValue: 'Housing, Rooms, Apartments, Sublets'},
-    {value: 'Clothing', viewValue: 'Clothing'},
-    {value: 'Shoes', viewValue: 'Shoes'},
-    {value: 'Electronics', viewValue: 'Electronics'},
-    {value: 'Video Games & Consoles', viewValue: 'Video Games & Consoles'},
-    {value: 'Movies & Musics', viewValue: 'Movies & Musics'},
-    {value: 'Cosmetics & Body Care', viewValue: 'Cosmetics & body Care'},
-    {value: 'Bags & Accessories', viewValue: 'Bags & Accessories'},
-    {value: 'Household Appliances', viewValue: 'Household Appliances'},
-    {value: 'Furniture & Household Good', viewValue: 'Furniture & Household Good'},
-    {value: 'Sports & Outdoor', viewValue: 'Sports & Outdoor'},
+    { value: 'Book Exchange', viewValue: 'Book Exchange' },
+    { value: 'Rideshare', viewValue: 'Rideshare' },
+    { value: 'Housing, Rooms, Apartments, Sublets', viewValue: 'Housing, Rooms, Apartments, Sublets' },
+    { value: 'Clothing', viewValue: 'Clothing' },
+    { value: 'Shoes', viewValue: 'Shoes' },
+    { value: 'Electronics', viewValue: 'Electronics' },
+    { value: 'Video Games & Consoles', viewValue: 'Video Games & Consoles' },
+    { value: 'Movies & Musics', viewValue: 'Movies & Musics' },
+    { value: 'Cosmetics & Body Care', viewValue: 'Cosmetics & body Care' },
+    { value: 'Bags & Accessories', viewValue: 'Bags & Accessories' },
+    { value: 'Household Appliances', viewValue: 'Household Appliances' },
+    { value: 'Furniture & Household Good', viewValue: 'Furniture & Household Good' },
+    { value: 'Sports & Outdoor', viewValue: 'Sports & Outdoor' },
   ];
 
   // Select filterForm from html and name it as form
@@ -81,7 +82,7 @@ export class PostListComponent implements OnInit, OnDestroy {
         if (value === 2000) {
           return '$' + value + '+';
         } else {
-            return '$' + value;
+          return '$' + value;
         }
       }
     },
@@ -95,6 +96,7 @@ export class PostListComponent implements OnInit, OnDestroy {
         this.posts = posts;
       });
     this.toggleMessage = 'Show Pending Posts!';
+
   }
 
   onDelete(postId: string) {
@@ -119,6 +121,18 @@ export class PostListComponent implements OnInit, OnDestroy {
     } else {
       this.ownPost = false;
     }
+
+    this.postsService.checkFavorite(localStorage.getItem('username'), post.id)
+      .subscribe(() => {
+        this.inFavorite = true;
+      }, err => {
+        if (err.status === 302) {
+          this.inFavorite = false;
+        } else if (err.status === 500) {
+          alert('Something went wrong');
+        }
+      });
+
   }
   purchaseItem(post: Post) {
     this.postsService.updateBuyer(post, this.currentUser);
@@ -147,17 +161,32 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.postsService.filterPosts(form.value.category, form.value.status ? 'pending' : 'available',
       form.value.condition, this.priceRange.minValue, this.priceRange.maxValue);
   }
-  addToFavoritePost(post: Post){
+  addToFavoritePost(post: Post) {
     this.postsService.addToFavorite(localStorage.getItem('username'), post.id)
-    .subscribe(() => {
-      alert("Added to favorite list");
-    }, err => {
-      if (err.status === 500) {
-        alert('Server Error!');
-      } else if (err.status === 401) {
-        alert('Something went wrong');
-      }
-    });
+      .subscribe(() => {
+        alert("Added to favorite list");
+        this.inFavorite = true;
+      }, err => {
+        if (err.status === 500) {
+          alert('Server Error!');
+        } else if (err.status === 401) {
+          alert('Something went wrong');
+        }
+      });
+  }
+
+  deleteFromFavoritePost(post: Post) {
+    this.postsService.deleteFromFavorite(localStorage.getItem('username'), post.id)
+      .subscribe(() => {
+        alert("Deleted from favorite list");
+        this.inFavorite = false;
+      }, err => {
+        if (err.status === 500) {
+          alert('Server Error!');
+        } else if (err.status === 401) {
+          alert('Something went wrong');
+        }
+      });
   }
 
   onResetFilters() {

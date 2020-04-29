@@ -68,6 +68,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
   canRateSeller = false;
   SellerComment = false;
   noReviews = false;
+  favoriteList = false;
+  favoriteShow = true;
+
   rating: number;
   displayRaing: number;
   ngOnInit() {
@@ -196,6 +199,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.MyPosts = true;
     this.showposts = this.posts;
     this.showList = false;
+    this.favoriteList = false;
   }
   goBack() {
     this.MyPosts = true;
@@ -251,23 +255,26 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.MyPosts = true;
     this.showList = false;
     this.showposts = this.sold;
-
+    this.favoriteList = false;
   }
   showPendingList() {
     this.MyPosts = true;
     this.showposts = this.pending;
     this.pendingList = true;
     this.showList = false;
+    this.favoriteList = false;
   }
   showPurchaseList() {
     this.MyPosts = true;
     this.showposts = this.purchased;
     this.showList = false;
+    this.favoriteList = false;
   }
   showFavoriteList(){
     this.MyPosts = true;
     this.showposts = this.favorite;
     this.showList = false;
+    this.favoriteList = true;
   }
   rateSeller() {
     this.rateTheSeller = true;
@@ -286,6 +293,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.showposts = this.posts;
     this.showList = false;
     this.SellerComment = false;
+    this.favoriteList = false;
   }
   showRatingComment(){
     this.SellerComment = true;
@@ -293,6 +301,20 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.MyPosts = true;
     if(this.reviews.length == 0)
       this.noReviews = true;
+    this.favoriteList = false;
+  }
+  deleteFromFavorite(post: Post) {
+    this.postsService.deleteFromFavorite(localStorage.getItem('username'), post.id)
+      .subscribe(() => {
+        alert("Successfully removed from your favorite list");
+      }, err => {
+        if (err.status === 500) {
+          alert('Server Error!');
+        } else if (err.status === 401) {
+          alert('Something went wrong');
+        }
+      });
+    window.location.reload();
   }
 
 }

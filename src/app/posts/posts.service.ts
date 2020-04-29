@@ -14,8 +14,10 @@ export class PostsService {
   private postsUpdated = new Subject<Post[]>();
 
   private posturl = environment.apiUrl + '/posts';
+  //favorite lists
   private addFavoriteUrl = environment.apiUrl + '/lists/addfavorite';
   private deleteFavoriteUrl = environment.apiUrl + '/lists/deletefavorite';
+  private checkfavoriteUrl = environment.apiUrl + '/lists/checkFavorite';
   constructor(private http: HttpClient) { }
   getPosts() {
     this.http.get<{ message: string; posts: any }>(this.posturl)
@@ -243,8 +245,13 @@ export class PostsService {
       });
   }
   addToFavorite(username:string, postId: string) {
-    
     return this.http.post<any>(this.addFavoriteUrl, { username, postId });
+  }
+  checkFavorite(username:string, postId: string) {
+    return this.http.post<any>(this.checkfavoriteUrl, { username, postId });
+  }
+  deleteFromFavorite(username:string, postId: string) {
+    return this.http.post<any>(this.deleteFavoriteUrl, { username, postId });
   }
 
 }

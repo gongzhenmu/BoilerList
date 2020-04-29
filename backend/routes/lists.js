@@ -98,14 +98,14 @@ router.get("/favoriteList",checkAuth,(req,res,next)=>{
 //--------check in favorite list---------------
 router.post("/checkFavorite",checkAuth,(req,res,next)=>{
   // const username = req.body.username;
-  userM.count({username:req.body.username, userFavorites:{ $in: [postId]}},(err, count) =>{
+  userM.count({username:req.body.username, userFavorites:{ $in: [req.body.postId]}},(err, count) =>{
     if(err){
       res.status(500).send();
     }else{
       if(count>0){
         res.status(200).send();
       }else{
-        res.status(401).send();
+        res.status(302).send();
       }
 
     }

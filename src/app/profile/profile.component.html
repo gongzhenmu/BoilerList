@@ -145,9 +145,12 @@
             Sold</button>
           <a *ngIf="!notAvailable" class='btn btn-outline-info' [routerLink]="['post-edit', CurrentPost.id]">Edit</a>
           <button *ngIf="!notAvailable" class='btn btn-outline-dark' (click)="onDelete(CurrentPost.id)">Delete</button>
-          <button *ngIf="canRateSeller && !CurrentPost.rated" type="button" class='btn btn-outline-info'
+          <button *ngIf="canRateSeller && !CurrentPost.rated &&!favoriteList" type="button" class='btn btn-outline-info'
             style="float: left;" aria-label="rate seller" (click)="rateSeller();" style="float: right;">Rate the
             seller</button>
+          <button *ngIf="favoriteList" type="button" class='btn btn-outline-info'
+            style="float: left;" aria-label="rate seller" (click)="deleteFromFavorite(CurrentPost);" style="float: right;">Remove from
+            favorite</button>
         </div>
         <div class="d-flex justify-content-between align-items-center" *ngIf="!currentUserPage">
           <button type="button" class='btn btn-outline-success' style="float: left;" aria-label="back"
@@ -209,7 +212,7 @@
 <!-- if SellerComment is shown -->
 <div *ngIf="SellerComment" class="container">
   <h1 *ngIf="!noReviews" style="float: center !important;">Reviews for this seller:</h1>
-  <h1 *ngIf="noReviews" > No one has rated this seller yet!</h1>
+  <h1 *ngIf="noReviews"> No one has rated this seller yet!</h1>
   <div *ngFor="let review of reviews">
     <div class="card">
       <div class="container card-header">

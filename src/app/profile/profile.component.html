@@ -1,5 +1,5 @@
-<div class="nav-scroller bg-white box-shadow" >
-  <nav class="nav nav-underline"*ngIf="currentUserPage">
+<div class="nav-scroller bg-white box-shadow">
+  <nav class="nav nav-underline" *ngIf="currentUserPage">
     <a class="nav-link text-theme" href="javascript:history.go(0)">Profile</a>
     <a class="nav-link text-theme" (click)="showMyLists();" routerLink="/profile">MyPosts</a>
     <a class="nav-link text-theme" (click)="showSoldList();" routerLink="/profile">Sold</a>
@@ -9,8 +9,9 @@
   </nav>
   <nav class="nav nav-underline" *ngIf="!currentUserPage">
     <a class="nav-link text-theme" href="javascript:history.go(0)">Profile</a>
-    <a class="nav-link text-theme" (click)="showSellerLists();" [routerLink]="['/profile', profile.username]">Seller's List</a>
-     </nav>
+    <a class="nav-link text-theme" (click)="showSellerLists();" [routerLink]="['/profile', profile.username]">Seller's
+      List</a>
+  </nav>
 </div>
 
 <div id="profile" *ngIf="!MyPosts && !rateTheSeller">
@@ -36,12 +37,12 @@
           <h5 class="text-theme">{{ profile.username }}</h5>
 
           <ng-template #t let-fill="fill">
-              <span class="star" [class.full]="fill === 100">
-                <span class="half" [style.width.%]="fill">&hearts;</span>&hearts;
-              </span>
-            </ng-template>
-            <ngb-rating [(rate)]="displayRaing" [starTemplate]="t" [readonly]="true" [max]="5"></ngb-rating>
-            <small >({{profile.ratingCount}})</small>
+            <span class="star" [class.full]="fill === 100">
+              <span class="half" [style.width.%]="fill">&hearts;</span>&hearts;
+            </span>
+          </ng-template>
+          <ngb-rating [(rate)]="displayRaing" [starTemplate]="t" [readonly]="true" [max]="5"></ngb-rating>
+          <small>({{profile.ratingCount}})</small>
           <hr>
           <div>
             <p class="card-email">Email: {{ profile.email }}
@@ -63,7 +64,7 @@
     <div class="row">
       <div class="col-md-3" *ngFor="let post of showposts">
         <div class="card mb-4 box-shadow">
-          <img class="card-img" [src] = post.mainImage alt="Card image" height="170">
+          <img class="card-img" [src]=post.mainImage alt="Card image" height="170">
           <div class="card-body">
             <h6 class="text-theme"><a (click)="showDetails(post)"> {{post.title}}</a></h6>
             <h5> ${{ post.price}} </h5>
@@ -103,7 +104,7 @@
               <img class="d-block w-100" [src]=CurrentPost.imageUrls[1] alt="Second slide">
             </div>
             <div class="carousel-item">
-              <img class="d-block w-100" [src]=CurrentPost.imageUrls[2]  alt="Third slide">
+              <img class="d-block w-100" [src]=CurrentPost.imageUrls[2] alt="Third slide">
             </div>
           </div>
           <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -166,27 +167,34 @@
 <div *ngIf="rateTheSeller" class="container">
   <div class="d-flex justify-content-center h-100">
     <div class="card">
+      <br>
+      <h3 class="text-center text-theme">Please rate this seller</h3>
+      <div class="container card-header">
+        <div class="starrating risingstar d-flex justify-content-center flex-row-reverse">
+          <input type="radio" id="star5" [(ngModel)]="rating" value=5 />
+          <label for="star5" title="5 star">5</label>
+          <input type="radio" id="star4" [(ngModel)]="rating" value=4 />
+          <label for="star4" title="4 star">4</label>
+          <input type="radio" id="star3" [(ngModel)]="rating" value=3 />
+          <label for="star3" title="3 star">3</label>
+          <input type="radio" id="star2" [(ngModel)]="rating" value=2 />
+          <label for="star2" title="2 star">2</label>
+          <input type="radio" id="star1" [(ngModel)]="rating" value=1 />
+          <label for="star1" title="1 star">1</label>
+        </div>
+      </div>
       <div class="card-body">
-        <br>
-        <h3 class="text-center text-theme">Please rate this seller</h3>
-        <div class="container">
-          <div class="starrating risingstar d-flex justify-content-center flex-row-reverse">
-            <input type="radio" id="star5" [(ngModel)]="rating" value=5 />
-            <label for="star5" title="5 star">5</label>
-            <input type="radio" id="star4" [(ngModel)]="rating" value=4 />
-            <label for="star4" title="4 star">4</label>
-            <input type="radio" id="star3" [(ngModel)]="rating" value=3 />
-            <label for="star3" title="3 star">3</label>
-            <input type="radio" id="star2" [(ngModel)]="rating" value=2 />
-            <label for="star2" title="2 star">2</label>
-            <input type="radio" id="star1" [(ngModel)]="rating" value=1 />
-            <label for="star1" title="1 star">1</label>
+        <div class="form-group">
+          <label for="inputComment" class="sr-only">Input your comment</label>
+          <div class="form-group align-items-center ">
+            <textarea #comment class="form-control form-control-lg" id="exampleFormControlTextarea1" rows="3"
+              spellcheck="false" placeholder="Your comment..."></textarea>
           </div>
         </div>
         <br>
         <button class='btn btn-outline-info' (click)="goBack()" aria-label="cancel">Cancel</button>
         <button type="button" aria-label="Confirm" class="btn btn-outline-primary" style="float: right;"
-          (click)="updateRating()">Confirm</button>
+          (click)="updateRating(comment.value); comment.value = ''">Confirm</button>
       </div>
     </div>
   </div>

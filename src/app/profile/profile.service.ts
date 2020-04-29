@@ -311,8 +311,8 @@ export class ProfileService {
     return this.http.post<any>(this.changePass, { username, password });
   }
 
-  updateRating(username: string, rate: number) {
-    return this.http.post<any>(this.rateUrl, { username, rate });
+  updateRating(username: string, rate: number, content:string) {
+    return this.http.post<any>(this.rateUrl, { username, rate , content});
   }
 
   updateContact(username: string, contact: string) {

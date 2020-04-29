@@ -207,7 +207,7 @@ router.post('/rate',checkAuth,(req,res,next)=>{
   const userData=req.body;
   console.log("rate"+userData.rate);
   userM.findOneAndUpdate({username:userData.username},{$inc : {ratingCount:1, ratings:userData.rate}}).then(updatePost =>{
-    const review = new Review({
+    const review = new review({
       sellername:userData.username,
       rate:userData.rate,
       content:userData.content

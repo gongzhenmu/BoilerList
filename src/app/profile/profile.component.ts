@@ -262,10 +262,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
   rateSeller() {
     this.rateTheSeller = true;
   }
-  updateRating() {
+  updateRating(content:string) {
     console.log("here now");
     console.log(this.rating);
-    this.profileService.updateRating(this.CurrentPost.owner, this.rating).subscribe(() => {
+    this.profileService.updateRating(this.CurrentPost.owner, this.rating, content).subscribe(() => {
       alert("Thank you");
       this.postsService.setRated(this.CurrentPost);
       this.goBack();

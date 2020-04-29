@@ -36,13 +36,14 @@ export class PostsService {
             viewCount: post.viewCount,
             buyer: post.buyer,
             imageUrls: post.imageUrls,
-            mainImage: post.mainImage
-
+            mainImage: post.mainImage,
+            createdTime: post.createdTime
           };
         });
       }))
       .subscribe(transformedPosts => {
         this.posts = transformedPosts;
+        this.posts.sort((a,b) => a.title.localeCompare(b.title));
         this.postsUpdated.next([...this.posts]);
       });
   }
@@ -77,7 +78,7 @@ export class PostsService {
 
   addPost(title: string, content: string, price: string, owner: string, category: string, condition: string, tags: string[], status: string, viewCount: number, buyer: string, imageFiles: File[]) {
     // tslint:disable-next-line:max-line-length
-    const post: Post = { id: null, title: title, content: content, price: price, owner: owner, category: category, condition: condition, tags: tags, status: status, viewCount: viewCount, buyer: buyer, imageUrls: null, mainImage: null, rated: false };
+    const post: Post = { id: null, title: title, content: content, price: price, owner: owner, category: category, condition: condition, tags: tags, status: status, viewCount: viewCount, buyer: buyer, imageUrls: null, mainImage: null, rated: false, createdTime: Date.now() };
     const postData = new FormData();
     postData.append('title', title);
     postData.append('content', content);
@@ -88,6 +89,7 @@ export class PostsService {
     postData.append('status', status);
     postData.append('viewCount', viewCount.toString());
     postData.append('rated', 'false');
+    postData.append('createdTime', post.createdTime.toString());
 
     for (let i = 0; i < tags.length; i++) {
       postData.append('tags', tags[i]);
@@ -124,9 +126,9 @@ export class PostsService {
 
 
   // tslint:disable-next-line:max-line-length
-  updatePost(id: string, title: string, content: string, price: string, owner: string, category: string, condition: string, tags: string[], status: string, viewCount: number, buyer: string, imageUrls: string[], mainImage: string) {
+  updatePost(id: string, title: string, content: string, price: string, owner: string, category: string, condition: string, tags: string[], status: string, viewCount: number, buyer: string, imageUrls: string[], mainImage: string, createdTime: number) {
     // tslint:disable-next-line:max-line-length
-    const post: Post = { id: id, title: title, content: content, price: price, owner: owner, category: category, condition: condition, tags: tags, status: status, viewCount: viewCount, buyer: buyer, imageUrls: imageUrls, mainImage: mainImage, rated: false };
+    const post: Post = { id: id, title: title, content: content, price: price, owner: owner, category: category, condition: condition, tags: tags, status: status, viewCount: viewCount, buyer: buyer, imageUrls: imageUrls, mainImage: mainImage, rated: false, createdTime: createdTime };
     this.http.put(this.posturl + '/' + id, post).subscribe(resData => {
       const updatedPosts = [...this.posts];
       const oldPostIndex = updatedPosts.findIndex(p => p.id === post.id);

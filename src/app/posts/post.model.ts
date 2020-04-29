@@ -13,5 +13,6 @@ export interface Post {
   imageUrls: string[];
   mainImage: string;
   rated: boolean;
+  createdTime: number;
 }
 

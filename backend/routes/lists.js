@@ -98,15 +98,16 @@ router.get("/favoriteList",checkAuth,(req,res,next)=>{
 //--------check in favorite list---------------
 router.post("/checkFavorite",checkAuth,(req,res,next)=>{
   // const username = req.body.username;
-  userM.findOne({username:req.body.username},{_id:{ $in :documents.userFavorites }},(err, result) =>{
+  userM.count({username:req.body.username, userFavorites:{ $in: [postId]}},(err, count) =>{
     if(err){
       res.status(500).send();
     }else{
-      if(!result){
-        res.status(404).send();
+      if(count>0){
+        res.status(200).send();
       }else{
-        res.status(202).send();
+        res.status(401).send();
       }
+
     }
   });
 });

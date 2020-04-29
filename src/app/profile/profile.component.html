@@ -11,6 +11,8 @@
     <a class="nav-link text-theme" href="javascript:history.go(0)">Profile</a>
     <a class="nav-link text-theme" (click)="showSellerLists();" [routerLink]="['/profile', profile.username]">Seller's
       List</a>
+    <a class="nav-link text-theme" (click)="showRatingComment();" [routerLink]="['/profile', profile.username]">Seller's
+      Review</a>
   </nav>
 </div>
 
@@ -133,7 +135,7 @@
           Buyer: <a href="/profile/{{CurrentPost.buyer}}">{{ CurrentPost.buyer}}</a>
         </p>
         👁{{ CurrentPost.viewCount}} views<br>
-        <div class="d-flex justify-content-between align-items-center" *ngIf="!pendingList">
+        <div class="d-flex justify-content-between align-items-center" *ngIf="!pendingList && currentUserPage">
           <button type="button" class='btn btn-outline-success' style="float: left;" aria-label="back"
             (click)="goBack();" style="float: left;">Back</button>
           <button *ngIf="!notAvailable" class='btn btn-outline-primary' (click)="onAvailable(CurrentPost)">Mark as
@@ -146,6 +148,10 @@
           <button *ngIf="canRateSeller && !CurrentPost.rated" type="button" class='btn btn-outline-info'
             style="float: left;" aria-label="rate seller" (click)="rateSeller();" style="float: right;">Rate the
             seller</button>
+        </div>
+        <div class="d-flex justify-content-between align-items-center" *ngIf="!currentUserPage">
+          <button type="button" class='btn btn-outline-success' style="float: left;" aria-label="back"
+            (click)="goBack();" style="float: left;">Back</button>
         </div>
 
         <div class="d-flex justify-content-between align-items-center" *ngIf="pendingList">
@@ -197,5 +203,27 @@
           (click)="updateRating(comment.value); comment.value = ''">Confirm</button>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- if SellerComment is shown -->
+<div *ngIf="SellerComment" class="container">
+  <h1 *ngIf="!noReviews" style="float: center !important;">Reviews for this seller:</h1>
+  <h1 *ngIf="noReviews" > No one has rated this seller yet!</h1>
+  <div *ngFor="let review of reviews">
+    <div class="card">
+      <div class="container card-header">
+        <ng-template #t let-fill="fill">
+          <span class="star" [class.full]="fill === 100">
+            <span class="half" [style.width.%]="fill">&hearts;</span>&hearts;
+          </span>
+        </ng-template>
+        <ngb-rating [(rate)]=review.rate [starTemplate]="t" [readonly]="true" [max]="5"></ngb-rating>
+      </div>
+      <div class="card-body">
+        <p>{{review.content}}</p>
+      </div>
+    </div>
+    <br>
   </div>
 </div>

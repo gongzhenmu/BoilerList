@@ -218,6 +218,21 @@ router.post('/rate',checkAuth,(req,res,next)=>{
   });
 
 });
+//-------------------get review-----------
+router.get("/getReviews",checkAuth,(req,res,next)=>{
+  // const username = req.body.username;
+  reviewM.find({sellername:req.query.username},(err, review) => {
+    if(err){
+      res.status(401).send();
+    }else{
+      res.status(200).json({
+        review:review
+      });
+    }
+
+  });
+});
+
 
 
 router.post('/contactUpdate',checkAuth,(req,res,next)=>{

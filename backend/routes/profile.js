@@ -5,6 +5,7 @@ const nodemailer = require('nodemailer');
 
 const userM = require('../models/user');
 const Post = require('../models/post');
+const reviewM = require('../models/review');
 
 const checkAuth = require('../middleware/checkAuth');
 const multer = require("multer");
@@ -201,13 +202,20 @@ router.post("/changePassword",checkAuth, (req,res,next) => {
 
 
 
-
+//-----------rating
 router.post('/rate',checkAuth,(req,res,next)=>{
   const userData=req.body;
   console.log("rate"+userData.rate);
   userM.findOneAndUpdate({username:userData.username},{$inc : {ratingCount:1, ratings:userData.rate}}).then(updatePost =>{
-    res.status(200).send();
-  })
+    const review = new Review({
+      sellername:userData.username,
+      rate:userData.rate,
+      content:userData.content
+    });
+    review.save().then(createdReview =>{
+      res.status(200).send();
+    });
+  });
 
 });
 

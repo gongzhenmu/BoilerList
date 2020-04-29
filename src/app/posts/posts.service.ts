@@ -237,6 +237,7 @@ export class PostsService {
           }
           return matched;
         });
+        console.log(updatedPosts);
         this.posts = updatedPosts;
         this.postsUpdated.next([...this.posts]);
       });

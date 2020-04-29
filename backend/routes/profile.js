@@ -238,13 +238,17 @@ router.post("/feedback",checkAuth, (req,res,next) => {
     if (error) {
       res.status(501).send();
     } else {
-      console.log("sent");
+      console.log("feedback sent");
       res.status(200).send();
     }
   });
 
 
 });
+
+
+
+
 
 
 

@@ -3,7 +3,7 @@
     <div class="row">
       <mat-card class="col-md-3 card box-shadow">
         <form #filterForm="ngForm">
-          <h4>Filter Your Results</h4>
+          <button class="resetButton" (click)="onResetFilters()">Reset</button><h4>Filter Your Results</h4>
           <mat-label>Select category: </mat-label><br>
           <mat-select class="bg-white" name="category" placeholder="Select a category"
             (selectionChange)="onChangeFilters(filterForm)" [ngModel]="filter.category">

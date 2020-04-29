@@ -58,7 +58,7 @@ a:active {
 }
 .carousel{
     margin: auto;
-    
+
 }
 .d-block{
   height: 35rem !important;
@@ -89,4 +89,18 @@ a:active {
   background-image: url("../../../assets/like.png");
   background-repeat: no-repeat;
   background-size: 100%;
+}
+
+.resetButton {
+  float: right;
+  background-color: DodgerBlue;
+  border: none;
+  color: white;
+  padding: 6px 8px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.resetButton:hover {
+  background-color: RoyalBlue;
 }

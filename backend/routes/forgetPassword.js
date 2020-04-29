@@ -47,7 +47,7 @@ router.post('/', (req, res)=>{
         if (error) {
           res.status(501).send();
         } else {
-          console.log("sent");
+          console.log("reset email sent");
           res.status(200).send();
         }
       });

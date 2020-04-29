@@ -15,6 +15,29 @@
   <div class="album py-6" *ngIf="showList" style="margin-top: 15% !important;">
     <div class="container">
       <div class="row">
+        <mat-card class="col-md-3 card box-shadow" style="height: 380px">
+          <form #filterForm="ngForm">
+            <button class="resetButton" (click)="onResetFilters()">Reset</button><h4>Filter Your Results</h4>
+            <mat-label>Select category: </mat-label><br>
+            <mat-select class="bg-white" name="category" placeholder="Select a category" (selectionChange)="onChangeFilters(filterForm)" [ngModel]="filter.category">
+              <mat-option *ngFor="let category of categories" [value]="category.value" >
+                {{category.viewValue}}
+              </mat-option>
+            </mat-select><br>
+            <mat-label>Select status: </mat-label><br>
+            <mat-slide-toggle (change)="onToggled($event);onChangeFilters(filterForm)" [ngModel]="filter.status" name="status">{{toggleMessage}}</mat-slide-toggle><br>
+            <mat-label>Select condition: </mat-label><br>
+            <mat-radio-group (change)="onChangeFilters(filterForm)" aria-label="Select the condition" [ngModel]="filter.condition" name="condition">
+              <mat-radio-button value="Broken">Broken</mat-radio-button>&nbsp;&nbsp;
+              <mat-radio-button value="Refurbished">Refurbished</mat-radio-button>&nbsp;&nbsp;
+              <mat-radio-button value="Used">Used</mat-radio-button>&nbsp;&nbsp;
+              <mat-radio-button value="Open Box">Open Box</mat-radio-button>&nbsp;&nbsp;
+              <mat-radio-button value="Like New">Like New</mat-radio-button>&nbsp;&nbsp;
+            </mat-radio-group><br>
+            <mat-label>Select price range: </mat-label><br>
+            <ng5-slider [(highValue)]="priceRange.maxValue" [(value)]="priceRange.minValue" [options]="priceRange.options" (valueChange)="onChangeFilters(filterForm)" (highValueChange)="onChangeFilters(filterForm)"></ng5-slider>
+          </form>
+        </mat-card>
         <div class="col-md-3" *ngFor="let post of searchResult">
           <div class="card mb-4 box-shadow">
             <img class="card-img" [src]= post.mainImage alt="Main Image of this item" height="170">
@@ -69,7 +92,7 @@
             </a>
           </div>
           <!-- the above are the default pictures -->
-  
+
           <h4 class="text-theme">{{CurrentPost.title}}</h4>
           <h5> ${{ CurrentPost.price}} </h5>
           <hr>

@@ -227,6 +227,7 @@ export class PostsService {
             matched = (post.category === category);
           }
           if (status !== '' && matched) {
+            status = status ? 'pending' : 'available'
             matched = (post.status === status);
           }
           if (condition !== '' && matched) {

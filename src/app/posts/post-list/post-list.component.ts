@@ -173,7 +173,7 @@ export class PostListComponent implements OnInit, OnDestroy {
     console.log('$' + this.priceRange.minValue + '-$' + this.priceRange.maxValue);
 
     // combine all filters to fetch matching posts
-    this.postsService.filterPosts(form.value.category, form.value.status ? 'pending' : 'available',
+    this.postsService.filterPosts(form.value.category, form.value.status,
       form.value.condition, this.priceRange.minValue, this.priceRange.maxValue);
   }
   addToFavoritePost(post: Post) {

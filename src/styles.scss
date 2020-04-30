@@ -65,6 +65,9 @@ $theme-map: null;
           overflow: hidden;
           color: rgb(170, 35, 170);
         }
+        .bg-theme{
+          background-color: white !important;
+        }
       }
       @if themed('name') == 'dark' {
         .tagsDisplay{
@@ -103,6 +106,12 @@ $theme-map: null;
         // .text-theme{
         //   color: #fff !important;
         // }
+        .search-theme{
+          color: #fff !important;
+        }
+        .bg-theme{
+          background-color: rgba(245, 243, 243, 0.973) !important;
+        }
       }
   }
 }

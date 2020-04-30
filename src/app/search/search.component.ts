@@ -49,6 +49,18 @@ export class SearchComponent implements OnInit, OnDestroy {
     {value: 'Sports & Outdoor', viewValue: 'Sports & Outdoor'},
   ];
 
+  //Sort Configutation
+  sort: Category[] = [
+    { value: 'titleA', viewValue: 'Sort by ascending' },
+    { value: 'titleD', viewValue: 'Sort by descending' },
+    { value: 'viewCountA', viewValue: 'Most Views First' },
+    { value: 'viewCountD', viewValue: 'Least Views First' },
+    { value: 'priceA', viewValue: 'Lowest Price First' },
+    { value: 'priceD', viewValue: 'Highest Price First' },
+    { value: 'timeD', viewValue: 'Oldest Posts First' },
+    { value: 'timeA', viewValue: 'Newest Posts First' },
+  ];
+
   // Filters
   public filter: Filter = {
     category: '',
@@ -184,5 +196,8 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.postsService.getPosts();
 
   }
+  onSort(sort: string){
+    this.profileservice.sortPosts(sort);
+ }
 
 }

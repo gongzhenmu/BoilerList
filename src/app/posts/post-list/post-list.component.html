@@ -1,13 +1,20 @@
 <div class="album py-6" *ngIf="showList">
   <div class="container">
     <div class="row">
-      <mat-card class="col-md-3 card box-shadow">
+      <mat-card class="col-md-3 card box-shadow search-theme">
         <form #filterForm="ngForm">
           <button class="resetButton" (click)="onResetFilters()">Reset</button>
           <h4>Filter Your Results</h4>
-          <button class="sortByTitle" (click)="onSortByTitle()">Sort by Title</button>
+          <!-- sort -->
+          <mat-label>Sort by: </mat-label><br>
+          <mat-select class="bg-theme" name="sort" placeholder="Sort by..."
+            (selectionChange)="onSort(selectedValue)" [(ngModel)]="selectedValue" [ngModel]="sort">
+            <mat-option *ngFor="let so of sort" [value]="so.value">
+              {{so.viewValue}}
+            </mat-option>
+          </mat-select><br>
           <mat-label>Select category: </mat-label><br>
-          <mat-select class="bg-white" name="category" placeholder="Select a category"
+          <mat-select class="bg-theme" name="category" placeholder="Select a category"
             (selectionChange)="onChangeFilters(filterForm)" [ngModel]="filter.category">
             <mat-option *ngFor="let category of categories" [value]="category.value">
               {{category.viewValue}}
@@ -44,6 +51,8 @@
               <button class='btn btn-sm btn-outline-primary' style="float: right;"
                 (click)="showDetails(post)">view</button>
             </div>
+            <br>
+            <small style="float: right !important;">{{post.createdTime| date:"MM/dd/yyyy 'at' h:mma"}}</small>
             <br>
           </div>
         </div>

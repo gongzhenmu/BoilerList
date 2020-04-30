@@ -42,6 +42,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   inFavorite = false;
   isAscending = true;
   isDescending = false;
+  selectedValue = 'timeD'
 
   // Category Configuration
   categories: Category[] = [
@@ -58,6 +59,18 @@ export class PostListComponent implements OnInit, OnDestroy {
     { value: 'Household Appliances', viewValue: 'Household Appliances' },
     { value: 'Furniture & Household Good', viewValue: 'Furniture & Household Good' },
     { value: 'Sports & Outdoor', viewValue: 'Sports & Outdoor' },
+  ];
+
+  //Sort Configutation
+  sort: Category[] = [
+    { value: 'titleA', viewValue: 'Sort by ascending' },
+    { value: 'titleD', viewValue: 'Sort by descending' },
+    { value: 'viewCountA', viewValue: 'Most Views First' },
+    { value: 'viewCountD', viewValue: 'Least Views First' },
+    { value: 'priceA', viewValue: 'Lowest Price First' },
+    { value: 'priceD', viewValue: 'Highest Price First' },
+    { value: 'timeD', viewValue: 'Oldest Posts First' },
+    { value: 'timeA', viewValue: 'Newest Posts First' },
   ];
 
   // Select filterForm from html and name it as form
@@ -199,38 +212,41 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.postsService.getPosts();
 
   }
-
-  onSortByTitle(){
-    this.postsService.sortPosts("title");
+  onSort(sort: string){
+     this.postsService.sortPosts(sort);
   }
 
-  onSortByPrice(){
-    this.postsService.sortPosts("price");
-  }
+  // onSortByTitle(){
+  //   this.postsService.sortPosts("title");
+  // }
 
-  onSortByTime(){
-    this.postsService.sortPosts("time");
-  }
+  // onSortByPrice(){
+  //   this.postsService.sortPosts("price");
+  // }
 
-  onSortByViewCount(){
-    this.postsService.sortPosts("viewCount");
-  }
+  // onSortByTime(){
+  //   this.postsService.sortPosts("time");
+  // }
 
-  onDescending(){
-    if(this.isAscending){
-      this.postsService.reversePosts();
-    }
-    this.isDescending = true;
-    this.isAscending = false;
-  }
+  // onSortByViewCount(){
+  //   this.postsService.sortPosts("viewCount");
+  // }
 
-  onAscending(){
-    if(this.isDescending){
-      this.postsService.reversePosts();
-    }
-    this.isDescending = false;
-    this.isAscending = true;
-  }
+  // onDescending(){
+  //   if(this.isAscending){
+  //     this.postsService.reversePosts();
+  //   }
+  //   this.isDescending = true;
+  //   this.isAscending = false;
+  // }
+
+  // onAscending(){
+  //   if(this.isDescending){
+  //     this.postsService.reversePosts();
+  //   }
+  //   this.isDescending = false;
+  //   this.isAscending = true;
+  // }
 
 
 }

@@ -258,17 +258,29 @@ export class PostsService {
 
   sortPosts(fieldToSort: string){
 
-    if(fieldToSort.match("price")){
+    if(fieldToSort.match("priceA")){
       this.posts.sort((a,b) => parseFloat(a.price) - parseFloat(b.price));
     }
-    else if(fieldToSort.match("viewCount")){
+    else if(fieldToSort.match("priceD")){
+      this.posts.sort((b,a) => parseFloat(a.price) - parseFloat(b.price));
+    }
+    else if(fieldToSort.match("viewCountA")){
+      this.posts.sort((b,a) => a.viewCount - b.viewCount);
+    }
+    else if(fieldToSort.match("viewCountD")){
       this.posts.sort((a,b) => a.viewCount - b.viewCount);
     }
-    else if(fieldToSort.match("title")){
+    else if(fieldToSort.match("titleA")){
       this.posts.sort((a,b) => a.title.localeCompare(b.title));
     }
-    else if(fieldToSort.match("time")){
+    else if(fieldToSort.match("titleD")){
+      this.posts.sort((b,a) => a.title.localeCompare(b.title));
+    }
+    else if(fieldToSort.match("timeA")){
       this.posts.sort((a,b) => a.createdTime - b.createdTime);
+    }
+    else if(fieldToSort.match("timeD")){
+      this.posts.sort((b,a) => a.createdTime - b.createdTime);
     }
     this.postsUpdated.next([...this.posts]);
   }

@@ -349,4 +349,33 @@ export class ProfileService {
         this.ratingCommentUpdated.next([...this.review]);
       });
   }
+
+  sortPosts(fieldToSort: string){
+
+    if(fieldToSort.match("priceA")){
+      this.searchPost.sort((a,b) => parseFloat(a.price) - parseFloat(b.price));
+    }
+    else if(fieldToSort.match("priceD")){
+      this.searchPost.sort((b,a) => parseFloat(a.price) - parseFloat(b.price));
+    }
+    else if(fieldToSort.match("viewCountA")){
+      this.searchPost.sort((b,a) => a.viewCount - b.viewCount);
+    }
+    else if(fieldToSort.match("viewCountD")){
+      this.searchPost.sort((a,b) => a.viewCount - b.viewCount);
+    }
+    else if(fieldToSort.match("titleA")){
+      this.searchPost.sort((a,b) => a.title.localeCompare(b.title));
+    }
+    else if(fieldToSort.match("titleD")){
+      this.searchPost.sort((b,a) => a.title.localeCompare(b.title));
+    }
+    else if(fieldToSort.match("timeA")){
+      this.searchPost.sort((a,b) => a.createdTime - b.createdTime);
+    }
+    else if(fieldToSort.match("timeD")){
+      this.searchPost.sort((b,a) => a.createdTime - b.createdTime);
+    }
+    this.searchUpdated.next([...this.searchPost]);
+  }
 }

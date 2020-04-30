@@ -51,14 +51,14 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   //Sort Configutation
   sort: Category[] = [
-    { value: 'titleA', viewValue: 'Sort by ascending' },
-    { value: 'titleD', viewValue: 'Sort by descending' },
+    { value: 'titleA', viewValue: 'Sort by Title(ascending)' },
+    { value: 'titleD', viewValue: 'Sort by Title(descending)' },
     { value: 'viewCountA', viewValue: 'Most Views First' },
     { value: 'viewCountD', viewValue: 'Least Views First' },
     { value: 'priceA', viewValue: 'Lowest Price First' },
     { value: 'priceD', viewValue: 'Highest Price First' },
-    { value: 'timeD', viewValue: 'Oldest Posts First' },
-    { value: 'timeA', viewValue: 'Newest Posts First' },
+    { value: 'timeA', viewValue: 'Oldest Posts First' },
+    { value: 'timeD', viewValue: 'Newest Posts First' },
   ];
 
   // Filters

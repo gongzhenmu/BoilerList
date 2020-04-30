@@ -11,9 +11,10 @@
     </div>
   </form>
 </div>
-
 <div class="album py-6" *ngIf="showList" style="margin-top: 170px !important;">
   <div class="container">
+    <h1 class="text-theme" *ngIf="hasSearched" style="margin: auto; float: center;">The Results of searching: {{search}} </h1>
+    <br>
     <div class="row">
       <mat-card *ngIf="hasSearched"class="col-md-3 card box-shadow search-theme" style="height: 380px">
         <form #filterForm="ngForm">

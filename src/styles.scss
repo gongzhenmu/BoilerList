@@ -85,7 +85,7 @@ $theme-map: null;
 .searchInput, .searchButton
 {
     color: #fff;
-    font-family: Nunito;
+    font-family: Roboto;
     padding: 0;
     margin: 0;
     border: 0;
@@ -95,15 +95,15 @@ $theme-map: null;
 #cover
 {
     position: absolute;
-    top: 20%;
+    top: 140px;
     left: 0;
     right: 0;
     width: 90%;
     padding: 30px;
     margin: -83px auto 0 auto;
-    background-color: #6133869f;
-    border-radius: 20px;
-    box-shadow: 0 10px 40px #6a3583, 0 0 0 20px #ffffffeb;
+    background-color: #61338631;
+    border-radius: 70px;
+    box-shadow:  0 0 0 13px #593196;
     transform: scale(0.6);
 }
 
@@ -280,7 +280,7 @@ $theme-map: null;
 .searchInput, .searchButton
 {
     color: #fff;
-    font-family: Nunito;
+    font-family: Roboto;
     padding: 0;
     margin: 0;
     border: 0;
@@ -290,15 +290,15 @@ $theme-map: null;
 #cover
 {
     position: absolute;
-    top: 20%;
+    top: 140px;
     left: 0;
     right: 0;
     width: 90%;
     padding: 30px;
     margin: -83px auto 0 auto;
-    background-color: #3694c0af;
-    border-radius: 20px;
-    box-shadow: 0 10px 40px #315e66, 0 0 0 20px #ffffffeb;
+    background-color: #3694c000;
+    border-radius: 60px;
+    box-shadow:0 0 0 13px rgb(42, 159, 214);
     transform: scale(0.6);
 }
 

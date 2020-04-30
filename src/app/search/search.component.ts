@@ -57,8 +57,8 @@ export class SearchComponent implements OnInit, OnDestroy {
     { value: 'viewCountD', viewValue: 'Least Views First' },
     { value: 'priceA', viewValue: 'Lowest Price First' },
     { value: 'priceD', viewValue: 'Highest Price First' },
-    { value: 'timeA', viewValue: 'Oldest Posts First' },
-    { value: 'timeD', viewValue: 'Newest Posts First' },
+    { value: 'timeD', viewValue: 'Oldest Posts First' },
+    { value: 'timeA', viewValue: 'Newest Posts First' },
   ];
 
   // Filters

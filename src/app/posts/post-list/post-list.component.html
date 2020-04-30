@@ -116,7 +116,7 @@
           (click)="deleteFromFavoritePost(CurrentPost);" style="float:left !important;"></button>
         <b *ngIf="inFavorite" style="float: left  !important;">&nbsp;Delete from favorite</b>
         <button type="button" class='btn btn-outline-info' style="float: right;" aria-label="back"
-          onClick="history.go(0)">Back</button>
+          (click)="goback()">Back</button>
 
         <button *ngIf="!itemSold && !ownPost" type="button" (click)="purchaseItem(CurrentPost);"
           class='btn btn-outline-primary' style="float: right;">Purchase</button>

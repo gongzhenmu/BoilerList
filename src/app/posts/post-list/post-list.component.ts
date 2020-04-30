@@ -216,6 +216,10 @@ export class PostListComponent implements OnInit, OnDestroy {
      this.postsService.sortPosts(sort);
   }
 
+  goback(){
+    this.showList = true;
+  }
+
   // onSortByTitle(){
   //   this.postsService.sortPosts("title");
   // }

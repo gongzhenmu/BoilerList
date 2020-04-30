@@ -68,7 +68,8 @@ export class ProfileService {
             buyer: post.buyer,
             imageUrls: post.imageUrls,
             mainImage: post.mainImage,
-            rated: post.rated
+            rated: post.rated,
+            createdTime: post.createdTime
           };
         });
       }))
@@ -97,7 +98,8 @@ export class ProfileService {
             buyer: post.buyer,
             imageUrls: post.imageUrls,
             mainImage: post.mainImage,
-            rated: post.rated
+            rated: post.rated,
+            createdTime: post.createdTime
           };
         });
       }))
@@ -126,7 +128,8 @@ export class ProfileService {
             buyer: post.buyer,
             imageUrls: post.imageUrls,
             mainImage: post.mainImage,
-            rated: post.rated
+            rated: post.rated,
+            createdTime: post.createdTime
           };
         });
       }))
@@ -155,7 +158,8 @@ export class ProfileService {
             buyer: post.buyer,
             imageUrls: post.imageUrls,
             mainImage: post.mainImage,
-            rated: post.rated
+            rated: post.rated,
+            createdTime: post.createdTime
           };
         });
       }))
@@ -185,7 +189,8 @@ export class ProfileService {
             buyer: post.buyer,
             imageUrls: post.imageUrls,
             mainImage: post.mainImage,
-            rated: post.rated
+            rated: post.rated,
+            createdTime: post.createdTime
           };
         });
       }))
@@ -215,7 +220,8 @@ export class ProfileService {
             buyer: post.buyer,
             imageUrls: post.imageUrls,
             mainImage: post.mainImage,
-            rated: post.rated
+            rated: post.rated,
+            createdTime: post.createdTime
           };
         });
       }))

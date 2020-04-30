@@ -102,11 +102,13 @@ export class SearchComponent implements OnInit, OnDestroy {
   itemSold = false;
   public currentUser = localStorage.getItem('username');
   ownPost = false;
+  hasSearched = false;
   ngOnInit() {
   }
 
   ngOnDestroy() {
-    this.searchSub.unsubscribe();
+    if(this.hasSearched)
+      this.searchSub.unsubscribe();
   }
 
   searchTitle(search:string){
@@ -121,6 +123,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         this.searchResultBackUp = this.searchResult;
         console.log('searchResultBackUp');
         console.log(this.searchResultBackUp);
+        this.hasSearched = true;
       });
   }
   showDetails(post: Post) {
@@ -198,6 +201,9 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
   onSort(sort: string){
     this.profileservice.sortPosts(sort);
+ }
+ goback(){
+   this.showList = true;
  }
 
 }

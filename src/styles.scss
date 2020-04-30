@@ -98,7 +98,7 @@ $theme-map: null;
     top: 20%;
     left: 0;
     right: 0;
-    width: 60%;
+    width: 90%;
     padding: 30px;
     margin: -83px auto 0 auto;
     background-color: #6133869f;
@@ -107,7 +107,7 @@ $theme-map: null;
     transform: scale(0.6);
 }
 
-form
+.searchform
 {
     height: 96px;
 }
@@ -293,7 +293,7 @@ form
     top: 20%;
     left: 0;
     right: 0;
-    width: 60%;
+    width: 90%;
     padding: 30px;
     margin: -83px auto 0 auto;
     background-color: #3694c0af;
@@ -302,7 +302,7 @@ form
     transform: scale(0.6);
 }
 
-form
+.searchform
 {
     height: 96px;
 }

@@ -227,7 +227,10 @@ export class PostsService {
             matched = (post.category === category);
           }
           if (status !== '' && matched) {
-            status = status ? 'pending' : 'available'
+            if (status === true || status === false){
+              status = status ? 'pending' : 'available';
+            }
+            console.log('status is ' + status);
             matched = (post.status === status);
           }
           if (condition !== '' && matched) {

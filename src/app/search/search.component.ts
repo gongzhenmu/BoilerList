@@ -166,6 +166,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         matched = (post.category === form.value.category);
       }
       if (form.value.status !== '' && matched) {
+        console.log('form.value.status is ' + form.value.status ? 'pending' : 'available');
         matched = (post.status === (form.value.status ? 'pending' : 'available'));
       }
       if (this.form.value.condition !== '' && matched) {

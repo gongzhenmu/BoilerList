@@ -42,7 +42,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   inFavorite = false;
   isAscending = true;
   isDescending = false;
-  selectedValue = 'timeD'
+  selectedValue = 'timeA'
 
   // Category Configuration
   categories: Category[] = [

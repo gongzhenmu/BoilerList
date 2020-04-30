@@ -43,7 +43,7 @@ export class PostsService {
       }))
       .subscribe(transformedPosts => {
         this.posts = transformedPosts;
-        this.posts.sort((a,b) => a.title.localeCompare(b.title));
+        this.posts.sort((a,b) => a.viewCount-b.viewCount);
         this.postsUpdated.next([...this.posts]);
       });
   }
@@ -254,6 +254,27 @@ export class PostsService {
   }
   deleteFromFavorite(username:string, postId: string) {
     return this.http.post<any>(this.deleteFavoriteUrl, { username, postId });
+  }
+
+  sortPosts(fieldToSort: string, isDescending: boolean){
+
+    if(fieldToSort.match("price")){
+      this.posts.sort((a,b) => parseFloat(a.price) - parseFloat(b.price));
+    }
+    else if(fieldToSort.match("viewCount")){
+      this.posts.sort((a,b) => a.viewCount - b.viewCount);
+    }
+    else if(fieldToSort.match("title")){
+      this.posts.sort((a,b) => a.title.localeCompare(b.title));
+    }
+    else if(fieldToSort.match("time")){
+      this.posts.sort((a,b) => a.createdTime - b.createdTime);
+    }
+
+    if(isDescending){
+      this. posts = this.posts.reverse();
+    }
+    this.postsUpdated.next([...this.posts]);
   }
 
 }

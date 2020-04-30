@@ -5,6 +5,7 @@
         <form #filterForm="ngForm">
           <button class="resetButton" (click)="onResetFilters()">Reset</button>
           <h4>Filter Your Results</h4>
+          <button class="sortByTitle" (click)="onSortByTitle()">Sort by Title</button>
           <mat-label>Select category: </mat-label><br>
           <mat-select class="bg-white" name="category" placeholder="Select a category"
             (selectionChange)="onChangeFilters(filterForm)" [ngModel]="filter.category">

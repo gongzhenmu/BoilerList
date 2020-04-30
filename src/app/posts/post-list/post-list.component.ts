@@ -197,6 +197,10 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.postsService.getPosts();
 
   }
+
+  onSortByTitle(){
+    this.postsService.sortPosts("title", false);
+  }
 }
 
 

@@ -44,7 +44,8 @@ export class PostCreateComponent implements OnInit {
     buyer: '',
     imageUrls: [],
     mainImage: '',
-    rated: false
+    rated: false,
+    createdTime: 0
   };
 
 
@@ -261,7 +262,7 @@ export class PostCreateComponent implements OnInit {
           this.post.mainImage = this.post.imageUrls[this.imageIndex]
         this.postsService.updatePost(this.postId, form.value.title,
           form.value.content, form.value.price, localStorage.getItem('username'),
-          form.value.category, this.formatLabel(form.value.condition), postTags, 'available', this.post.viewCount, this.post.buyer, this.post.imageUrls, this.post.mainImage);
+          form.value.category, this.formatLabel(form.value.condition), postTags, 'available', this.post.viewCount, this.post.buyer, this.post.imageUrls, this.post.mainImage, this.post.createdTime);
       }
     form.resetForm();
     this.router.navigate(['/']);

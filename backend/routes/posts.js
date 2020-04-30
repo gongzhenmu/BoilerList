@@ -46,8 +46,10 @@ router.post("", checkAuth, multer({storage: image_storage}).array("images", 9), 
     status: req.body.status,
     viewCount: parseInt(req.body.viewCount),
     imageUrls: null,
-    mainImage: " mainImage"
+    mainImage: " mainImage",
+    createdTime: parseInt(req.body.createdTime)
   });
+  console.log("created time: " + post.createdTime);
 
   var imageUrls = new Array();
   const image_url = req.protocol + "://" + req.get("host");
@@ -165,7 +167,8 @@ router.put("/:id",(req, res, next) => {
     viewCount: req.body.viewCount,
     rated:req.body.rated,
     imageUrls: req.body.imageUrls,
-    mainImage: req.body.mainImage
+    mainImage: req.body.mainImage,
+    createdTime: req.body.createdTime
   });
   Post.updateOne({_id: req.params.id} , post).then(updatedPost => {
     console.log(updatedPost);
@@ -192,7 +195,8 @@ router.post("/updateMainImage", checkAuth, (req,res, next) => {
     viewCount: req.body.viewCount,
     rated:req.body.rated,
     imageUrls: req.body.imageUrls,
-    mainImage: req.body.mainImage
+    mainImage: req.body.mainImage,
+    createdTime: req.body.createdTime
   });
   Post.updateOne({_id: req.params.id} , post).then(updatedPost => {
     console.log(updatedPost);

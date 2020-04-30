@@ -43,7 +43,7 @@ export class PostsService {
       }))
       .subscribe(transformedPosts => {
         this.posts = transformedPosts;
-        this.posts.sort((a,b) => a.viewCount-b.viewCount);
+        //this.posts.sort((a,b) => a.viewCount-b.viewCount);
         this.postsUpdated.next([...this.posts]);
       });
   }
@@ -256,7 +256,7 @@ export class PostsService {
     return this.http.post<any>(this.deleteFavoriteUrl, { username, postId });
   }
 
-  sortPosts(fieldToSort: string, isDescending: boolean){
+  sortPosts(fieldToSort: string){
 
     if(fieldToSort.match("price")){
       this.posts.sort((a,b) => parseFloat(a.price) - parseFloat(b.price));
@@ -270,11 +270,14 @@ export class PostsService {
     else if(fieldToSort.match("time")){
       this.posts.sort((a,b) => a.createdTime - b.createdTime);
     }
-
-    if(isDescending){
-      this. posts = this.posts.reverse();
-    }
     this.postsUpdated.next([...this.posts]);
   }
+
+  reversePosts(){
+    this.posts = this.posts.reverse();
+    this.postsUpdated.next([...this.posts]);
+  }
+
+
 
 }

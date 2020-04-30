@@ -40,6 +40,8 @@ export class PostListComponent implements OnInit, OnDestroy {
   public currentUser = localStorage.getItem('username');
   ownPost = false;
   inFavorite = false;
+  isAscending = true;
+  isDescending = false;
 
   // Category Configuration
   categories: Category[] = [
@@ -199,8 +201,38 @@ export class PostListComponent implements OnInit, OnDestroy {
   }
 
   onSortByTitle(){
-    this.postsService.sortPosts("title", false);
+    this.postsService.sortPosts("title");
   }
+
+  onSortByPrice(){
+    this.postsService.sortPosts("price");
+  }
+
+  onSortByTime(){
+    this.postsService.sortPosts("time");
+  }
+
+  onSortByViewCount(){
+    this.postsService.sortPosts("viewCount");
+  }
+
+  onDescending(){
+    if(this.isAscending){
+      this.postsService.reversePosts();
+    }
+    this.isDescending = true;
+    this.isAscending = false;
+  }
+
+  onAscending(){
+    if(this.isDescending){
+      this.postsService.reversePosts();
+    }
+    this.isDescending = false;
+    this.isAscending = true;
+  }
+
+
 }
 
 

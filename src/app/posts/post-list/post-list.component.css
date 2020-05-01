@@ -71,25 +71,6 @@ a:active {
 .status{
   margin-top: 0.7rem;
 }
-.like-btn{
-  border: none;
-  background-color: transparent;
-  width: 1.5rem;
-  height: 2rem;
-  background-image: url("../../../assets/unlike.png");
-  background-repeat: no-repeat;
-  background-size: 100%;
-}
-
-.unlike-btn{
-  border: none;
-  background-color: transparent;
-  width: 1.5rem;
-  height: 1.5rem;
-  background-image: url("../../../assets/like.png");
-  background-repeat: no-repeat;
-  background-size: 100%;
-}
 
 .resetButton {
   float: right;

@@ -42,7 +42,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   inFavorite = false;
   isAscending = true;
   isDescending = false;
-  selectedValue = 'timeA'
+  selectedValue = 'timeD'
 
   // Category Configuration
   categories: Category[] = [
@@ -207,9 +207,9 @@ export class PostListComponent implements OnInit, OnDestroy {
   onResetFilters() {
     window.location.reload();
   }
-  onSort(sort: string) {
-     this.postsService.sortPosts(sort);
-  }
+    onSort(sort: string) {
+      this.postsService.sortPosts(sort);
+    }
 
   goback(){
     this.showList = true;

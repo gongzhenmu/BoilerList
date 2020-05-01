@@ -445,3 +445,22 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   margin-top: auto;
   margin-bottom: auto;
 }
+.like-btn{
+  border: none;
+  background-color: transparent;
+  width: 1.5rem;
+  height: 2rem;
+  background-image: url("../src/assets/unlike.png");
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+
+.unlike-btn{
+  border: none;
+  background-color: transparent;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-image: url("../src/assets/like.png");
+  background-repeat: no-repeat;
+  background-size: 100%;
+}

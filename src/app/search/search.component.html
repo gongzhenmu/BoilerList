@@ -1,9 +1,10 @@
 <div *ngIf="showList" id="cover">
   <form method="get" action="">
     <div class="tb">
-      <div class="td"><input class = "searchInput"type="text" [(ngModel)]="search" name="search" placeholder="Search..." required></div>
+      <div class="td"><input class="searchInput" type="text" [(ngModel)]="search" name="search" placeholder="Search..."
+          required></div>
       <div class="td" id="s-cover">
-        <button class="searchButton"type="submit" (click)="searchTitle(search)">
+        <button class="searchButton" type="submit" (click)="searchTitle(search)">
           <div id="s-circle"></div>
           <span></span>
         </button>
@@ -13,10 +14,10 @@
 </div>
 <div class="album py-6" *ngIf="showList" style="margin-top: 170px !important;">
   <div class="container">
-    <h1  *ngIf="hasSearched" style="color:white; margin: auto; float: center;">The Results of searching: {{search}} </h1>
+    <h1 *ngIf="hasSearched" style="color:white; margin: auto; float: center;">The Results of searching: {{search}} </h1>
     <br>
     <div class="row">
-      <mat-card *ngIf="hasSearched"class="col-md-3 card box-shadow search-theme" style="height: 380px">
+      <mat-card *ngIf="hasSearched" class="col-md-3 card box-shadow search-theme" style="height: 380px">
         <form #filterForm="ngForm">
           <button class="resetButton" (click)="onResetFilters()">Reset</button>
           <h4>Filter Your Results</h4>
@@ -122,12 +123,16 @@
         Seller: <a href="/profile/{{CurrentPost.owner}}">{{ CurrentPost.owner}}</a><br>
         <!-- Buyer: {{CurrentPost.buyer}}<br> -->
         👁{{ CurrentPost.viewCount}} views<br>
-        <div class="d-flex justify-content-between align-items-center">
-          <button type="button" class='btn btn-outline-info' style="float: left;" aria-label="back"
-            (click)="goback()" style="float: right;">Back</button>
-          <button *ngIf="!itemSold && !ownPost" type="button" (click)="purchaseItem(CurrentPost);"
-            class='btn btn-outline-primary' style="float: right;">Purchase</button>
-        </div>
+        <button *ngIf="!inFavorite" class="like-btn" aria-label="like post" (click)="addToFavoritePost(CurrentPost);"
+          style="float:left !important;"></button>
+        <b *ngIf="!inFavorite" style="float: left  !important;">&nbsp;Add to favorite</b>
+        <button *ngIf="inFavorite" class="unlike-btn" aria-label="unlike post"
+          (click)="deleteFromFavoritePost(CurrentPost);" style="float:left !important;"></button>
+        <b *ngIf="inFavorite" style="float: left  !important;">&nbsp;Delete from favorite</b>
+        <button type="button" class='btn btn-outline-info' style="float: right;" aria-label="back"
+          (click)="goback()">Back</button>
+        <button *ngIf="!itemSold && !ownPost" type="button" (click)="purchaseItem(CurrentPost);"
+          class='btn btn-outline-primary' style="float: right;">Purchase</button>
       </div>
     </div>
   </div>

@@ -103,6 +103,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   public currentUser = localStorage.getItem('username');
   ownPost = false;
   hasSearched = false;
+  inFavorite = false;
   ngOnInit() {
     this.toggleMessage = 'Show Available Posts Only!';
   }
@@ -141,6 +142,16 @@ export class SearchComponent implements OnInit, OnDestroy {
     } else {
       this.ownPost = false;
     }
+    this.postsService.checkFavorite(localStorage.getItem('username'), post.id)
+      .subscribe(() => {
+        this.inFavorite = true;
+      }, err => {
+        if (err.status === 302) {
+          this.inFavorite = false;
+        } else if (err.status === 500) {
+          alert('Something went wrong');
+        }
+      });
   }
   purchaseItem(post: Post) {
     this.postsService.updateBuyer(post, this.currentUser);
@@ -205,5 +216,32 @@ export class SearchComponent implements OnInit, OnDestroy {
  goback(){
    this.showList = true;
  }
+ addToFavoritePost(post: Post) {
+  this.postsService.addToFavorite(localStorage.getItem('username'), post.id)
+    .subscribe(() => {
+      alert("Added to favorite list");
+      this.inFavorite = true;
+    }, err => {
+      if (err.status === 500) {
+        alert('Server Error!');
+      } else if (err.status === 401) {
+        alert('Something went wrong');
+      }
+    });
+}
+
+deleteFromFavoritePost(post: Post) {
+  this.postsService.deleteFromFavorite(localStorage.getItem('username'), post.id)
+    .subscribe(() => {
+      alert("Deleted from favorite list");
+      this.inFavorite = false;
+    }, err => {
+      if (err.status === 500) {
+        alert('Server Error!');
+      } else if (err.status === 401) {
+        alert('Something went wrong');
+      }
+    });
+}
 
 }

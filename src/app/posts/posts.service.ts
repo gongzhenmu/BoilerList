@@ -43,7 +43,7 @@ export class PostsService {
       }))
       .subscribe(transformedPosts => {
         this.posts = transformedPosts;
-        //this.posts.sort((a,b) => a.viewCount-b.viewCount);
+        this.posts.sort((b,a) => a.createdTime-b.createdTime);
         this.postsUpdated.next([...this.posts]);
       });
   }
@@ -53,6 +53,7 @@ export class PostsService {
   }
 
   getPost(id: string) {
+
     return this.http.get<{ message: string; posts: any }>(this.posturl)
       .pipe(map((postData) => {
         return postData.posts.map(post => {

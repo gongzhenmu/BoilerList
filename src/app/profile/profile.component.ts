@@ -167,11 +167,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.profileService.updateStatus(post, 'sold');
     window.location.reload();
   }
-
-  onAvailable(post: Post) {
-    this.postsService.updateBuyer(post, 'None');
-    this.profileService.updateStatus(post, 'available');
-    window.location.reload();
+  
+  onAvailable(post: Post){
+    this.postsService.updatePost(post.id, post.title, 
+      post.content, post.price, post.owner, post.category, 
+      post.condition, post.tags, 'available', post.viewCount, 'None', 
+      post.imageUrls, post.mainImage, post.createdTime);
+      window.location.reload();
   }
   showDetails(post: Post) {
     this.showList = true;

@@ -110,7 +110,7 @@ export class PostListComponent implements OnInit, OnDestroy {
       .subscribe((posts: Post[]) => {
         this.posts = posts;
       });
-    this.toggleMessage = 'Show Pending Posts!';
+    this.toggleMessage = 'Show Available Posts Only!';
 
   }
 
@@ -157,9 +157,9 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   onToggled(e) {
     if (e.checked) {
-      this.toggleMessage = 'Show Available Posts!';
+      this.toggleMessage = 'Show All Posts!';
     } else {
-      this.toggleMessage = 'Show Pending Posts!';
+      this.toggleMessage = 'Show Available Posts Only!';
     }
   }
   onChangeFilters(form: NgForm) {

@@ -104,6 +104,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   ownPost = false;
   hasSearched = false;
   ngOnInit() {
+    this.toggleMessage = 'Show Available Posts Only!';
   }
 
   ngOnDestroy() {
@@ -149,9 +150,9 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   onToggled(e) {
     if (e.checked) {
-      this.toggleMessage = 'Show Available Posts!';
+      this.toggleMessage = 'Show Available Posts Only!';
     } else {
-      this.toggleMessage = 'Show Pending Posts!';
+      this.toggleMessage = 'Show All Posts!';
     }
   }
   onChangeFilters(form: NgForm) {
@@ -166,8 +167,11 @@ export class SearchComponent implements OnInit, OnDestroy {
         matched = (post.category === form.value.category);
       }
       if (form.value.status !== '' && matched) {
-        console.log('form.value.status is ' + form.value.status ? 'pending' : 'available');
-        matched = (post.status === (form.value.status ? 'pending' : 'available'));
+        console.log(form.value.status);
+        if (form.value.status === true) {
+          matched = (post.status === 'available');
+        }
+        console.log(matched);
       }
       if (this.form.value.condition !== '' && matched) {
         matched = (post.condition === form.value.condition);

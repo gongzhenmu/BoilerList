@@ -197,12 +197,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   onResetFilters() {
-    // Reset form
-    this.form.reset();
-
-    // get all posts
-    this.postsService.getPosts();
-
+    window.location.reload();
   }
   onSort(sort: string){
     this.profileservice.sortPosts(sort);

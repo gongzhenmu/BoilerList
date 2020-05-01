@@ -205,14 +205,9 @@ export class PostListComponent implements OnInit, OnDestroy {
   }
 
   onResetFilters() {
-    // Reset form
-    this.form.reset();
-
-    // get all posts
-    this.postsService.getPosts();
-
+    window.location.reload();
   }
-  onSort(sort: string){
+  onSort(sort: string) {
      this.postsService.sortPosts(sort);
   }
 

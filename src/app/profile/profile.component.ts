@@ -72,7 +72,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   noReviews = false;
   favoriteList = false;
   favoriteShow = true;
-  ownPost = false;
+    ownPost = false;
   rating: number;
   displayRaing: number;
   ngOnInit() {
@@ -201,7 +201,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.canRateSeller = false;
 
     if(!this.currentUserPage){
-      this.postsService.checkFavorite(this.otherUsername, post.id)
+      this.postsService.checkFavorite(this.currentUser, post.id)
       .subscribe(() => {
         this.inFavorite = true;
       }, err => {
@@ -349,9 +349,22 @@ export class ProfileComponent implements OnInit, OnDestroy {
     window.location.reload();
   }
   purchaseItem(post: Post) {
-    this.postsService.updateBuyer(post, this.otherUsername);
+    this.postsService.updateBuyer(post, this.currentUser);
     this.showList = true;
     alert('Success! \nYou can now go to your pending list to change this transaction status!');
+  }
+  deleteFromFavoritePost(post: Post) {
+    this.postsService.deleteFromFavorite(localStorage.getItem('username'), post.id)
+      .subscribe(() => {
+        alert("Deleted from favorite list");
+        this.inFavorite = false;
+      }, err => {
+        if (err.status === 500) {
+          alert('Server Error!');
+        } else if (err.status === 401) {
+          alert('Something went wrong');
+        }
+      });
   }
 
 }

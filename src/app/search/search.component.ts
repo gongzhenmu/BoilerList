@@ -73,7 +73,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   // priceRange
   priceRange: PriceRangeSlider = {
     minValue: 0,
-    maxValue: 1000,
+    maxValue: 2000,
     options: {
       floor: 0,
       ceil: 2000,

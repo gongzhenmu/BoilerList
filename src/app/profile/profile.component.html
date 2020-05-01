@@ -140,13 +140,13 @@
         <div class="d-flex justify-content-between align-items-center" *ngIf="!pendingList && currentUserPage">
           <button type="button" class='btn btn-outline-success' style="float: left;" aria-label="back"
             (click)="goBack();" style="float: left;">Back</button>
-          <button *ngIf="!notAvailable" class='btn btn-outline-primary' (click)="onAvailable(CurrentPost)">Mark as
+          <button *ngIf="!notAvailable && !favoriteList" class='btn btn-outline-primary' (click)="onAvailable(CurrentPost)">Mark as
             Available</button>
           <!-- <button class='btn btn-outline-warning' (click)="onPending(CurrentPost)">Mark as Pending</button> -->
-          <button *ngIf="!notAvailable" class='btn btn-outline-danger' (click)="onSold(CurrentPost)">Mark as
+          <button *ngIf="!notAvailable && !favoriteList" class='btn btn-outline-danger' (click)="onSold(CurrentPost)">Mark as
             Sold</button>
-          <a *ngIf="!notAvailable" class='btn btn-outline-info' [routerLink]="['post-edit', CurrentPost.id]">Edit</a>
-          <button *ngIf="!notAvailable" class='btn btn-outline-dark' (click)="onDelete(CurrentPost.id)">Delete</button>
+          <a *ngIf="!notAvailable && !favoriteList" class='btn btn-outline-info' [routerLink]="['post-edit', CurrentPost.id]">Edit</a>
+          <button *ngIf="!notAvailable && !favoriteList" class='btn btn-outline-dark' (click)="onDelete(CurrentPost.id)">Delete</button>
           <button *ngIf="canRateSeller && !CurrentPost.rated &&!favoriteList" type="button" class='btn btn-outline-info'
             style="float: left;" aria-label="rate seller" (click)="rateSeller();" style="float: right;">Rate the
             seller</button>
@@ -159,7 +159,7 @@
             (click)="goBack();" style="float: left;">Back</button>
         </div>
 
-        <div class="d-flex justify-content-between align-items-center" *ngIf="pendingList">
+        <div class="d-flex justify-content-between align-items-center" *ngIf="pendingList && currentUserPage">
           <button type="button" class='btn btn-outline-success' style="float: left;" aria-label="back"
             (click)="goBack();" style="float: right;">Back</button>
           <button *ngIf="purchaseUser" class='btn btn-outline-primary' (click)="onAvailable(CurrentPost)">Cancel

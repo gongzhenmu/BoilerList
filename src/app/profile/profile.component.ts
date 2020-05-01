@@ -298,7 +298,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   showRatingComment(){
     this.SellerComment = true;
     this.showList = false;
-    this.MyPosts = true;
+    this.MyPosts = false;
     if(this.reviews.length == 0)
       this.noReviews = true;
     this.favoriteList = false;

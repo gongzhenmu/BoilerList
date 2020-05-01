@@ -16,7 +16,7 @@
   </nav>
 </div>
 
-<div id="profile" *ngIf="!MyPosts && !rateTheSeller">
+<div id="profile" *ngIf="!MyPosts && !rateTheSeller && !SellerComment">
   <br>
   <br>
   <br>
@@ -89,7 +89,7 @@
   </div>
 </div>
 <!-- show the post detail page -->
-<div class="container" *ngIf="showList && !rateTheSeller">
+<div class="container" *ngIf="showList && !rateTheSeller && !SellerComment">
   <div class="d-flex justify-content-center h-100">
     <div class="card detailcard">
       <div class="card-body" style="text-align: center;">

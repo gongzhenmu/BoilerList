@@ -229,6 +229,7 @@ export class PostsService {
             matched = (post.category === category);
           }
           if (status !== '' && matched) {
+            console.log('status is ' + status);
             if (status === true) {
               matched = (post.status === 'available');
             }

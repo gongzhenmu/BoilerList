@@ -60,6 +60,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
   MyPosts = false;
   CurrentPost: Post;
 
+  inFavorite = false;
+
 
   pendingList = false;
   notAvailable = false;
@@ -70,7 +72,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   noReviews = false;
   favoriteList = false;
   favoriteShow = true;
-
+  ownPost = false;
   rating: number;
   displayRaing: number;
   ngOnInit() {
@@ -178,7 +180,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.notAvailable = true;
     else
       this.notAvailable = false;
-
+      if (post.owner === this.currentUser) {
+        this.ownPost = true;
+      } else {
+        this.ownPost = false;
+      }
     if (post.status == 'pending') {
       this.pendingList = true;
       if (post.buyer == this.currentUser)
@@ -193,6 +199,19 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.canRateSeller = true;
     else
       this.canRateSeller = false;
+
+    if(!this.currentUserPage){
+      this.postsService.checkFavorite(this.otherUsername, post.id)
+      .subscribe(() => {
+        this.inFavorite = true;
+      }, err => {
+        if (err.status === 302) {
+          this.inFavorite = false;
+        } else if (err.status === 500) {
+          alert('Something went wrong');
+        }
+      });
+    }
 
   }
   showMyLists() {
@@ -303,6 +322,19 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.noReviews = true;
     this.favoriteList = false;
   }
+  addToFavoritePost(post: Post) {
+    this.postsService.addToFavorite(localStorage.getItem('username'), post.id)
+      .subscribe(() => {
+        alert("Added to favorite list");
+        this.inFavorite = true;
+      }, err => {
+        if (err.status === 500) {
+          alert('Server Error!');
+        } else if (err.status === 401) {
+          alert('Something went wrong');
+        }
+      });
+  }
   deleteFromFavorite(post: Post) {
     this.postsService.deleteFromFavorite(localStorage.getItem('username'), post.id)
       .subscribe(() => {
@@ -315,6 +347,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
         }
       });
     window.location.reload();
+  }
+  purchaseItem(post: Post) {
+    this.postsService.updateBuyer(post, this.currentUser);
+    this.showList = true;
+    alert('Success! \nYou can now go to your pending list to change this transaction status!');
   }
 
 }

@@ -151,24 +151,33 @@
             style="float: left;" aria-label="rate seller" (click)="rateSeller();" style="float: right;">Rate the
             seller</button>
           <button *ngIf="favoriteList" type="button" class='btn btn-outline-info'
-            style="float: left;" aria-label="rate seller" (click)="deleteFromFavorite(CurrentPost);" style="float: right;">Remove from
+            style="float: left;"  (click)="deleteFromFavorite(CurrentPost);" style="float: right;">Remove from
             favorite</button>
-        </div>
-        <div class="d-flex justify-content-between align-items-center" *ngIf="!currentUserPage">
-          <button type="button" class='btn btn-outline-success' style="float: left;" aria-label="back"
-            (click)="goBack();" style="float: left;">Back</button>
         </div>
 
         <div class="d-flex justify-content-between align-items-center" *ngIf="pendingList && currentUserPage">
-          <button type="button" class='btn btn-outline-success' style="float: left;" aria-label="back"
+          <button ngIftype="button" class='btn btn-outline-success' style="float: left;" aria-label="back"
             (click)="goBack();" style="float: right;">Back</button>
-          <button *ngIf="purchaseUser" class='btn btn-outline-primary' (click)="onAvailable(CurrentPost)">Cancel
+            <button *ngIf="favoriteList" type="button" class='btn btn-outline-info'
+            style="float: left;"  (click)="deleteFromFavorite(CurrentPost);" style="float: right;">Remove from
+            favorite</button>
+          <button *ngIf="purchaseUser && !favoriteList" class='btn btn-outline-primary' (click)="onAvailable(CurrentPost)">Cancel
             Purchase</button>
-          <button *ngIf="!purchaseUser" class='btn btn-outline-primary' (click)="onAvailable(CurrentPost)">Cancel
+          <button *ngIf="!purchaseUser && !favoriteList" class='btn btn-outline-primary' (click)="onAvailable(CurrentPost)">Cancel
             Sell</button>
           <!-- <button class='btn btn-outline-warning' (click)="onPending(CurrentPost)">Mark as Pending</button> -->
-          <button class='btn btn-outline-danger' (click)="onSold(CurrentPost)"> Complete</button>
+          <button *ngIf="!favoriteList" class='btn btn-outline-danger' (click)="onSold(CurrentPost)"> Complete</button>
         </div>
+        <button *ngIf="!inFavorite && !currentUserPage" class="like-btn" aria-label="like post" (click)="addToFavoritePost(CurrentPost);"
+          style="float:left !important;"></button>
+        <b *ngIf="!inFavorite && !currentUserPage" style="float: left  !important;">&nbsp;Add to favorite</b>
+        <button *ngIf="inFavorite" class="unlike-btn" aria-label="unlike post"
+          (click)="deleteFromFavoritePost(CurrentPost);" style="float:left !important;"></button>
+        <b *ngIf="inFavorite && !currentUserPage" style="float: left  !important;">&nbsp;Delete from favorite</b>
+        <button *ngIf="!currentUserPage" type="button" class='btn btn-outline-info' style="float: right;" aria-label="back"
+          (click)="goBack();">Back</button>
+        <button *ngIf="!notAvailable && !ownPost" type="button" (click)="purchaseItem(CurrentPost);"
+          class='btn btn-outline-primary' style="float: right;">Purchase</button>
       </div>
     </div>
   </div>

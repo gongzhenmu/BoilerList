@@ -70,7 +70,8 @@ export class PostsService {
             buyer: post.buyer,
             imageUrls: post.imageUrls,
             mainImage: post.mainImage,
-            rated: post.rated
+            rated: post.rated,
+            createdTime: post.createdTime
           };
         });
       })).toPromise();
@@ -215,7 +216,8 @@ export class PostsService {
             viewCount: post.viewCount,
             buyer: post.buyer,
             imageUrls: post.imageUrls,
-            mainImage: post.mainImage
+            mainImage: post.mainImage,
+            createdTime: post.createdTime
           };
         });
       }))

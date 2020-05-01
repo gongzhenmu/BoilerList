@@ -349,7 +349,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     window.location.reload();
   }
   purchaseItem(post: Post) {
-    this.postsService.updateBuyer(post, this.currentUser);
+    this.postsService.updateBuyer(post, this.otherUsername);
     this.showList = true;
     alert('Success! \nYou can now go to your pending list to change this transaction status!');
   }

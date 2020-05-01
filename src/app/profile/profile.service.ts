@@ -47,6 +47,10 @@ export class ProfileService {
   //ratingcomment
   private ratingcommentUrl = environment.apiUrl + '/profile/getReviews';
 
+  //favorite lists
+  private addFavoriteUrl = environment.apiUrl + '/lists/addfavorite';
+  private deleteFavoriteUrl = environment.apiUrl + '/lists/deletefavorite';
+  private checkfavoriteUrl = environment.apiUrl + '/lists/checkFavorite';
   constructor(private http: HttpClient) { }
 
   getMyPosts(username: string) {
@@ -357,7 +361,6 @@ export class ProfileService {
   }
 
   sortPosts(fieldToSort: string){
-
     if(fieldToSort.match("priceA")){
       this.searchPost.sort((a,b) => parseFloat(a.price) - parseFloat(b.price));
     }
@@ -384,4 +387,14 @@ export class ProfileService {
     }
     this.searchUpdated.next([...this.searchPost]);
   }
+  addToFavorite(username:string, postId: string) {
+    return this.http.post<any>(this.addFavoriteUrl, { username, postId });
+  }
+  checkFavorite(username:string, postId: string) {
+    return this.http.post<any>(this.checkfavoriteUrl, { username, postId });
+  }
+  deleteFromFavorite(username:string, postId: string) {
+    return this.http.post<any>(this.deleteFavoriteUrl, { username, postId });
+  }
+
 }
